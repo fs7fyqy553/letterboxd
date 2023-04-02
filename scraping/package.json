@@ -1,0 +1,16 @@
+{
+  "name": "letterboxd-scraper",
+  "version": "0.0.0",
+  "description": "Scraper of letterboxd.com for film data",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "James Graça-Jones <jamesgracajones@gmail.com> (https://github.com/JamesGJ5)",
+  "license": "ISC",
+  "devDependencies": {
+    "axios": "^1.3.4",
+    "cheerio": "^1.0.0-rc.12",
+    "json2csv": "^6.0.0-alpha.2"
+  }
+}
