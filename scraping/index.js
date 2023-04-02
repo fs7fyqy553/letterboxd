@@ -27,10 +27,23 @@ async function getReleaseYear() {
     return pageDataDoc("[href^='/films/year/']").text();
 }
 
+async function getDirectorNameArray() {
+    const pageDataDoc = await getPageDataDoc();
+    // TODO: figure out how to do the below in a single line and extract into own function
+    const directors = pageDataDoc("[href^='/director/']>span");
+    const arr = [];
+    directors.each(function() {
+        directorName = pageDataDoc(this).text();
+        arr.push(directorName);
+    });
+    return arr;
+}
+
 // async function testGetFunctions() {
 //     const filmTitle = await getFilmTitle();
 //     const releaseYear = await getReleaseYear();
-//     console.log(filmTitle, releaseYear);
+//     const directors = await getDirectorNameArray();
+//     console.log(filmTitle, releaseYear, directors);
 // }
 
 // testGetFunctions();
