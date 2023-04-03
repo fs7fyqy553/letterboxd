@@ -44,12 +44,18 @@ async function getAverageRating() {
     return dynamicPageDoc.querySelector(".display-rating").text;
 }
 
-// async function testGetFunctions() {
+async function getFilmPosterURL() {
+    const dynamicPageDoc = await getDynamicPageDoc();
+    return dynamicPageDoc.querySelector("#poster-zoom > div > div > img").getAttribute("src");
+}
+
+async function testGetFunctions() {
 //     const filmTitle = await getFilmTitle();
 //     const releaseYear = await getReleaseYear();
 //     const directors = await getDirectorNameArray();
 //     const averageRating = await getAverageRating();
-//     console.log(filmTitle, releaseYear, directors, averageRating);
-// }
+    // const filmPosterURL = await getFilmPosterURL();
+    // console.log(filmTitle, releaseYear, directors, averageRating, filmPosterURL);
+}
 
 // testGetFunctions();
