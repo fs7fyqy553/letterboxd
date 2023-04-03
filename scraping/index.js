@@ -1,8 +1,6 @@
 const { parse } = require("node-html-parser");
 const puppeteer = require("puppeteer");
 
-const url = "https://letterboxd.com/film/the-matrix/"
-
 // TODO: clean up below function
 async function getDynamicPageDoc() {
     try {
@@ -16,6 +14,11 @@ async function getDynamicPageDoc() {
     } catch(err) {
         throw err;
     }
+}
+
+async function checkIfAdult() {
+    const dynamicPageDoc = await getDynamicPageDoc();
+    return !!dynamicPageDoc.querySelector(".-adult");
 }
 
 // TODO: write a function to call getPageDataDoc once and then modify get... functions to 
@@ -49,13 +52,16 @@ async function getFilmPosterURL() {
     return dynamicPageDoc.querySelector("#poster-zoom > div > div > img").getAttribute("src");
 }
 
-async function testGetFunctions() {
-//     const filmTitle = await getFilmTitle();
-//     const releaseYear = await getReleaseYear();
-//     const directors = await getDirectorNameArray();
-//     const averageRating = await getAverageRating();
+// async function testGetFunctions() {
+    // const filmTitle = await getFilmTitle();
+    // const releaseYear = await getReleaseYear();
+    // const directors = await getDirectorNameArray();
+    // const averageRating = await getAverageRating();
     // const filmPosterURL = await getFilmPosterURL();
+    // const isAdult = await checkIfAdult();
     // console.log(filmTitle, releaseYear, directors, averageRating, filmPosterURL);
-}
+    // console.log(isAdult);
+// }
 
+const url = "https://letterboxd.com/film/the-matrix/"
 // testGetFunctions();
