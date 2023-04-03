@@ -45,7 +45,7 @@ function getFilmPosterURL(letterboxdFilmPageDoc) {
     return letterboxdFilmPageDoc.querySelector("#poster-zoom > div > div > img").getAttribute("src");
 }
 
-// TODO: add a mechanism that returns null if any of the details aren't found successfully
+// TODO: consider adding a mechanism that returns null if any of the details aren't found successfully
 function extractFilmDetails(letterboxdFilmPageDoc) {
     return checkIfAdult(letterboxdFilmPageDoc)
         ?
