@@ -9,7 +9,6 @@
   "author": "James Graça-Jones <jamesgracajones@gmail.com> (https://github.com/JamesGJ5)",
   "license": "ISC",
   "devDependencies": {
-    "json2csv": "^6.0.0-alpha.2",
     "node-html-parser": "^6.1.5",
     "puppeteer": "^19.8.3"
   }
