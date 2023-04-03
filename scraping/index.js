@@ -1,12 +1,14 @@
 const { parse } = require("node-html-parser");
 const puppeteer = require("puppeteer");
 
+// TODO: clarify variable names
+
 // TODO: clean up below function
-async function getDynamicPageDoc() {
+async function getDynamicPageDoc(URL) {
     try {
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
-        await page.goto(url);
+        await page.goto(URL);
         const dynamicHTML = await page.evaluate(() => document.body.innerHTML);
         await browser.close();
         dynamicPageDoc = parse(dynamicHTML);
@@ -16,52 +18,57 @@ async function getDynamicPageDoc() {
     }
 }
 
-async function checkIfAdult() {
-    const dynamicPageDoc = await getDynamicPageDoc();
-    return !!dynamicPageDoc.querySelector(".-adult");
+function checkIfAdult(letterboxdFilmPageDoc) {
+    return !!letterboxdFilmPageDoc.querySelector(".-adult");
 }
-
-// TODO: write a function to call getPageDataDoc once and then modify get... functions to 
-// accept the resulting page document as a parameter and return the required details
 
 // NOTE: may not be necessary if the titles are already known in order to decide which 
 // webpages to scrape
-async function getFilmTitle() {
-    const dynamicPageDoc = await getDynamicPageDoc();
-    return dynamicPageDoc.querySelector(".headline-1").text;
+function getFilmTitle(letterboxdFilmPageDoc) {
+    return letterboxdFilmPageDoc.querySelector(".headline-1").text;
 }
 
-async function getReleaseYear() {
-    const dynamicPageDoc = await getDynamicPageDoc();
-    return dynamicPageDoc.querySelector("[href^='/films/year/']").text;
+function getReleaseYear(letterboxdFilmPageDoc) {
+    return letterboxdFilmPageDoc.querySelector("[href^='/films/year/']").text;
 }
 
-async function getDirectorNameArray() {
-    const dynamicPageDoc = await getDynamicPageDoc();
-    const directorNodes = dynamicPageDoc.querySelectorAll("[href^='/director/']>span");
+function getDirectorNameArray(letterboxdFilmPageDoc) {
+    const directorNodes = letterboxdFilmPageDoc.querySelectorAll("[href^='/director/']>span");
     return directorNodes.map((element) => element.text);
 }
 
-async function getAverageRating() {
-    const dynamicPageDoc = await getDynamicPageDoc();
-    return dynamicPageDoc.querySelector(".display-rating").text;
+function getAverageRating(letterboxdFilmPageDoc) {
+    return letterboxdFilmPageDoc.querySelector(".display-rating").text;
 }
 
-async function getFilmPosterURL() {
-    const dynamicPageDoc = await getDynamicPageDoc();
-    return dynamicPageDoc.querySelector("#poster-zoom > div > div > img").getAttribute("src");
+function getFilmPosterURL(letterboxdFilmPageDoc) {
+    return letterboxdFilmPageDoc.querySelector("#poster-zoom > div > div > img").getAttribute("src");
 }
 
-// async function testGetFunctions() {
-    // const filmTitle = await getFilmTitle();
-    // const releaseYear = await getReleaseYear();
-    // const directors = await getDirectorNameArray();
-    // const averageRating = await getAverageRating();
-    // const filmPosterURL = await getFilmPosterURL();
-    // const isAdult = await checkIfAdult();
-    // console.log(filmTitle, releaseYear, directors, averageRating, filmPosterURL);
-    // console.log(isAdult);
+// TODO: add a mechanism that returns null if any of the details aren't found successfully
+function extractFilmDetails(letterboxdFilmPageDoc) {
+    return checkIfAdult(letterboxdFilmPageDoc)
+        ?
+            null
+        :
+            {
+                filmTitle: getFilmTitle(letterboxdFilmPageDoc),
+                releaseYear: getReleaseYear(letterboxdFilmPageDoc),
+                directorNames: getDirectorNameArray(letterboxdFilmPageDoc),
+                averageRating: getAverageRating(letterboxdFilmPageDoc),
+                filmPosterURL: getFilmPosterURL(letterboxdFilmPageDoc),
+            }
+}
+
+async function getFilmDetails(letterboxdFilmURL) {
+    const letterboxdFilmPageDoc = await getDynamicPageDoc(letterboxdFilmURL);
+    return extractFilmDetails(letterboxdFilmPageDoc);
+}
+
+// async function testGetFunctions(letterboxdFilmURL) {
+//     const filmDetails = await getFilmDetails(letterboxdFilmURL);
+//     console.log(filmDetails);
 // }
 
 const url = "https://letterboxd.com/film/the-matrix/"
-// testGetFunctions();
+// testGetFunctions(url);
