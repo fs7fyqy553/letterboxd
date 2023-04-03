@@ -65,10 +65,4 @@ async function getFilmDetails(letterboxdFilmURL) {
     return extractFilmDetails(letterboxdFilmPageDoc);
 }
 
-// async function testGetFunctions(letterboxdFilmURL) {
-//     const filmDetails = await getFilmDetails(letterboxdFilmURL);
-//     console.log(filmDetails);
-// }
-
-const url = "https://letterboxd.com/film/the-matrix/"
-// testGetFunctions(url);
+// const url = "https://letterboxd.com/film/the-matrix/"
