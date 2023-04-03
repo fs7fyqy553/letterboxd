@@ -39,11 +39,17 @@ async function getDirectorNameArray() {
     return directorNodes.map((element) => element.text);
 }
 
+async function getAverageRating() {
+    const dynamicPageDoc = await getDynamicPageDoc();
+    return dynamicPageDoc.querySelector(".display-rating").text;
+}
+
 // async function testGetFunctions() {
 //     const filmTitle = await getFilmTitle();
 //     const releaseYear = await getReleaseYear();
 //     const directors = await getDirectorNameArray();
-//     console.log(filmTitle, releaseYear, directors);
+//     const averageRating = await getAverageRating();
+//     console.log(filmTitle, releaseYear, directors, averageRating);
 // }
 
 // testGetFunctions();
