@@ -1,12 +1,18 @@
-const cheerio = require("cheerio");
-const axios = require("axios");
+const { parse } = require("node-html-parser");
+const puppeteer = require("puppeteer");
 
 const url = "https://letterboxd.com/film/the-matrix/"
 
-async function getPageDataDoc() {
+// TODO: clean up below function
+async function getDynamicPageDoc() {
     try {
-        const response  = await axios.get(url);
-        return cheerio.load(response.data);
+        const browser = await puppeteer.launch();
+        const page = await browser.newPage();
+        await page.goto(url);
+        const dynamicHTML = await page.evaluate(() => document.body.innerHTML);
+        await browser.close();
+        dynamicPageDoc = parse(dynamicHTML);
+        return dynamicPageDoc;
     } catch(err) {
         throw err;
     }
@@ -18,25 +24,19 @@ async function getPageDataDoc() {
 // NOTE: may not be necessary if the titles are already known in order to decide which 
 // webpages to scrape
 async function getFilmTitle() {
-    const pageDataDoc = await getPageDataDoc();
-    return pageDataDoc(".headline-1").text();
+    const dynamicPageDoc = await getDynamicPageDoc();
+    return dynamicPageDoc.querySelector(".headline-1").text;
 }
 
 async function getReleaseYear() {
-    const pageDataDoc = await getPageDataDoc();
-    return pageDataDoc("[href^='/films/year/']").text();
+    const dynamicPageDoc = await getDynamicPageDoc();
+    return dynamicPageDoc.querySelector("[href^='/films/year/']").text;
 }
 
 async function getDirectorNameArray() {
-    const pageDataDoc = await getPageDataDoc();
-    // TODO: figure out how to do the below in a single line and extract into own function
-    const directors = pageDataDoc("[href^='/director/']>span");
-    const arr = [];
-    directors.each(function() {
-        directorName = pageDataDoc(this).text();
-        arr.push(directorName);
-    });
-    return arr;
+    const dynamicPageDoc = await getDynamicPageDoc();
+    const directorNodes = dynamicPageDoc.querySelectorAll("[href^='/director/']>span");
+    return directorNodes.map((element) => element.text);
 }
 
 // async function testGetFunctions() {
