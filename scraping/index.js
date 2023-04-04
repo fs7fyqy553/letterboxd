@@ -13,12 +13,55 @@ async function getDynamicPageDoc(URL) {
         const page = await browser.newPage();
         await page.goto(URL);
         const dynamicHTML = await page.evaluate(() => document.body.innerHTML);
-        // await browser.close();
         dynamicPageDoc = parse(dynamicHTML);
         return [dynamicPageDoc, browser];
     } catch(err) {
         throw err;
     }
+}
+
+// TODO: clean up all of this too; in fact, consider moving it to another file
+async function autoScroll(page){
+    await page.evaluate(async () => {
+        await new Promise((resolve) => {
+            var totalHeight = 0;
+            var distance = 100;
+            var timer = setInterval(() => {
+                var scrollHeight = document.body.scrollHeight;
+                window.scrollBy(0, distance);
+                totalHeight += distance;
+
+                if(totalHeight >= scrollHeight - window.innerHeight){
+                    clearInterval(timer);
+                    resolve();
+                }
+            }, 100);
+        });
+    });
+}
+
+async function getDynamicListPageDoc(URL) {
+    const browser = await puppeteer.launch({
+        headless: false
+    });
+    const page = await browser.newPage();
+    await page.goto(URL);
+    await page.setViewport({
+        width: 1200,
+        height: 800
+    });
+
+    await autoScroll(page);
+
+    await page.screenshot({
+        path: 'yoursite.png',
+        fullPage: true
+    });
+
+    const dynamicHTML = await page.evaluate(() => document.body.innerHTML);
+    dynamicPageDoc = parse(dynamicHTML);
+
+    return [dynamicPageDoc, browser];
 }
 
 function checkIfAdult(letterboxdFilmPageDoc) {
@@ -97,7 +140,7 @@ async function processFilmsOnPage(letterboxdFilmPageDoc, processorCallback) {
 }
 
 async function processFilmList(URL, processorCallback) {
-    const [letterboxdListPageDoc, browser] = await getDynamicPageDoc(URL);
+    const [letterboxdListPageDoc, browser] = await getDynamicListPageDoc(URL);
     Promise.all(
         [
             processFilmsOnPage(letterboxdListPageDoc, processorCallback),
