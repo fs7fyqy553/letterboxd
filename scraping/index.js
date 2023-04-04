@@ -47,20 +47,24 @@ function getFilmPosterURL(letterboxdFilmPageDoc) {
 
 // TODO: make below code more succinct
 function makeFilmDetailsObject(letterboxdFilmPageDoc) {
-    const obj = {
+    let obj = {
         filmTitle: getFilmTitle,
         releaseYear: getReleaseYear,
         directorNames: getDirectorNameArray,
         averageRating: getAverageRating,
         filmPosterURL: getFilmPosterURL,
     };
-    for (const [detailName, extractor] of Object.entries(obj)) {
-        detail = extractor(letterboxdFilmPageDoc);
-        if (!detail) {
-            obj = null;
-            break;
+    try { 
+        for (const [detailName, extractor] of Object.entries(obj)) {
+            detail = extractor(letterboxdFilmPageDoc);
+            // if (!detail) {
+            //     obj = null;
+            //     break;
+            // }
+            obj[detailName] = detail;
         }
-        obj[detailName] = detail;
+    } catch(err) {
+        obj = null;
     }
     return obj;
 }
