@@ -40,6 +40,8 @@ async function autoScroll(page){
     });
 }
 
+// NOTE: below two functions inspired by 
+// https://stackoverflow.com/questions/51529332/puppeteer-scroll-down-until-you-cant-anymore/53527984#53527984
 async function getDynamicListPageDoc(URL) {
     const browser = await puppeteer.launch({
         headless: false
