@@ -45,17 +45,26 @@ function getFilmPosterURL(letterboxdFilmPageDoc) {
     return letterboxdFilmPageDoc.querySelector("#poster-zoom > div > div > img").getAttribute("src");
 }
 
+// TODO: make below code more succinct
 function makeFilmDetailsObject(letterboxdFilmPageDoc) {
-    return {
-        filmTitle: getFilmTitle(letterboxdFilmPageDoc),
-        releaseYear: getReleaseYear(letterboxdFilmPageDoc),
-        directorNames: getDirectorNameArray(letterboxdFilmPageDoc),
-        averageRating: getAverageRating(letterboxdFilmPageDoc),
-        filmPosterURL: getFilmPosterURL(letterboxdFilmPageDoc),
+    const obj = {
+        filmTitle: getFilmTitle,
+        releaseYear: getReleaseYear,
+        directorNames: getDirectorNameArray,
+        averageRating: getAverageRating,
+        filmPosterURL: getFilmPosterURL,
     };
+    for (const [detailName, extractor] of Object.entries(obj)) {
+        detail = extractor(letterboxdFilmPageDoc);
+        if (!detail) {
+            obj = null;
+            break;
+        }
+        obj[detailName] = detail;
+    }
+    return obj;
 }
 
-// TODO: consider adding a mechanism that returns null if any of the details aren't found successfully
 function extractFilmDetails(letterboxdFilmPageDoc) {
     if (checkIfAdult(letterboxdFilmPageDoc) === true) {
         return null;
