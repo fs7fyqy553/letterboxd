@@ -10,9 +10,9 @@ async function getDynamicPageDoc(URL) {
         const page = await browser.newPage();
         await page.goto(URL);
         const dynamicHTML = await page.evaluate(() => document.body.innerHTML);
-        await browser.close();
+        // await browser.close();
         dynamicPageDoc = parse(dynamicHTML);
-        return dynamicPageDoc;
+        return [dynamicPageDoc, browser];
     } catch(err) {
         throw err;
     }
@@ -78,8 +78,14 @@ function extractFilmDetails(letterboxdFilmPageDoc) {
 }
 
 async function getFilmDetails(letterboxdFilmURL) {
-    const letterboxdFilmPageDoc = await getDynamicPageDoc(letterboxdFilmURL);
-    return extractFilmDetails(letterboxdFilmPageDoc);
+    const [letterboxdFilmPageDoc, browser] = await getDynamicPageDoc(letterboxdFilmURL);
+    return Promise.all(
+        [
+            extractFilmDetails(letterboxdFilmPageDoc),
+            browser.close()
+        ]
+    )
+    .then(([filmDetails, _]) => filmDetails);
 }
 
 // TEST
