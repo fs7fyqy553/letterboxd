@@ -55,11 +55,6 @@ async function getDynamicListPageDoc(URL) {
 
     await autoScroll(page);
 
-    await page.screenshot({
-        path: 'yoursite.png',
-        fullPage: true
-    });
-
     const dynamicHTML = await page.evaluate(() => document.body.innerHTML);
     dynamicPageDoc = parse(dynamicHTML);
 
