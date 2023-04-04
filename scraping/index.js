@@ -57,10 +57,6 @@ function makeFilmDetailsObject(letterboxdFilmPageDoc) {
     try { 
         for (const [detailName, extractor] of Object.entries(obj)) {
             detail = extractor(letterboxdFilmPageDoc);
-            // if (!detail) {
-            //     obj = null;
-            //     break;
-            // }
             obj[detailName] = detail;
         }
     } catch(err) {
