@@ -1,3 +1,5 @@
+// TODO: clean flow of file
+
 const { parse } = require("node-html-parser");
 const puppeteer = require("puppeteer");
 
