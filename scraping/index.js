@@ -141,20 +141,30 @@ async function processFilmsOnPage(letterboxdFilmPageDoc, processorCallback) {
     });
 }
 
+async function getNextPageURL(letterboxdListPageDoc) {
+    try {
+        const nextPageAnchor = letterboxdListPageDoc.querySelector("#content > div > div > section > div.pagination > div:nth-child(2) > a");
+        const nextPagePath = nextPageAnchor.getAttribute("href");
+        const nextPageURL = "https://letterboxd.com" + nextPagePath;
+        return nextPageURL;
+    } catch(err) {
+        return null;
+    }
+}
+
 async function processFilmList(URL, processorCallback) {
-    const [letterboxdListPageDoc, browser] = await getDynamicListPageDoc(URL);
-    Promise.all(
-        [
-            processFilmsOnPage(letterboxdListPageDoc, processorCallback),
-            browser.close(),
-        ]
-    )
-    .then(() => {
-        // const nextPageURL = getNextPageURL(letterboxdListPageDoc);
-        // if (nextPageURL) {
-        //     processFilmList(nextPageURL, processorCallback);
-        // }
-    })
+    while (URL !== null) {
+        const [letterboxdListPageDoc, browser] = await getDynamicListPageDoc(URL);
+        URL = await Promise.all(
+            [
+                processFilmsOnPage(letterboxdListPageDoc, processorCallback),
+                browser.close(),
+            ]
+        )
+        .then(() => {
+            return getNextPageURL(letterboxdListPageDoc);
+        });
+    }
 }
 
 // TEST
