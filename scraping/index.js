@@ -1,4 +1,5 @@
 // TODO: clean flow of file
+// TODO: reconsider Promise.all statements
 
 const { parse } = require("node-html-parser");
 const puppeteer = require("puppeteer");
@@ -86,6 +87,35 @@ async function getFilmDetails(letterboxdFilmURL) {
     .then(([filmDetails, _]) => filmDetails);
 }
 
+async function processFilmsOnPage(letterboxdFilmPageDoc, processorCallback) {
+    const filmLinkNodeList = letterboxdFilmPageDoc.querySelectorAll("#content > div > div > section > ul > li > div > div > a");
+    const letterboxdFilmURLArray = filmLinkNodeList.map((element) => {
+        const filmPath = element.getAttribute("href");
+        const URL = "https://letterboxd.com" + filmPath;
+        processorCallback(URL);
+    });
+}
+
+async function processFilmList(URL, processorCallback) {
+    const [letterboxdListPageDoc, browser] = await getDynamicPageDoc(URL);
+    Promise.all(
+        [
+            processFilmsOnPage(letterboxdListPageDoc, processorCallback),
+            browser.close(),
+        ]
+    )
+    .then(() => {
+        // const nextPageURL = getNextPageURL(letterboxdListPageDoc);
+        // if (nextPageURL) {
+        //     processFilmList(nextPageURL, processorCallback);
+        // }
+    })
+}
+
 // TEST
-const url = "https://letterboxd.com/film/the-matrix/"
-getFilmDetails(url).then(console.log);
+// const url = "https://letterboxd.com/film/the-matrix/"
+// getFilmDetails(url).then(console.log);
+processFilmList(
+    "https://letterboxd.com/victorvdb/list/letterboxd-500-most-watched-movies-of-all/",
+    console.log
+);
