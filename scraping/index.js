@@ -45,19 +45,23 @@ function getFilmPosterURL(letterboxdFilmPageDoc) {
     return letterboxdFilmPageDoc.querySelector("#poster-zoom > div > div > img").getAttribute("src");
 }
 
+function makeFilmDetailsObject(letterboxdFilmPageDoc) {
+    return {
+        filmTitle: getFilmTitle(letterboxdFilmPageDoc),
+        releaseYear: getReleaseYear(letterboxdFilmPageDoc),
+        directorNames: getDirectorNameArray(letterboxdFilmPageDoc),
+        averageRating: getAverageRating(letterboxdFilmPageDoc),
+        filmPosterURL: getFilmPosterURL(letterboxdFilmPageDoc),
+    };
+}
+
 // TODO: consider adding a mechanism that returns null if any of the details aren't found successfully
 function extractFilmDetails(letterboxdFilmPageDoc) {
-    return checkIfAdult(letterboxdFilmPageDoc)
-        ?
-            null
-        :
-            {
-                filmTitle: getFilmTitle(letterboxdFilmPageDoc),
-                releaseYear: getReleaseYear(letterboxdFilmPageDoc),
-                directorNames: getDirectorNameArray(letterboxdFilmPageDoc),
-                averageRating: getAverageRating(letterboxdFilmPageDoc),
-                filmPosterURL: getFilmPosterURL(letterboxdFilmPageDoc),
-            }
+    if (checkIfAdult(letterboxdFilmPageDoc) === true) {
+        return null;
+    } else {
+        return makeFilmDetailsObject(letterboxdFilmPageDoc);
+    }
 }
 
 async function getFilmDetails(letterboxdFilmURL) {
@@ -65,4 +69,6 @@ async function getFilmDetails(letterboxdFilmURL) {
     return extractFilmDetails(letterboxdFilmPageDoc);
 }
 
-// const url = "https://letterboxd.com/film/the-matrix/"
+// TEST
+const url = "https://letterboxd.com/film/the-matrix/"
+getFilmDetails(url).then(console.log);
