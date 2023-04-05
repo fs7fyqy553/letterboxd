@@ -21,12 +21,11 @@ async function getDynamicFilmPageBody(browser, filmPageURL) {
 }
 
 // TODO: clean up below function
-async function getFilmPageDoc(filmPageURL) {
+async function getFilmPageDoc(browser, filmPageURL) {
     try {
-        const browser = await puppeteer.launch();
         const filmPageBody = await getDynamicFilmPageBody(browser, filmPageURL);
         filmPageDoc = parse(filmPageBody);
-        return [filmPageDoc, browser];
+        return filmPageDoc;
     } catch(err) {
         throw err;
     }
@@ -122,7 +121,8 @@ function getFilmDetailsObject(filmPageDoc) {
 }
 
 async function getDetailsObjectFromFilmPage(filmPageURL) {
-    const [filmPageDoc, browser] = await getFilmPageDoc(filmPageURL);
+    const browser = await puppeteer.launch();
+    const filmPageDoc = await getFilmPageDoc(browser, filmPageURL);
     return Promise.all(
         [
             getFilmDetailsObject(filmPageDoc),
