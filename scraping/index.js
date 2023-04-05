@@ -50,22 +50,21 @@ async function autoScroll(page){
     });
 }
 
-// NOTE: below two functions inspired by 
-// https://stackoverflow.com/questions/51529332/puppeteer-scroll-down-until-you-cant-anymore/53527984#53527984
-async function getFilmListPageDoc(puppeteerBrowser, listPageURL) {
-    // const puppeteerBrowser = await puppeteer.launch({
-    //     headless: false
-    // });
-    // const page = await puppeteerBrowser.newPage();
-    // await page.goto(listPageURL);
+async function getDynamicFilmListPageBody(puppeteerBrowser, listPageURL) {
     const page = await getPuppeteerPage(puppeteerBrowser, listPageURL);
     await page.setViewport({
         width: 1200,
         height: 800
     });
     await autoScroll(page);
-    const dynamicFilmListPageBody = await page.evaluate(() => document.body.innerHTML);
-    filmListPageDoc = parse(dynamicFilmListPageBody);
+    return await page.evaluate(() => document.body.innerHTML);
+}
+
+// NOTE: below two functions inspired by 
+// https://stackoverflow.com/questions/51529332/puppeteer-scroll-down-until-you-cant-anymore/53527984#53527984
+async function getFilmListPageDoc(puppeteerBrowser, listPageURL) {
+    const filmListPageBody = await getDynamicFilmListPageBody(puppeteerBrowser, listPageURL);
+    filmListPageDoc = parse(filmListPageBody);
     return filmListPageDoc;
 }
 
