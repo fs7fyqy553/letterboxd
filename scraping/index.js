@@ -56,6 +56,7 @@ async function getDynamicFilmListPageBody(puppeteerBrowser, listPageURL) {
         width: 1200,
         height: 800
     });
+    // NOTE: this is done because list in page is fully loaded upon scroll
     await autoScroll(page);
     return await page.evaluate(() => document.body.innerHTML);
 }
