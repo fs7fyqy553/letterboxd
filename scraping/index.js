@@ -1,3 +1,4 @@
+// TODO: rearrange the order of function definitions in this file
 const { parse } = require("node-html-parser");
 const puppeteer = require("puppeteer");
 const { scrollPageToBottom } = require("puppeteer-autoscroll-down");
