@@ -129,12 +129,15 @@ async function getDetailsObjectFromFilmPage(filmPageURL) {
     .then(([filmDetails, _]) => filmDetails);
 }
 
+function getLetterboxdURL(path) {
+    return "https://letterboxd.com" + path;
+}
+
 async function processFilmsOnListPage(filmListPageDoc, processor) {
     const filmAnchorNodeList = filmListPageDoc.querySelectorAll("#content > div > div > section > ul > li > div > div > a");
     filmAnchorNodeList.forEach((filmAnchorNode) => {
         const filmPagePath = filmAnchorNode.getAttribute("href");
-        const URL = "https://letterboxd.com" + filmPagePath;
-        processor(URL);
+        processor(getLetterboxdURL(filmPagePath));
     });
 }
 
@@ -144,8 +147,7 @@ async function getNextFilmListPageURL(filmListPageDoc) {
         return null;
     }
     const nextPagePath = nextPageAnchor.getAttribute("href");
-    const nextPageURL = "https://letterboxd.com" + nextPagePath;
-    return nextPageURL;
+    return getLetterboxdURL(nextPagePath);
 }
 
 async function processFilmsInList(firstListPageURL, processor) {
@@ -154,9 +156,9 @@ async function processFilmsInList(firstListPageURL, processor) {
     while (listPageURL !== null) {
         const filmListPageDoc = await getFilmListPageDoc(puppeteerBrowser, listPageURL);
         listPageURL = await processFilmsOnListPage(filmListPageDoc, processor)
-        .then(() => {
-            return getNextFilmListPageURL(filmListPageDoc);
-        });
+            .then(() => {
+                return getNextFilmListPageURL(filmListPageDoc);
+            });
     }
     puppeteerBrowser.close();
 }
