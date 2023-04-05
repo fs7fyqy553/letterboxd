@@ -1,5 +1,6 @@
 // TODO: clean flow of file:
 // 1. DONE First, clean up all variable and function names
+// 2. Make functions "single-purpose"
 // TODO: reconsider Promise.all statements
 
 const { parse } = require("node-html-parser");
@@ -8,11 +9,11 @@ const puppeteer = require("puppeteer");
 // TODO: clarify variable names
 
 // TODO: clean up below function
-async function getFilmPageDoc(URL) {
+async function getFilmPageDoc(filmPageURL) {
     try {
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
-        await page.goto(URL);
+        await page.goto(filmPageURL);
         const dynamicFilmPageHTML = await page.evaluate(() => document.body.innerHTML);
         filmPageDoc = parse(dynamicFilmPageHTML);
         return [filmPageDoc, browser];
