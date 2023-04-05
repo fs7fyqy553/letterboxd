@@ -1,12 +1,6 @@
-// TODO: clean flow of file:
-// 1. DONE First, clean up all variable and function names
-// 2. Make functions "single-purpose"
-// TODO: reconsider Promise.all statements
 const { parse } = require("node-html-parser");
 const puppeteer = require("puppeteer");
 const { scrollPageToBottom } = require("puppeteer-autoscroll-down");
-
-// TODO: clarify variable names
 
 async function getPuppeteerPage(puppeteerBrowser, pageURL) {
     const page = await puppeteerBrowser.newPage();
@@ -19,7 +13,6 @@ async function getDynamicFilmPageBody(puppeteerBrowser, filmPageURL) {
     return await page.evaluate(() => document.body.innerHTML);
 }
 
-// TODO: clean up below function
 async function getFilmPageDoc(puppeteerBrowser, filmPageURL) {
     try {
         const filmPageBody = await getDynamicFilmPageBody(puppeteerBrowser, filmPageURL);
@@ -32,13 +25,10 @@ async function getFilmPageDoc(puppeteerBrowser, filmPageURL) {
 async function getDynamicFilmListPageBody(puppeteerBrowser, listPageURL) {
     const page = await getPuppeteerPage(puppeteerBrowser, listPageURL);
     // NOTE: scrolling is done because list in page is fully loaded upon scroll
-    // await autoScroll(page);
     await scrollPageToBottom(page);
     return await page.evaluate(() => document.body.innerHTML);
 }
 
-// NOTE: below two functions inspired by 
-// https://stackoverflow.com/questions/51529332/puppeteer-scroll-down-until-you-cant-anymore/53527984#53527984
 async function getFilmListPageDoc(puppeteerBrowser, listPageURL) {
     const filmListPageBody = await getDynamicFilmListPageBody(puppeteerBrowser, listPageURL);
     filmListPageDoc = parse(filmListPageBody);
@@ -49,8 +39,6 @@ function checkIfAdult(filmPageDoc) {
     return !!filmPageDoc.querySelector(".-adult");
 }
 
-// NOTE: may not be necessary if the titles are already known in order to decide which 
-// webpages to scrape
 function getFilmTitle(filmPageDoc) {
     return filmPageDoc.querySelector(".headline-1").text;
 }
@@ -75,7 +63,6 @@ function getFilmPosterURL(filmPageDoc) {
     return filmPageDoc.querySelector("#poster-zoom > div > div > img").getAttribute("src");
 }
 
-// TODO: make below code more succinct
 function getFilmDetailsObject(filmPageDoc) {
     if (checkIfAdult(filmPageDoc) === true) {
         return null;
@@ -143,7 +130,7 @@ async function processFilmsInList(firstListPageURL, processor) {
 // TESTS
 // const url = "https://letterboxd.com/film/the-matrix/"
 // getDetailsObjectFromFilmPage(url).then(console.log);
-processFilmsInList(
-    "https://letterboxd.com/victorvdb/list/letterboxd-500-most-watched-movies-of-all/",
-    console.log
-);
+// processFilmsInList(
+//     "https://letterboxd.com/victorvdb/list/letterboxd-500-most-watched-movies-of-all/",
+//     console.log
+// );
