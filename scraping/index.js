@@ -78,7 +78,7 @@ function getFilmTitle(filmPageDoc) {
     return filmPageDoc.querySelector(".headline-1").text;
 }
 
-function getReleaseYear(filmPageDoc) {
+function getReleaseYearString(filmPageDoc) {
     return filmPageDoc.querySelector("[href^='/films/year/']").text;
 }
 
@@ -106,7 +106,7 @@ function getFilmDetailsObject(filmPageDoc) {
     try {
         return {
             filmTitle: getFilmTitle(filmPageDoc),
-            releaseYear: getReleaseYear(filmPageDoc),
+            releaseYearString: getReleaseYearString(filmPageDoc),
             directorNameArray: getDirectorNameArray(filmPageDoc),
             averageRatingString: getAverageRatingString(filmPageDoc),
             filmPosterURL: getFilmPosterURL(filmPageDoc),
