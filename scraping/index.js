@@ -84,6 +84,9 @@ function getReleaseYear(filmPageDoc) {
 
 function getDirectorNameArray(filmPageDoc) {
     const directorNodeList = filmPageDoc.querySelectorAll("[href^='/director/']>span");
+    if (directorNodeList.length === 0) {
+        throw new Error("Director data not read correctly");
+    }
     return directorNodeList.map((directorNode) => directorNode.text);
 }
 
