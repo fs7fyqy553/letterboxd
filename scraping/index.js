@@ -129,10 +129,4 @@ async function processFilmsInList(firstListPageURL, processor) {
     puppeteerBrowser.close();
 }
 
-// TESTS
-// const url = "https://letterboxd.com/film/the-matrix/"
-// getDetailsObjectFromFilmPage(url).then(console.log);
-// processFilmsInList(
-//     "https://letterboxd.com/victorvdb/list/letterboxd-500-most-watched-movies-of-all/",
-//     console.log
-// );
+module.exports = {getDetailsObjectFromFilmPage, processFilmsInList};
