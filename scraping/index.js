@@ -55,13 +55,10 @@ async function getFilmListPageDoc(listPageURL) {
         width: 1200,
         height: 800
     });
-
     await autoScroll(page);
-
-    const dynamicHTML = await page.evaluate(() => document.body.innerHTML);
-    dynamicPageDoc = parse(dynamicHTML);
-
-    return [dynamicPageDoc, browser];
+    const dynamicFilmListPageBody = await page.evaluate(() => document.body.innerHTML);
+    filmListPageDoc = parse(dynamicFilmListPageBody);
+    return [filmListPageDoc, browser];
 }
 
 function checkIfAdult(filmPageDoc) {
