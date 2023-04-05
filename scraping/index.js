@@ -52,10 +52,10 @@ async function autoScroll(page){
 
 // NOTE: below two functions inspired by 
 // https://stackoverflow.com/questions/51529332/puppeteer-scroll-down-until-you-cant-anymore/53527984#53527984
-async function getFilmListPageDoc(listPageURL) {
-    const puppeteerBrowser = await puppeteer.launch({
-        headless: false
-    });
+async function getFilmListPageDoc(puppeteerBrowser, listPageURL) {
+    // const puppeteerBrowser = await puppeteer.launch({
+    //     headless: false
+    // });
     const page = await puppeteerBrowser.newPage();
     await page.goto(listPageURL);
     await page.setViewport({
@@ -65,7 +65,7 @@ async function getFilmListPageDoc(listPageURL) {
     await autoScroll(page);
     const dynamicFilmListPageBody = await page.evaluate(() => document.body.innerHTML);
     filmListPageDoc = parse(dynamicFilmListPageBody);
-    return [filmListPageDoc, puppeteerBrowser];
+    return filmListPageDoc;
 }
 
 function checkIfAdult(filmPageDoc) {
@@ -153,7 +153,11 @@ async function getNextFilmListPageURL(filmListPageDoc) {
 async function processFilmsInList(firstListPageURL, processor) {
     let listPageURL = firstListPageURL;
     while (URL !== null) {
-        const [filmListPageDoc, puppeteerBrowser] = await getFilmListPageDoc(listPageURL);
+        // TODO: consider doing this before while loop (setting up the browser) and closing it afterwards
+        const puppeteerBrowser = await puppeteer.launch({
+            headless: false
+        });
+        const filmListPageDoc = await getFilmListPageDoc(puppeteerBrowser, listPageURL);
         listPageURL = await Promise.all(
             [
                 processFilmsOnListPage(filmListPageDoc, processor),
@@ -167,9 +171,9 @@ async function processFilmsInList(firstListPageURL, processor) {
 }
 
 // TESTS
-const url = "https://letterboxd.com/film/the-matrix/"
-getDetailsObjectFromFilmPage(url).then(console.log);
-// processFilmsInList(
-//     "https://letterboxd.com/victorvdb/list/letterboxd-500-most-watched-movies-of-all/",
-//     console.log
-// );
+// const url = "https://letterboxd.com/film/the-matrix/"
+// getDetailsObjectFromFilmPage(url).then(console.log);
+processFilmsInList(
+    "https://letterboxd.com/victorvdb/list/letterboxd-500-most-watched-movies-of-all/",
+    console.log
+);
