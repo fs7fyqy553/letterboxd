@@ -56,8 +56,9 @@ async function getFilmListPageDoc(puppeteerBrowser, listPageURL) {
     // const puppeteerBrowser = await puppeteer.launch({
     //     headless: false
     // });
-    const page = await puppeteerBrowser.newPage();
-    await page.goto(listPageURL);
+    // const page = await puppeteerBrowser.newPage();
+    // await page.goto(listPageURL);
+    const page = await getPuppeteerPage(puppeteerBrowser, listPageURL);
     await page.setViewport({
         width: 1200,
         height: 800
@@ -164,9 +165,9 @@ async function processFilmsInList(firstListPageURL, processor) {
 }
 
 // TESTS
-const url = "https://letterboxd.com/film/the-matrix/"
-getDetailsObjectFromFilmPage(url).then(console.log);
-// processFilmsInList(
-//     "https://letterboxd.com/victorvdb/list/letterboxd-500-most-watched-movies-of-all/",
-//     console.log
-// );
+// const url = "https://letterboxd.com/film/the-matrix/"
+// getDetailsObjectFromFilmPage(url).then(console.log);
+processFilmsInList(
+    "https://letterboxd.com/victorvdb/list/letterboxd-500-most-watched-movies-of-all/",
+    console.log
+);
