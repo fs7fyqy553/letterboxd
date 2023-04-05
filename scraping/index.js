@@ -8,9 +8,14 @@ const puppeteer = require("puppeteer");
 
 // TODO: clarify variable names
 
-async function getDynamicFilmPageBody(browser, filmPageURL) {
+async function setupHeadlessPuppeteerPage(browser, filmPageURL) {
     const page = await browser.newPage();
     await page.goto(filmPageURL);
+    return page;
+}
+
+async function getDynamicFilmPageBody(browser, filmPageURL) {
+    const page = await setupHeadlessPuppeteerPage(browser, filmPageURL);
     const dynamicFilmPageBody = await page.evaluate(() => document.body.innerHTML);
     return dynamicFilmPageBody;
 }
