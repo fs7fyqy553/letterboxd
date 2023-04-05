@@ -149,23 +149,16 @@ async function getNextFilmListPageURL(filmListPageDoc) {
 }
 
 async function processFilmsInList(firstListPageURL, processor) {
+    const puppeteerBrowser = await puppeteer.launch({headless: false});
     let listPageURL = firstListPageURL;
     while (listPageURL !== null) {
-        // TODO: consider doing this before while loop (setting up the browser) and closing it afterwards
-        const puppeteerBrowser = await puppeteer.launch({
-            headless: false
-        });
         const filmListPageDoc = await getFilmListPageDoc(puppeteerBrowser, listPageURL);
-        listPageURL = await Promise.all(
-            [
-                processFilmsOnListPage(filmListPageDoc, processor),
-                puppeteerBrowser.close(),
-            ]
-        )
+        listPageURL = await processFilmsOnListPage(filmListPageDoc, processor)
         .then(() => {
             return getNextFilmListPageURL(filmListPageDoc);
         });
     }
+    puppeteerBrowser.close();
 }
 
 // TESTS
