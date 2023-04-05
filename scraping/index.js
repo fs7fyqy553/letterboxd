@@ -2,9 +2,9 @@
 // 1. DONE First, clean up all variable and function names
 // 2. Make functions "single-purpose"
 // TODO: reconsider Promise.all statements
-
 const { parse } = require("node-html-parser");
 const puppeteer = require("puppeteer");
+const { scrollPageToBottom } = require("puppeteer-autoscroll-down");
 
 // TODO: clarify variable names
 
@@ -29,31 +29,11 @@ async function getFilmPageDoc(puppeteerBrowser, filmPageURL) {
     }
 }
 
-// TODO: clean up all of this too; in fact, consider moving it to another file
-// TODO: consider replacing the below with https://www.npmjs.com/package/puppeteer-autoscroll-down
-async function autoScroll(page){
-    await page.evaluate(async () => {
-        await new Promise((resolve) => {
-            let totalHeight = 0;
-            const distance = 100;
-            const timer = setInterval(() => {
-                const scrollHeight = document.body.scrollHeight;
-                window.scrollBy(0, distance);
-                totalHeight += distance;
-
-                if(totalHeight >= scrollHeight - window.innerHeight){
-                    clearInterval(timer);
-                    resolve();
-                }
-            }, 100);
-        });
-    });
-}
-
 async function getDynamicFilmListPageBody(puppeteerBrowser, listPageURL) {
     const page = await getPuppeteerPage(puppeteerBrowser, listPageURL);
     // NOTE: scrolling is done because list in page is fully loaded upon scroll
-    await autoScroll(page);
+    // await autoScroll(page);
+    await scrollPageToBottom(page);
     return await page.evaluate(() => document.body.innerHTML);
 }
 

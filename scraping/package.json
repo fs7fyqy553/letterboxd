@@ -10,6 +10,7 @@
   "license": "ISC",
   "devDependencies": {
     "node-html-parser": "^6.1.5",
-    "puppeteer": "^19.8.3"
+    "puppeteer": "^19.8.3",
+    "puppeteer-autoscroll-down": "^1.1.2"
   }
 }
