@@ -23,6 +23,7 @@ async function getFilmPageDoc(filmPageURL) {
 }
 
 // TODO: clean up all of this too; in fact, consider moving it to another file
+// TODO: consider replacing the below with https://www.npmjs.com/package/puppeteer-autoscroll-down
 async function autoScroll(page){
     await page.evaluate(async () => {
         await new Promise((resolve) => {
