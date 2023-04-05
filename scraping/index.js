@@ -145,7 +145,6 @@ async function getNextFilmListPageURL(filmListPageDoc) {
         const nextPageURL = "https://letterboxd.com" + nextPagePath;
         return nextPageURL;
     } catch(err) {
-        console.error(err);
         return null;
     }
 }
