@@ -152,7 +152,7 @@ async function getNextFilmListPageURL(filmListPageDoc) {
 
 async function processFilmsInList(firstListPageURL, processor) {
     let listPageURL = firstListPageURL;
-    while (URL !== null) {
+    while (listPageURL !== null) {
         // TODO: consider doing this before while loop (setting up the browser) and closing it afterwards
         const puppeteerBrowser = await puppeteer.launch({
             headless: false
