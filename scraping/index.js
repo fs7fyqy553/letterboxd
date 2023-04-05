@@ -139,14 +139,13 @@ async function processFilmsOnListPage(filmListPageDoc, processor) {
 }
 
 async function getNextFilmListPageURL(filmListPageDoc) {
-    try {
-        const nextPageAnchor = filmListPageDoc.querySelector("#content > div > div > section > div.pagination > div:nth-child(2) > a");
-        const nextPagePath = nextPageAnchor.getAttribute("href");
-        const nextPageURL = "https://letterboxd.com" + nextPagePath;
-        return nextPageURL;
-    } catch(err) {
+    const nextPageAnchor = filmListPageDoc.querySelector("#content > div > div > section > div.pagination > div:nth-child(2) > a");
+    if (nextPageAnchor === null) {
         return null;
     }
+    const nextPagePath = nextPageAnchor.getAttribute("href");
+    const nextPageURL = "https://letterboxd.com" + nextPagePath;
+    return nextPageURL;
 }
 
 async function processFilmsInList(firstListPageURL, processor) {
