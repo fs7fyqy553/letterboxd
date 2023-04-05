@@ -27,10 +27,10 @@ async function getFilmPageDoc(filmPageURL) {
 async function autoScroll(page){
     await page.evaluate(async () => {
         await new Promise((resolve) => {
-            var totalHeight = 0;
-            var distance = 100;
-            var timer = setInterval(() => {
-                var scrollHeight = document.body.scrollHeight;
+            let totalHeight = 0;
+            const distance = 100;
+            const timer = setInterval(() => {
+                const scrollHeight = document.body.scrollHeight;
                 window.scrollBy(0, distance);
                 totalHeight += distance;
 
@@ -164,7 +164,7 @@ async function processFilmsInList(firstListPageURL, processor) {
 // TESTS
 // const url = "https://letterboxd.com/film/the-matrix/"
 // getDetailsObjectFromFilmPage(url).then(console.log);
-// processFilmsInList(
-//     "https://letterboxd.com/victorvdb/list/letterboxd-500-most-watched-movies-of-all/",
-//     console.log
-// );
+processFilmsInList(
+    "https://letterboxd.com/victorvdb/list/letterboxd-500-most-watched-movies-of-all/",
+    console.log
+);
