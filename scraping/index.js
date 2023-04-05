@@ -14,8 +14,8 @@ async function getFilmPageDoc(filmPageURL) {
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
         await page.goto(filmPageURL);
-        const dynamicFilmPageHTML = await page.evaluate(() => document.body.innerHTML);
-        filmPageDoc = parse(dynamicFilmPageHTML);
+        const dynamicFilmPageBody = await page.evaluate(() => document.body.innerHTML);
+        filmPageDoc = parse(dynamicFilmPageBody);
         return [filmPageDoc, browser];
     } catch(err) {
         throw err;
