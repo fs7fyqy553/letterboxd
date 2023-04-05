@@ -100,22 +100,17 @@ function getFilmDetailsObject(filmPageDoc) {
     if (checkIfAdult(filmPageDoc) === true) {
         return null;
     }
-    let obj = {
-        filmTitle: getFilmTitle,
-        releaseYear: getReleaseYear,
-        directorNames: getDirectorNameArray,
-        averageRatingString: getAverageRatingString,
-        filmPosterURL: getFilmPosterURL,
-    };
-    try { 
-        for (const [detailName, detailExtractor] of Object.entries(obj)) {
-            detail = detailExtractor(filmPageDoc);
-            obj[detailName] = detail;
+    try {
+        return {
+            filmTitle: getFilmTitle(filmPageDoc),
+            releaseYear: getReleaseYear(filmPageDoc),
+            directorNameArray: getDirectorNameArray(filmPageDoc),
+            averageRatingString: getAverageRatingString(filmPageDoc),
+            filmPosterURL: getFilmPosterURL(filmPageDoc),
         }
     } catch(err) {
-        obj = null;
+        return null;
     }
-    return obj;
 }
 
 async function getDetailsObjectFromFilmPage(filmPageURL) {
