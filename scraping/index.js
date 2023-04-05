@@ -1,4 +1,5 @@
-// TODO: clean flow of file
+// TODO: clean flow of file:
+// 1. DONE First, clean up all variable and function names
 // TODO: reconsider Promise.all statements
 
 const { parse } = require("node-html-parser");
@@ -7,14 +8,14 @@ const puppeteer = require("puppeteer");
 // TODO: clarify variable names
 
 // TODO: clean up below function
-async function getDynamicPageDoc(URL) {
+async function getFilmPageDoc(URL) {
     try {
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
         await page.goto(URL);
-        const dynamicHTML = await page.evaluate(() => document.body.innerHTML);
-        dynamicPageDoc = parse(dynamicHTML);
-        return [dynamicPageDoc, browser];
+        const dynamicFilmPageHTML = await page.evaluate(() => document.body.innerHTML);
+        filmPageDoc = parse(dynamicFilmPageHTML);
+        return [filmPageDoc, browser];
     } catch(err) {
         throw err;
     }
@@ -42,12 +43,12 @@ async function autoScroll(page){
 
 // NOTE: below two functions inspired by 
 // https://stackoverflow.com/questions/51529332/puppeteer-scroll-down-until-you-cant-anymore/53527984#53527984
-async function getDynamicListPageDoc(URL) {
+async function getFilmListPageDoc(listPageURL) {
     const browser = await puppeteer.launch({
         headless: false
     });
     const page = await browser.newPage();
-    await page.goto(URL);
+    await page.goto(listPageURL);
     await page.setViewport({
         width: 1200,
         height: 800
@@ -61,45 +62,48 @@ async function getDynamicListPageDoc(URL) {
     return [dynamicPageDoc, browser];
 }
 
-function checkIfAdult(letterboxdFilmPageDoc) {
-    return !!letterboxdFilmPageDoc.querySelector(".-adult");
+function checkIfAdult(filmPageDoc) {
+    return !!filmPageDoc.querySelector(".-adult");
 }
 
 // NOTE: may not be necessary if the titles are already known in order to decide which 
 // webpages to scrape
-function getFilmTitle(letterboxdFilmPageDoc) {
-    return letterboxdFilmPageDoc.querySelector(".headline-1").text;
+function getFilmTitle(filmPageDoc) {
+    return filmPageDoc.querySelector(".headline-1").text;
 }
 
-function getReleaseYear(letterboxdFilmPageDoc) {
-    return letterboxdFilmPageDoc.querySelector("[href^='/films/year/']").text;
+function getReleaseYear(filmPageDoc) {
+    return filmPageDoc.querySelector("[href^='/films/year/']").text;
 }
 
-function getDirectorNameArray(letterboxdFilmPageDoc) {
-    const directorNodes = letterboxdFilmPageDoc.querySelectorAll("[href^='/director/']>span");
-    return directorNodes.map((element) => element.text);
+function getDirectorNameArray(filmPageDoc) {
+    const directorNodeList = filmPageDoc.querySelectorAll("[href^='/director/']>span");
+    return directorNodeList.map((directorNode) => directorNode.text);
 }
 
-function getAverageRating(letterboxdFilmPageDoc) {
-    return letterboxdFilmPageDoc.querySelector(".display-rating").text;
+function getAverageRatingString(filmPageDoc) {
+    return filmPageDoc.querySelector(".display-rating").text;
 }
 
-function getFilmPosterURL(letterboxdFilmPageDoc) {
-    return letterboxdFilmPageDoc.querySelector("#poster-zoom > div > div > img").getAttribute("src");
+function getFilmPosterURL(filmPageDoc) {
+    return filmPageDoc.querySelector("#poster-zoom > div > div > img").getAttribute("src");
 }
 
 // TODO: make below code more succinct
-function makeFilmDetailsObject(letterboxdFilmPageDoc) {
+function getFilmDetailsObject(filmPageDoc) {
+    if (checkIfAdult(filmPageDoc) === true) {
+        return null;
+    }
     let obj = {
         filmTitle: getFilmTitle,
         releaseYear: getReleaseYear,
         directorNames: getDirectorNameArray,
-        averageRating: getAverageRating,
+        averageRatingString: getAverageRatingString,
         filmPosterURL: getFilmPosterURL,
     };
     try { 
-        for (const [detailName, extractor] of Object.entries(obj)) {
-            detail = extractor(letterboxdFilmPageDoc);
+        for (const [detailName, detailExtractor] of Object.entries(obj)) {
+            detail = detailExtractor(filmPageDoc);
             obj[detailName] = detail;
         }
     } catch(err) {
@@ -108,37 +112,29 @@ function makeFilmDetailsObject(letterboxdFilmPageDoc) {
     return obj;
 }
 
-function extractFilmDetails(letterboxdFilmPageDoc) {
-    if (checkIfAdult(letterboxdFilmPageDoc) === true) {
-        return null;
-    } else {
-        return makeFilmDetailsObject(letterboxdFilmPageDoc);
-    }
-}
-
-async function getFilmDetails(letterboxdFilmURL) {
-    const [letterboxdFilmPageDoc, browser] = await getDynamicPageDoc(letterboxdFilmURL);
+async function getDetailsObjectFromFilmPage(filmPageURL) {
+    const [filmPageDoc, browser] = await getFilmPageDoc(filmPageURL);
     return Promise.all(
         [
-            extractFilmDetails(letterboxdFilmPageDoc),
+            getFilmDetailsObject(filmPageDoc),
             browser.close()
         ]
     )
     .then(([filmDetails, _]) => filmDetails);
 }
 
-async function processFilmsOnPage(letterboxdFilmPageDoc, processorCallback) {
-    const filmLinkNodeList = letterboxdFilmPageDoc.querySelectorAll("#content > div > div > section > ul > li > div > div > a");
-    const letterboxdFilmURLArray = filmLinkNodeList.map((element) => {
-        const filmPath = element.getAttribute("href");
-        const URL = "https://letterboxd.com" + filmPath;
-        processorCallback(URL);
+async function processFilmsOnListPage(filmListPageDoc, processor) {
+    const filmAnchorNodeList = filmListPageDoc.querySelectorAll("#content > div > div > section > ul > li > div > div > a");
+    filmAnchorNodeList.forEach((filmAnchorNode) => {
+        const filmPagePath = filmAnchorNode.getAttribute("href");
+        const URL = "https://letterboxd.com" + filmPagePath;
+        processor(URL);
     });
 }
 
-async function getNextPageURL(letterboxdListPageDoc) {
+async function getNextFilmListPageURL(filmListPageDoc) {
     try {
-        const nextPageAnchor = letterboxdListPageDoc.querySelector("#content > div > div > section > div.pagination > div:nth-child(2) > a");
+        const nextPageAnchor = filmListPageDoc.querySelector("#content > div > div > section > div.pagination > div:nth-child(2) > a");
         const nextPagePath = nextPageAnchor.getAttribute("href");
         const nextPageURL = "https://letterboxd.com" + nextPagePath;
         return nextPageURL;
@@ -147,25 +143,26 @@ async function getNextPageURL(letterboxdListPageDoc) {
     }
 }
 
-async function processFilmList(URL, processorCallback) {
+async function processFilmsInList(firstListPageURL, processor) {
+    let listPageURL = firstListPageURL;
     while (URL !== null) {
-        const [letterboxdListPageDoc, browser] = await getDynamicListPageDoc(URL);
-        URL = await Promise.all(
+        const [filmListPageDoc, browser] = await getFilmListPageDoc(listPageURL);
+        listPageURL = await Promise.all(
             [
-                processFilmsOnPage(letterboxdListPageDoc, processorCallback),
+                processFilmsOnListPage(filmListPageDoc, processor),
                 browser.close(),
             ]
         )
         .then(() => {
-            return getNextPageURL(letterboxdListPageDoc);
+            return getNextFilmListPageURL(filmListPageDoc);
         });
     }
 }
 
-// TEST
+// TESTS
 // const url = "https://letterboxd.com/film/the-matrix/"
-// getFilmDetails(url).then(console.log);
-processFilmList(
-    "https://letterboxd.com/victorvdb/list/letterboxd-500-most-watched-movies-of-all/",
-    console.log
-);
+// getDetailsObjectFromFilmPage(url).then(console.log);
+// processFilmsInList(
+//     "https://letterboxd.com/victorvdb/list/letterboxd-500-most-watched-movies-of-all/",
+//     console.log
+// );
