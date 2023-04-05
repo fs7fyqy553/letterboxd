@@ -1,5 +1,6 @@
 // TODO: rearrange the order of function definitions in this file
 // TODO: consider opening the browser just once for all film pages
+// TODO: lint and format file
 const { parse } = require("node-html-parser");
 const puppeteer = require("puppeteer");
 const { scrollPageToBottom } = require("puppeteer-autoscroll-down");
