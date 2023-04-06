@@ -1,5 +1,7 @@
+require("dotenv").config();
 const express = require('express');
 const logger = require('morgan');
+require("./mongoConfig");
 
 const app = express();
 
