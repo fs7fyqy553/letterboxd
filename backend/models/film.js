@@ -9,4 +9,4 @@ const FilmSchema = new Schema({
     filmPosterURL: {type: String, required: true},
 });
 
-module.exports = mongoose.model("Film", FilmSchema);
+module.exports = model("Film", FilmSchema);
