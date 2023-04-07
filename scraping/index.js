@@ -78,9 +78,13 @@ function getLetterboxdURL(path) {
 }
 
 async function processListedFilm(filmAnchorNode, filmPuppeteerPage, processor) {
-    const filmPagePath = filmAnchorNode.getAttribute("href");
-    const filmDetailsObject = await getDetailsObjectFromFilmPage(filmPuppeteerPage, getLetterboxdURL(filmPagePath));
-    processor(filmDetailsObject);
+    try {
+        const filmPagePath = filmAnchorNode.getAttribute("href");
+        const filmDetailsObject = await getDetailsObjectFromFilmPage(filmPuppeteerPage, getLetterboxdURL(filmPagePath));
+        await processor(filmDetailsObject);
+    } catch(err) {
+        throw err;
+    }
 }
 
 async function processFilmsOnListPage(filmListPageDoc, filmPuppeteerPage, processor) {
