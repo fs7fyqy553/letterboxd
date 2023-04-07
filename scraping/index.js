@@ -33,9 +33,7 @@ function checkIfAdult(filmPageDoc) {
 }
 
 function getFilmDetailsObject(filmPageDoc) {
-    if (checkIfAdult(filmPageDoc) === true) {
-        return null;
-    }
+    if (checkIfAdult(filmPageDoc) === true) {return null;}
     try {
         return {
             filmTitle: getFilmTitle(filmPageDoc),
@@ -121,10 +119,8 @@ async function processFilmsInList(firstListPageURL, processor) {
     let listPageURL = firstListPageURL;
     while (listPageURL !== null) {
         const filmListPageDoc = await getFilmListPageDoc(puppeteerBrowser, listPageURL);
-        listPageURL = await processFilmsOnListPage(filmListPageDoc, processor)
-            .then(() => {
-                return getNextFilmListPageURL(filmListPageDoc);
-            });
+        await processFilmsOnListPage(filmListPageDoc, processor);
+        listPageURL = await getNextFilmListPageURL(filmListPageDoc);
     }
     puppeteerBrowser.close();
 }
