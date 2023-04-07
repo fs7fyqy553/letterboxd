@@ -108,17 +108,17 @@ async function getDynamicFilmListPageBody(puppeteerPage, listPageURL) {
     return await getInnerHTMLFromPage(puppeteerPage);
 }
 
-async function getFilmListPageDoc(puppeteerPage, listPageURL) {
-    const filmListPageBody = await getDynamicFilmListPageBody(puppeteerPage, listPageURL);
+async function getFilmListPageDoc(filmListPuppeteerPage, listPageURL) {
+    const filmListPageBody = await getDynamicFilmListPageBody(filmListPuppeteerPage, listPageURL);
     filmListPageDoc = parse(filmListPageBody);
     return filmListPageDoc;
 }
 
 async function processFilmsInListStartingAt(listPageURL, processor) {
     const puppeteerBrowser = await puppeteer.launch({headless: false});
-    const puppeteerPage = await puppeteerBrowser.newPage();
+    const filmListPuppeteerPage = await puppeteerBrowser.newPage();
     while (listPageURL !== null) {
-        const filmListPageDoc = await getFilmListPageDoc(puppeteerPage, listPageURL);
+        const filmListPageDoc = await getFilmListPageDoc(filmListPuppeteerPage, listPageURL);
         await processFilmsOnListPage(filmListPageDoc, processor);
         listPageURL = await getNextFilmListPageURL(filmListPageDoc);
     }
