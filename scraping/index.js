@@ -81,7 +81,10 @@ async function processListedFilm(filmAnchorNode, filmPuppeteerPage, processor) {
     try {
         const filmPagePath = filmAnchorNode.getAttribute("href");
         const filmDetailsObject = await getDetailsObjectFromFilmPage(filmPuppeteerPage, getLetterboxdURL(filmPagePath));
-        await processor(filmDetailsObject);
+        // TODO: ensure this conditional doesn't cause issues
+        if (filmDetailsObject !== null) {
+            await processor(filmDetailsObject);
+        }
     } catch(err) {
         throw err;
     }
