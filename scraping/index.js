@@ -49,6 +49,12 @@ function getFilmDetailsObject(filmPageDoc) {
     }
 }
 
+async function getPuppeteerPage(puppeteerBrowser, pageURL) {
+    const page = await puppeteerBrowser.newPage();
+    await page.goto(pageURL);
+    return page;
+}
+
 async function getDynamicFilmPageBody(puppeteerBrowser, filmPageURL) {
     const page = await getPuppeteerPage(puppeteerBrowser, filmPageURL);
     return await getInnerHTMLFromPage(page);
@@ -91,12 +97,6 @@ function processListedFilm(filmAnchorNode, processor) {
 async function processFilmsOnListPage(filmListPageDoc, processor) {
     const filmAnchorNodeList = filmListPageDoc.querySelectorAll("#content > div > div > section > ul > li > div > div > a");
     filmAnchorNodeList.forEach((filmAnchorNode) => processListedFilm(filmAnchorNode, processor));
-}
-
-async function getPuppeteerPage(puppeteerBrowser, pageURL) {
-    const page = await puppeteerBrowser.newPage();
-    await page.goto(pageURL);
-    return page;
 }
 
 async function getInnerHTMLFromPage(puppeteerPage) {
