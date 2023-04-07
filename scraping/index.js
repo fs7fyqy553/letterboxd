@@ -1,53 +1,15 @@
-// TODO: rearrange the order of function definitions in this file
 // TODO: consider opening the browser just once for all film pages
 // TODO: lint and format file
 const { parse } = require("node-html-parser");
 const puppeteer = require("puppeteer");
 const { scrollPageToBottom } = require("puppeteer-autoscroll-down");
 
-async function getPuppeteerPage(puppeteerBrowser, pageURL) {
-    const page = await puppeteerBrowser.newPage();
-    await page.goto(pageURL);
-    return page;
+function getFilmPosterURL(filmPageDoc) {
+    return filmPageDoc.querySelector("#poster-zoom > div > div > img").getAttribute("src");
 }
 
-async function getDynamicFilmPageBody(puppeteerBrowser, filmPageURL) {
-    const page = await getPuppeteerPage(puppeteerBrowser, filmPageURL);
-    return await page.evaluate(() => document.body.innerHTML);
-}
-
-async function getFilmPageDoc(puppeteerBrowser, filmPageURL) {
-    try {
-        const filmPageBody = await getDynamicFilmPageBody(puppeteerBrowser, filmPageURL);
-        return parse(filmPageBody);
-    } catch(err) {
-        throw err;
-    }
-}
-
-async function getDynamicFilmListPageBody(puppeteerBrowser, listPageURL) {
-    const page = await getPuppeteerPage(puppeteerBrowser, listPageURL);
-    // NOTE: scrolling is done because list in page is fully loaded upon scroll
-    await scrollPageToBottom(page);
-    return await page.evaluate(() => document.body.innerHTML);
-}
-
-async function getFilmListPageDoc(puppeteerBrowser, listPageURL) {
-    const filmListPageBody = await getDynamicFilmListPageBody(puppeteerBrowser, listPageURL);
-    filmListPageDoc = parse(filmListPageBody);
-    return filmListPageDoc;
-}
-
-function checkIfAdult(filmPageDoc) {
-    return !!filmPageDoc.querySelector(".-adult");
-}
-
-function getFilmTitle(filmPageDoc) {
-    return filmPageDoc.querySelector(".headline-1").text;
-}
-
-function getReleaseYearString(filmPageDoc) {
-    return filmPageDoc.querySelector("[href^='/films/year/']").text;
+function getAverageRatingString(filmPageDoc) {
+    return filmPageDoc.querySelector(".display-rating").text;
 }
 
 function getDirectorNameArray(filmPageDoc) {
@@ -58,12 +20,16 @@ function getDirectorNameArray(filmPageDoc) {
     return directorNodeList.map((directorNode) => directorNode.text);
 }
 
-function getAverageRatingString(filmPageDoc) {
-    return filmPageDoc.querySelector(".display-rating").text;
+function getReleaseYearString(filmPageDoc) {
+    return filmPageDoc.querySelector("[href^='/films/year/']").text;
 }
 
-function getFilmPosterURL(filmPageDoc) {
-    return filmPageDoc.querySelector("#poster-zoom > div > div > img").getAttribute("src");
+function getFilmTitle(filmPageDoc) {
+    return filmPageDoc.querySelector(".headline-1").text;
+}
+
+function checkIfAdult(filmPageDoc) {
+    return !!filmPageDoc.querySelector(".-adult");
 }
 
 function getFilmDetailsObject(filmPageDoc) {
@@ -84,6 +50,20 @@ function getFilmDetailsObject(filmPageDoc) {
     }
 }
 
+async function getDynamicFilmPageBody(puppeteerBrowser, filmPageURL) {
+    const page = await getPuppeteerPage(puppeteerBrowser, filmPageURL);
+    return await page.evaluate(() => document.body.innerHTML);
+}
+
+async function getFilmPageDoc(puppeteerBrowser, filmPageURL) {
+    try {
+        const filmPageBody = await getDynamicFilmPageBody(puppeteerBrowser, filmPageURL);
+        return parse(filmPageBody);
+    } catch(err) {
+        throw err;
+    }
+}
+
 async function getDetailsObjectFromFilmPage(filmPageURL) {
     const puppeteerBrowser = await puppeteer.launch();
     const filmPageDoc = await getFilmPageDoc(puppeteerBrowser, filmPageURL);
@@ -94,6 +74,15 @@ async function getDetailsObjectFromFilmPage(filmPageURL) {
         ]
     )
     .then(([filmDetails, _]) => filmDetails);
+}
+
+async function getNextFilmListPageURL(filmListPageDoc) {
+    const nextPageAnchor = filmListPageDoc.querySelector("#content > div > div > section > div.pagination > div:nth-child(2) > a");
+    if (nextPageAnchor === null) {
+        return null;
+    }
+    const nextPagePath = nextPageAnchor.getAttribute("href");
+    return getLetterboxdURL(nextPagePath);
 }
 
 function getLetterboxdURL(path) {
@@ -108,13 +97,23 @@ async function processFilmsOnListPage(filmListPageDoc, processor) {
     });
 }
 
-async function getNextFilmListPageURL(filmListPageDoc) {
-    const nextPageAnchor = filmListPageDoc.querySelector("#content > div > div > section > div.pagination > div:nth-child(2) > a");
-    if (nextPageAnchor === null) {
-        return null;
-    }
-    const nextPagePath = nextPageAnchor.getAttribute("href");
-    return getLetterboxdURL(nextPagePath);
+async function getPuppeteerPage(puppeteerBrowser, pageURL) {
+    const page = await puppeteerBrowser.newPage();
+    await page.goto(pageURL);
+    return page;
+}
+
+async function getDynamicFilmListPageBody(puppeteerBrowser, listPageURL) {
+    const page = await getPuppeteerPage(puppeteerBrowser, listPageURL);
+    // NOTE: scrolling is done because list in page is fully loaded upon scroll
+    await scrollPageToBottom(page);
+    return await page.evaluate(() => document.body.innerHTML);
+}
+
+async function getFilmListPageDoc(puppeteerBrowser, listPageURL) {
+    const filmListPageBody = await getDynamicFilmListPageBody(puppeteerBrowser, listPageURL);
+    filmListPageDoc = parse(filmListPageBody);
+    return filmListPageDoc;
 }
 
 async function processFilmsInList(firstListPageURL, processor) {
