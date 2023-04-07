@@ -122,4 +122,4 @@ async function processFilmsInListStartingAt(listPageURL, processor) {
     filmPuppeteerBrowser.close();
 }
 
-module.exports = {getDetailsObjectFromFilmPage, processFilmsInListStartingAt};
+module.exports = {processFilmsInListStartingAt};
