@@ -66,19 +66,14 @@ async function getDetailsObjectFromFilmPage(filmPageURL) {
     const puppeteerBrowser = await puppeteer.launch();
     const filmPageDoc = await getFilmPageDoc(puppeteerBrowser, filmPageURL);
     return Promise.all(
-        [
-            getFilmDetailsObject(filmPageDoc),
-            puppeteerBrowser.close()
-        ]
+        [getFilmDetailsObject(filmPageDoc), puppeteerBrowser.close()]
     )
     .then(([filmDetails, _]) => filmDetails);
 }
 
 async function getNextFilmListPageURL(filmListPageDoc) {
     const nextPageAnchor = filmListPageDoc.querySelector("#content > div > div > section > div.pagination > div:nth-child(2) > a");
-    if (nextPageAnchor === null) {
-        return null;
-    }
+    if (nextPageAnchor === null) {return null;}
     const nextPagePath = nextPageAnchor.getAttribute("href");
     return getLetterboxdURL(nextPagePath);
 }
