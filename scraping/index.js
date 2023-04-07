@@ -87,12 +87,14 @@ function getLetterboxdURL(path) {
     return "https://letterboxd.com" + path;
 }
 
+function processListedFilm(filmAnchorNode, processor) {
+    const filmPagePath = filmAnchorNode.getAttribute("href");
+    processor(getLetterboxdURL(filmPagePath));
+}
+
 async function processFilmsOnListPage(filmListPageDoc, processor) {
     const filmAnchorNodeList = filmListPageDoc.querySelectorAll("#content > div > div > section > ul > li > div > div > a");
-    filmAnchorNodeList.forEach((filmAnchorNode) => {
-        const filmPagePath = filmAnchorNode.getAttribute("href");
-        processor(getLetterboxdURL(filmPagePath));
-    });
+    filmAnchorNodeList.forEach((filmAnchorNode) => processListedFilm(filmAnchorNode, processor));
 }
 
 async function getPuppeteerPage(puppeteerBrowser, pageURL) {
