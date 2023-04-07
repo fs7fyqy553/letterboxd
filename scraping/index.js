@@ -50,7 +50,7 @@ function getFilmDetailsObject(filmPageDoc) {
 
 async function getDynamicFilmPageBody(puppeteerBrowser, filmPageURL) {
     const page = await getPuppeteerPage(puppeteerBrowser, filmPageURL);
-    return await page.evaluate(() => document.body.innerHTML);
+    return await getInnerHTMLFromPage(page);
 }
 
 async function getFilmPageDoc(puppeteerBrowser, filmPageURL) {
@@ -103,11 +103,15 @@ async function getPuppeteerPage(puppeteerBrowser, pageURL) {
     return page;
 }
 
+async function getInnerHTMLFromPage(puppeteerPage) {
+    return await puppeteerPage.evaluate(() => document.body.innerHTML)
+}
+
 async function getDynamicFilmListPageBody(puppeteerBrowser, listPageURL) {
     const page = await getPuppeteerPage(puppeteerBrowser, listPageURL);
     // NOTE: scrolling is done because list in page is fully loaded upon scroll
     await scrollPageToBottom(page);
-    return await page.evaluate(() => document.body.innerHTML);
+    return await getInnerHTMLFromPage(page);
 }
 
 async function getFilmListPageDoc(puppeteerBrowser, listPageURL) {
