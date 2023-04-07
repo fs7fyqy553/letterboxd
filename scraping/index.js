@@ -50,14 +50,14 @@ function getFilmDetailsObject(filmPageDoc) {
 }
 
 async function getPuppeteerPage(puppeteerBrowser, pageURL) {
-    const page = await puppeteerBrowser.newPage();
-    await page.goto(pageURL);
-    return page;
+    const puppeteerPage = await puppeteerBrowser.newPage();
+    await puppeteerPage.goto(pageURL);
+    return puppeteerPage;
 }
 
 async function getDynamicFilmPageBody(puppeteerBrowser, filmPageURL) {
-    const page = await getPuppeteerPage(puppeteerBrowser, filmPageURL);
-    return await getInnerHTMLFromPage(page);
+    const puppeteerPage = await getPuppeteerPage(puppeteerBrowser, filmPageURL);
+    return await getInnerHTMLFromPage(puppeteerPage);
 }
 
 async function getFilmPageDoc(puppeteerBrowser, filmPageURL) {
