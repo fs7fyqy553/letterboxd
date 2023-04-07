@@ -1,6 +1,5 @@
 // TODO: consider opening the browser just once for all film pages
 // TODO: lint and format file
-// TODO: replace instances of "page" with "puppeteerPage"
 const { parse } = require("node-html-parser");
 const puppeteer = require("puppeteer");
 const { scrollPageToBottom } = require("puppeteer-autoscroll-down");
