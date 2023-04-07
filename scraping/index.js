@@ -1,5 +1,6 @@
 // TODO: consider opening the browser just once for all film pages
 // TODO: lint and format file
+// TODO: replace instances of "page" with "puppeteerPage"
 const { parse } = require("node-html-parser");
 const puppeteer = require("puppeteer");
 const { scrollPageToBottom } = require("puppeteer-autoscroll-down");
@@ -102,23 +103,23 @@ async function getInnerHTMLFromPage(puppeteerPage) {
     return await puppeteerPage.evaluate(() => document.body.innerHTML)
 }
 
-async function getDynamicFilmListPageBody(puppeteerBrowser, listPageURL) {
-    const page = await getPuppeteerPage(puppeteerBrowser, listPageURL);
-    // NOTE: scrolling is done because list in page is fully loaded upon scroll
-    await scrollPageToBottom(page);
-    return await getInnerHTMLFromPage(page);
+async function getDynamicFilmListPageBody(puppeteerPage, listPageURL) {
+    await puppeteerPage.goto(listPageURL);
+    await scrollPageToBottom(puppeteerPage);
+    return await getInnerHTMLFromPage(puppeteerPage);
 }
 
-async function getFilmListPageDoc(puppeteerBrowser, listPageURL) {
-    const filmListPageBody = await getDynamicFilmListPageBody(puppeteerBrowser, listPageURL);
+async function getFilmListPageDoc(puppeteerPage, listPageURL) {
+    const filmListPageBody = await getDynamicFilmListPageBody(puppeteerPage, listPageURL);
     filmListPageDoc = parse(filmListPageBody);
     return filmListPageDoc;
 }
 
 async function processFilmsInListStartingAt(listPageURL, processor) {
     const puppeteerBrowser = await puppeteer.launch({headless: false});
+    const puppeteerPage = await puppeteerBrowser.newPage();
     while (listPageURL !== null) {
-        const filmListPageDoc = await getFilmListPageDoc(puppeteerBrowser, listPageURL);
+        const filmListPageDoc = await getFilmListPageDoc(puppeteerPage, listPageURL);
         await processFilmsOnListPage(filmListPageDoc, processor);
         listPageURL = await getNextFilmListPageURL(filmListPageDoc);
     }
