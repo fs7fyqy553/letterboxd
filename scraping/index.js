@@ -1,4 +1,3 @@
-// TODO: consider opening the browser just once for all film pages
 // TODO: lint and format file
 const { parse } = require("node-html-parser");
 const puppeteer = require("puppeteer");
@@ -48,33 +47,23 @@ function getFilmDetailsObject(filmPageDoc) {
     }
 }
 
-async function getPuppeteerPage(puppeteerBrowser, pageURL) {
-    const puppeteerPage = await puppeteerBrowser.newPage();
-    await puppeteerPage.goto(pageURL);
-    return puppeteerPage;
+async function getDynamicFilmPageBody(filmPuppeteerPage, filmPageURL) {
+    await filmPuppeteerPage.goto(filmPageURL);
+    return await getInnerHTMLFromPage(filmPuppeteerPage);
 }
 
-async function getDynamicFilmPageBody(puppeteerBrowser, filmPageURL) {
-    const puppeteerPage = await getPuppeteerPage(puppeteerBrowser, filmPageURL);
-    return await getInnerHTMLFromPage(puppeteerPage);
-}
-
-async function getFilmPageDoc(puppeteerBrowser, filmPageURL) {
+async function getFilmPageDoc(filmPuppeteerPage, filmPageURL) {
     try {
-        const filmPageBody = await getDynamicFilmPageBody(puppeteerBrowser, filmPageURL);
+        const filmPageBody = await getDynamicFilmPageBody(filmPuppeteerPage, filmPageURL);
         return parse(filmPageBody);
     } catch(err) {
         throw err;
     }
 }
 
-async function getDetailsObjectFromFilmPage(filmPageURL) {
-    const puppeteerBrowser = await puppeteer.launch();
-    const filmPageDoc = await getFilmPageDoc(puppeteerBrowser, filmPageURL);
-    return Promise.all(
-        [getFilmDetailsObject(filmPageDoc), puppeteerBrowser.close()]
-    )
-    .then(([filmDetails, _]) => filmDetails);
+async function getDetailsObjectFromFilmPage(filmPuppeteerPage, filmPageURL) {
+    const filmPageDoc = await getFilmPageDoc(filmPuppeteerPage, filmPageURL);
+    return await getFilmDetailsObject(filmPageDoc);
 }
 
 async function getNextFilmListPageURL(filmListPageDoc) {
@@ -88,14 +77,19 @@ function getLetterboxdURL(path) {
     return "https://letterboxd.com" + path;
 }
 
-function processListedFilm(filmAnchorNode, processor) {
+async function processListedFilm(filmAnchorNode, filmPuppeteerPage, processor) {
     const filmPagePath = filmAnchorNode.getAttribute("href");
-    processor(getLetterboxdURL(filmPagePath));
+    const filmDetailsObject = await getDetailsObjectFromFilmPage(filmPuppeteerPage, getLetterboxdURL(filmPagePath));
+    processor(filmDetailsObject);
 }
 
-async function processFilmsOnListPage(filmListPageDoc, processor) {
-    const filmAnchorNodeList = filmListPageDoc.querySelectorAll(".film-list .frame")
-    filmAnchorNodeList.forEach((filmAnchorNode) => processListedFilm(filmAnchorNode, processor));
+async function processFilmsOnListPage(filmListPageDoc, filmPuppeteerPage, processor) {
+    const filmAnchorNodeList = filmListPageDoc.querySelectorAll(".film-list .frame");
+    for (let i = 0; i < filmAnchorNodeList.length; i += 1) {
+        const filmAnchorNode = filmAnchorNodeList[i];
+        // TODO: consider processing listed films in parallel
+        await processListedFilm(filmAnchorNode, filmPuppeteerPage, processor);
+    }
 }
 
 async function getInnerHTMLFromPage(puppeteerPage) {
@@ -117,12 +111,15 @@ async function getFilmListPageDoc(filmListPuppeteerPage, listPageURL) {
 async function processFilmsInListStartingAt(listPageURL, processor) {
     const puppeteerBrowser = await puppeteer.launch({headless: false});
     const filmListPuppeteerPage = await puppeteerBrowser.newPage();
+    const filmPuppeteerBrowser = await puppeteer.launch({headless: true});
+    const filmPuppeteerPage = await filmPuppeteerBrowser.newPage();
     while (listPageURL !== null) {
         const filmListPageDoc = await getFilmListPageDoc(filmListPuppeteerPage, listPageURL);
-        await processFilmsOnListPage(filmListPageDoc, processor);
+        await processFilmsOnListPage(filmListPageDoc, filmPuppeteerPage, processor);
         listPageURL = await getNextFilmListPageURL(filmListPageDoc);
     }
     puppeteerBrowser.close();
+    filmPuppeteerBrowser.close();
 }
 
 module.exports = {getDetailsObjectFromFilmPage, processFilmsInListStartingAt};
