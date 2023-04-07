@@ -114,7 +114,7 @@ async function getFilmListPageDoc(puppeteerBrowser, listPageURL) {
     return filmListPageDoc;
 }
 
-async function processFilmsInList(listPageURL, processor) {
+async function processFilmsInListStartingAt(listPageURL, processor) {
     const puppeteerBrowser = await puppeteer.launch({headless: false});
     while (listPageURL !== null) {
         const filmListPageDoc = await getFilmListPageDoc(puppeteerBrowser, listPageURL);
@@ -124,4 +124,4 @@ async function processFilmsInList(listPageURL, processor) {
     puppeteerBrowser.close();
 }
 
-module.exports = {getDetailsObjectFromFilmPage, processFilmsInList};
+module.exports = {getDetailsObjectFromFilmPage, processFilmsInListStartingAt};
