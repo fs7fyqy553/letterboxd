@@ -1,7 +1,7 @@
 const { getDetailsObjectFromFilmPage, processFilmsInListStartingAt } = require("./index");
 
-const testFilmPageScraper = true;
-const testFilmListScraper = false;
+const testFilmPageScraper = false;
+const testFilmListScraper = true;
 
 if (testFilmPageScraper) {
     const testFilmPageURL = "https://letterboxd.com/film/the-matrix/";

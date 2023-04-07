@@ -78,7 +78,7 @@ async function getDetailsObjectFromFilmPage(filmPageURL) {
 }
 
 async function getNextFilmListPageURL(filmListPageDoc) {
-    const nextPageAnchor = filmListPageDoc.querySelector("#content > div > div > section > div.pagination > div:nth-child(2) > a");
+    const nextPageAnchor = filmListPageDoc.querySelector(".next");
     if (nextPageAnchor === null) {return null;}
     const nextPagePath = nextPageAnchor.getAttribute("href");
     return getLetterboxdURL(nextPagePath);
@@ -94,7 +94,7 @@ function processListedFilm(filmAnchorNode, processor) {
 }
 
 async function processFilmsOnListPage(filmListPageDoc, processor) {
-    const filmAnchorNodeList = filmListPageDoc.querySelectorAll("#content > div > div > section > ul > li > div > div > a");
+    const filmAnchorNodeList = filmListPageDoc.querySelectorAll(".film-list .frame")
     filmAnchorNodeList.forEach((filmAnchorNode) => processListedFilm(filmAnchorNode, processor));
 }
 
