@@ -114,9 +114,8 @@ async function getFilmListPageDoc(puppeteerBrowser, listPageURL) {
     return filmListPageDoc;
 }
 
-async function processFilmsInList(firstListPageURL, processor) {
+async function processFilmsInList(listPageURL, processor) {
     const puppeteerBrowser = await puppeteer.launch({headless: false});
-    let listPageURL = firstListPageURL;
     while (listPageURL !== null) {
         const filmListPageDoc = await getFilmListPageDoc(puppeteerBrowser, listPageURL);
         await processFilmsOnListPage(filmListPageDoc, processor);
