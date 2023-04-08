@@ -18,7 +18,7 @@ function App() {
             releaseYearString: "Year 1",
             directorNameArray: ["Director 1", "Director 2"],
             averageRatingString: "4.3",
-            filmPosterURL: "Film poster URL 1",
+            filmPosterURL: "https://thewell.unc.edu/wp-content/uploads/sites/1007/2020/04/film1.jpg",
           }
         }
       />
