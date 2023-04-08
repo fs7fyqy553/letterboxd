@@ -6,13 +6,14 @@ import FilmToGuess from "./components/FilmToGuess";
 
 function App() {
   const [highScore, setHighScore] = useState(0);
+  const [currentScore, setCurrentScore] = useState(0);
   return (
     <div className="App">
       <HighScore
         score={highScore}
       />
       <CurrentScore
-        score={0}
+        score={currentScore}
       />
       <ReferenceFilm
         filmDetailsObject={
