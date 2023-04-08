@@ -1,7 +1,7 @@
-function HighScore({ highScore }) {
+function HighScore({ score }) {
     return (
         <div className="HighScore">
-            High Score: {highScore}
+            High Score: {score}
         </div>
     );
 }

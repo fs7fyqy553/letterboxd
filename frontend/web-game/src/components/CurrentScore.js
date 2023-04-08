@@ -1,7 +1,7 @@
-function CurrentScore({ currentScore }) {
+function CurrentScore({ score }) {
     return (
         <div className="CurrentScore">
-            Current Score: {currentScore}
+            Current Score: {score}
         </div>
     )
 }

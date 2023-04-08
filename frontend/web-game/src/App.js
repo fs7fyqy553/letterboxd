@@ -5,10 +5,10 @@ function App() {
   return (
     <div className="App">
       <HighScore
-        highScore={0}
+        score={0}
       />
       <CurrentScore
-        currentScore={0}
+        score={0}
       />
     </div>
   );
