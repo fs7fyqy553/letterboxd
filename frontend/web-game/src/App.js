@@ -14,6 +14,10 @@ function App() {
     getRandomFilmDetailsObject()
       .then(setReferenceFilmDetailsObject)
   }, []);
+  useEffect(() => {
+    getRandomFilmDetailsObject()
+      .then(setFilmDetailsObjectToGuess)
+  }, []);
   return (
     <div className="App">
       <HighScore
