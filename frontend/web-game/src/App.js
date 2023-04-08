@@ -7,6 +7,7 @@ import FilmToGuess from "./components/FilmToGuess";
 function App() {
   const [highScore, setHighScore] = useState(0);
   const [currentScore, setCurrentScore] = useState(0);
+  const [referenceFilmDetailsObject, setReferenceFilmDetailsObject] = useState(null);
   return (
     <div className="App">
       <HighScore
@@ -15,17 +16,11 @@ function App() {
       <CurrentScore
         score={currentScore}
       />
-      <ReferenceFilm
-        filmDetailsObject={
-          {
-            filmTitle: "Film 1",
-            releaseYearString: "Year 1",
-            directorNameArray: ["Director 1", "Director 2"],
-            averageRatingString: "4.3",
-            filmPosterURL: "https://thewell.unc.edu/wp-content/uploads/sites/1007/2020/04/film1.jpg",
-          }
-        }
-      />
+      {referenceFilmDetailsObject && 
+        <ReferenceFilm
+          filmDetailsObject={referenceFilmDetailsObject}
+        />
+      }
       <FilmToGuess
         filmDetailsObject={
           {
