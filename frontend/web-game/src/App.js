@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import getRandomFilmDetailsObject from "./functions/getRandomFilmDetailsObject";
 import HighScore from "./components/HighScore";
 import CurrentScore from "./components/CurrentScore";
 import ReferenceFilm from "./components/ReferenceFilm";
@@ -9,6 +10,10 @@ function App() {
   const [currentScore, setCurrentScore] = useState(0);
   const [referenceFilmDetailsObject, setReferenceFilmDetailsObject] = useState(null);
   const [filmDetailsObjectToGuess, setFilmDetailsObjectToGuess] = useState(null);
+  useEffect(() => {
+    getRandomFilmDetailsObject()
+      .then(setReferenceFilmDetailsObject)
+  }, []);
   return (
     <div className="App">
       <HighScore
