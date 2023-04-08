@@ -12,11 +12,9 @@ function App() {
   const [filmDetailsObjectToGuess, setFilmDetailsObjectToGuess] = useState(null);
   useEffect(() => {
     getRandomFilmDetailsObject()
-      .then(setReferenceFilmDetailsObject)
-  }, []);
-  useEffect(() => {
+      .then(setReferenceFilmDetailsObject);
     getRandomFilmDetailsObject()
-      .then(setFilmDetailsObjectToGuess)
+      .then(setFilmDetailsObjectToGuess);
   }, []);
   return (
     <div className="App">
