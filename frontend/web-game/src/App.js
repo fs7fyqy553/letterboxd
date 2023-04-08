@@ -1,13 +1,15 @@
+import { useState } from "react";
 import HighScore from "./components/HighScore";
 import CurrentScore from "./components/CurrentScore";
 import ReferenceFilm from "./components/ReferenceFilm";
 import FilmToGuess from "./components/FilmToGuess";
 
 function App() {
+  const [highScore, setHighScore] = useState(0);
   return (
     <div className="App">
       <HighScore
-        score={0}
+        score={highScore}
       />
       <CurrentScore
         score={0}
