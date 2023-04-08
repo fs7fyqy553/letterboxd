@@ -8,6 +8,7 @@
     "serverstart": "DEBUG=backend:* npm run devstart"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "debug": "~2.6.9",
     "dotenv": "^16.0.3",
     "express": "~4.16.1",
