@@ -8,31 +8,33 @@ import FilmToGuess from "./components/FilmToGuess";
 function App() {
   const [highScore, setHighScore] = useState(0);
   const [currentScore, setCurrentScore] = useState(0);
-  const [referenceFilmDetailsObject, setReferenceFilmDetailsObject] = useState(null);
-  const [filmDetailsObjectToGuess, setFilmDetailsObjectToGuess] = useState(null);
+  // const [referenceFilmDetailsObject, setReferenceFilmDetailsObject] = useState(null);
+  // const [filmDetailsObjectToGuess, setFilmDetailsObjectToGuess] = useState(null);
+  const [filmDetailsObjectPairArray, setFilmDetailsObjectPairArray] = useState(null);
   const changeFilms = () => {
     getTwoFilmsWithDifferentAverageRatings()
-      .then(([film1, film2]) => {
-        setReferenceFilmDetailsObject(film1);
-        setFilmDetailsObjectToGuess(film2);
+      .then((pairArray) => {
+        // setReferenceFilmDetailsObject(film1);
+        // setFilmDetailsObjectToGuess(film2);
+        setFilmDetailsObjectPairArray(pairArray);
       });
   };
   useEffect(() => {
     changeFilms();
   }, []);
   const processReferenceFilmSelection = () => {
-    processFilmSelection(referenceFilmDetailsObject);
+    processFilmSelection(filmDetailsObjectPairArray[0]);
   }
   const processFilmToGuessSelection = () => {
-    processFilmSelection(filmDetailsObjectToGuess);
+    processFilmSelection(filmDetailsObjectPairArray[1]);
   }
   // TODO: split function up/make it more concise
   const processFilmSelection = (selectedFilmDetailsObject) => {
     let opponentFilmDetailsObject;
-    if (selectedFilmDetailsObject === referenceFilmDetailsObject) {
-      opponentFilmDetailsObject = filmDetailsObjectToGuess;
+    if (selectedFilmDetailsObject === filmDetailsObjectPairArray[0]) {
+      opponentFilmDetailsObject = filmDetailsObjectPairArray[1];
     } else {
-      opponentFilmDetailsObject = referenceFilmDetailsObject;
+      opponentFilmDetailsObject = filmDetailsObjectPairArray[0];
     }
 
     if (selectedFilmDetailsObject.averageRatingString > opponentFilmDetailsObject.averageRatingString) {
@@ -58,17 +60,17 @@ function App() {
       <CurrentScore
         score={currentScore}
       />
-      {referenceFilmDetailsObject && 
-        <ReferenceFilm
-          filmDetailsObject={referenceFilmDetailsObject}
-          onReferenceFilmClick={processReferenceFilmSelection}
-        />
-      }
-      {filmDetailsObjectToGuess &&
-        <FilmToGuess
-          filmDetailsObject={filmDetailsObjectToGuess}
-          onFilmToGuessClick={processFilmToGuessSelection}
-        />
+      {filmDetailsObjectPairArray &&
+        <>
+          <ReferenceFilm
+            filmDetailsObject={filmDetailsObjectPairArray[0]}
+            onReferenceFilmClick={processReferenceFilmSelection}
+          />
+          <FilmToGuess
+            filmDetailsObject={filmDetailsObjectPairArray[1]}
+            onFilmToGuessClick={processFilmToGuessSelection}
+          />
+        </>
       }
     </div>
   );
