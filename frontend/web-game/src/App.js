@@ -10,12 +10,15 @@ function App() {
   const [currentScore, setCurrentScore] = useState(0);
   const [referenceFilmDetailsObject, setReferenceFilmDetailsObject] = useState(null);
   const [filmDetailsObjectToGuess, setFilmDetailsObjectToGuess] = useState(null);
-  useEffect(() => {
+  const changeFilms = () => {
     getTwoFilmsWithDifferentAverageRatings()
       .then(([film1, film2]) => {
         setReferenceFilmDetailsObject(film1);
         setFilmDetailsObjectToGuess(film2);
-      })
+      });
+  };
+  useEffect(() => {
+    changeFilms();
   }, []);
   const processReferenceFilmSelection = () => {
     if (referenceFilmDetailsObject.averageRatingString > filmDetailsObjectToGuess.averageRatingString) {
@@ -23,6 +26,7 @@ function App() {
     } else {
       setCurrentScore(0);
     }
+    changeFilms();
   };
   useEffect(() => {
     // TODO: make sure you don't need to do something like in class-based React to ensure 
