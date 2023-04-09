@@ -23,6 +23,9 @@ function App() {
   const processReferenceFilmSelection = () => {
     processFilmSelection(referenceFilmDetailsObject);
   }
+  const processFilmToGuessSelection = () => {
+    processFilmSelection(filmDetailsObjectToGuess);
+  }
   // TODO: split function up/make it more concise
   const processFilmSelection = (selectedFilmDetailsObject) => {
     let opponentFilmDetailsObject;
@@ -64,6 +67,7 @@ function App() {
       {filmDetailsObjectToGuess &&
         <FilmToGuess
           filmDetailsObject={filmDetailsObjectToGuess}
+          onFilmToGuessClick={processFilmToGuessSelection}
         />
       }
     </div>

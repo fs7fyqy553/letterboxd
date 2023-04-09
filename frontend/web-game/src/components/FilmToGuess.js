@@ -1,8 +1,11 @@
 import FilmDetails from "./FilmDetails";
 
-function FilmToGuess({ filmDetailsObject }) {
+function FilmToGuess({ filmDetailsObject, onFilmToGuessClick }) {
     return (
-        <div className="FilmToGuess">
+        <div
+            className="FilmToGuess"
+            onClick={onFilmToGuessClick}
+        >
             <FilmDetails
                 filmDetailsObject={filmDetailsObject}
                 averageRatingShown={false}
