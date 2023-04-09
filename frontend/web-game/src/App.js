@@ -21,11 +21,23 @@ function App() {
     changeFilms();
   }, []);
   const processReferenceFilmSelection = () => {
-    if (referenceFilmDetailsObject.averageRatingString > filmDetailsObjectToGuess.averageRatingString) {
-      setCurrentScore(score => score + 1);
+    processFilmSelection(referenceFilmDetailsObject);
+  }
+  // TODO: split function up/make it more concise
+  const processFilmSelection = (selectedFilmDetailsObject) => {
+    let opponentFilmDetailsObject;
+    if (selectedFilmDetailsObject === referenceFilmDetailsObject) {
+      opponentFilmDetailsObject = filmDetailsObjectToGuess;
+    } else {
+      opponentFilmDetailsObject = referenceFilmDetailsObject;
+    }
+
+    if (selectedFilmDetailsObject.averageRatingString > opponentFilmDetailsObject.averageRatingString) {
+      setCurrentScore(currentScore => currentScore + 1);
     } else {
       setCurrentScore(0);
     }
+
     changeFilms();
   };
   useEffect(() => {
