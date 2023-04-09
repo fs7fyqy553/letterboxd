@@ -68,11 +68,11 @@ function App() {
         <div className="Films">
           <ReferenceFilm
             filmDetailsObject={filmDetailsObjectPairArray[0]}
-            onReferenceFilmClick={processReferenceFilmSelection}
+            onFilmDetailsClick={processReferenceFilmSelection}
           />
           <FilmToGuess
             filmDetailsObject={filmDetailsObjectPairArray[1]}
-            onFilmToGuessClick={processFilmToGuessSelection}
+            onFilmDetailsClick={processFilmToGuessSelection}
           />
         </div>
       }

@@ -1,4 +1,4 @@
-function FilmDetails({ filmDetailsObject, averageRatingShown }) {
+function FilmDetails({ filmDetailsObject, averageRatingShown, onFilmDetailsClick }) {
     const {
         filmTitle,
         releaseYearString,
@@ -8,7 +8,10 @@ function FilmDetails({ filmDetailsObject, averageRatingShown }) {
     }
     = filmDetailsObject;
     return (
-        <div className="FilmDetails">
+        <div
+            className="FilmDetails"
+            onClick={onFilmDetailsClick}
+        >
             <img
                 src={filmPosterURL}
                 alt={`Film Poster For ${filmTitle}`}
