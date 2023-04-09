@@ -1,3 +1,5 @@
+import "../styles/FilmDetails.css";
+
 function FilmDetails({ filmDetailsObject, averageRatingShown, onFilmDetailsClick }) {
     const {
         filmTitle,
@@ -16,17 +18,19 @@ function FilmDetails({ filmDetailsObject, averageRatingShown, onFilmDetailsClick
                 src={filmPosterURL}
                 alt={`Film Poster For ${filmTitle}`}
             />
-            <div>
-                {filmTitle} ({releaseYearString})
-            </div>
-            <div>
-                Directed By: {directorNameArray.join(", ")}
-            </div>
-            {averageRatingShown && 
+            <div className="text">
                 <div>
-                    Average Rating: {averageRatingString} / 5
+                    {filmTitle} ({releaseYearString})
                 </div>
-            }
+                <div>
+                    Directed By: {directorNameArray.join(", ")}
+                </div>
+                {averageRatingShown && 
+                    <div>
+                        Average Rating: {averageRatingString} / 5
+                    </div>
+                }
+            </div>
         </div>
     );
 }
