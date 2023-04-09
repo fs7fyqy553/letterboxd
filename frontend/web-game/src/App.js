@@ -1,3 +1,4 @@
+import "./styles/App.css";
 import { useState, useEffect } from "react";
 import getTwoFilmsWithDifferentAverageRatings from "./functions/getTwoFilmsWithDifferentAverageRatings";
 import HighScore from "./components/HighScore";
@@ -54,14 +55,17 @@ function App() {
   }, [currentScore])
   return (
     <div className="App">
-      <HighScore
-        score={highScore}
-      />
-      <CurrentScore
-        score={currentScore}
-      />
+      <div className="Header">
+        {/* TODO: put CurrentScore before HighScore */}
+        <HighScore
+          score={highScore}
+        />
+        <CurrentScore
+          score={currentScore}
+        />
+      </div>
       {filmDetailsObjectPairArray &&
-        <>
+        <div className="Films">
           <ReferenceFilm
             filmDetailsObject={filmDetailsObjectPairArray[0]}
             onReferenceFilmClick={processReferenceFilmSelection}
@@ -70,7 +74,7 @@ function App() {
             filmDetailsObject={filmDetailsObjectPairArray[1]}
             onFilmToGuessClick={processFilmToGuessSelection}
           />
-        </>
+        </div>
       }
     </div>
   );

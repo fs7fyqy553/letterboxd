@@ -1,0 +1,16 @@
+.App {
+    display: flex;
+    flex-direction: column;
+}
+
+.Header {
+    padding: 10px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.Films {
+    /* NOTE: currently coloured for development purposes */
+    background-color: red;
+    display: flex;
+}
