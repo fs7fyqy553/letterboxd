@@ -17,6 +17,13 @@ function App() {
         setFilmDetailsObjectToGuess(film2);
       })
   }, []);
+  const processReferenceFilmSelection = () => {
+    if (referenceFilmDetailsObject.averageRatingString > filmDetailsObjectToGuess.averageRatingString) {
+      setCurrentScore(score => score + 1);
+    } else {
+      setCurrentScore(0);
+    }
+  };
   return (
     <div className="App">
       <HighScore
@@ -28,6 +35,7 @@ function App() {
       {referenceFilmDetailsObject && 
         <ReferenceFilm
           filmDetailsObject={referenceFilmDetailsObject}
+          onReferenceFilmClick={processReferenceFilmSelection}
         />
       }
       {filmDetailsObjectToGuess &&
