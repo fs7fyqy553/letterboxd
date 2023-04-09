@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import getRandomFilmDetailsObject from "./functions/getRandomFilmDetailsObject";
+import getTwoFilmsWithDifferentAverageRatings from "./functions/getTwoFilmsWithDifferentAverageRatings";
 import HighScore from "./components/HighScore";
 import CurrentScore from "./components/CurrentScore";
 import ReferenceFilm from "./components/ReferenceFilm";
@@ -11,10 +11,11 @@ function App() {
   const [referenceFilmDetailsObject, setReferenceFilmDetailsObject] = useState(null);
   const [filmDetailsObjectToGuess, setFilmDetailsObjectToGuess] = useState(null);
   useEffect(() => {
-    getRandomFilmDetailsObject()
-      .then(setReferenceFilmDetailsObject);
-    getRandomFilmDetailsObject()
-      .then(setFilmDetailsObjectToGuess);
+    getTwoFilmsWithDifferentAverageRatings()
+      .then(([film1, film2]) => {
+        setReferenceFilmDetailsObject(film1);
+        setFilmDetailsObjectToGuess(film2);
+      })
   }, []);
   return (
     <div className="App">
