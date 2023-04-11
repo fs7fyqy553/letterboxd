@@ -1,10 +1,8 @@
 body {
     margin: 0;
-    background-color: blue;
     height: 100vh;
 }
 
 #root {
-    background-color: orange;
     height: 100%;
 }
