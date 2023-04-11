@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import getFilmPair from "./functions/getFilmPair";
 import HighScore from "./components/HighScore";
 import CurrentScore from "./components/CurrentScore";
-import ReferenceFilm from "./components/FilmHidingRating";
-import FilmToGuess from "./components/FilmShowingRating";
+import FilmHidingRating from "./components/FilmHidingRating";
+import FilmShowingRating from "./components/FilmShowingRating";
 
 function App() {
   const [highScore, setHighScore] = useState(0);
@@ -22,10 +22,10 @@ function App() {
     const newFilmObjectArray = await getFilmPair();
     setFilmObjectArray(newFilmObjectArray);
   };
-  const processReferenceFilmSelection = () => {
+  const selectFilmHidingRating = () => {
     processFilmSelection(0);
   }
-  const processFilmToGuessSelection = () => {
+  const selectFilmShowingRating = () => {
     processFilmSelection(1);
   }
   const processFilmSelection = (selectedFilmObjectIndex) => {
@@ -55,13 +55,13 @@ function App() {
       </div>
       {filmObjectArray &&
         <div className="Films">
-          <ReferenceFilm
+          <FilmHidingRating
             filmObject={filmObjectArray[0]}
-            onFilmClick={processReferenceFilmSelection}
+            onFilmClick={selectFilmHidingRating}
           />
-          <FilmToGuess
+          <FilmShowingRating
             filmObject={filmObjectArray[1]}
-            onFilmClick={processFilmToGuessSelection}
+            onFilmClick={selectFilmShowingRating}
           />
         </div>
       }

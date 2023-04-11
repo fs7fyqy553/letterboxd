@@ -1,6 +1,6 @@
 import FilmDetails from "./FilmDetails.js";
 
-function ReferenceFilm({ filmObject, onFilmClick }) {
+function FilmHidingRating({ filmObject, onFilmClick }) {
     return (
         <FilmDetails
             filmObject={filmObject}
@@ -10,4 +10,4 @@ function ReferenceFilm({ filmObject, onFilmClick }) {
     );
 }
 
-export default ReferenceFilm;
+export default FilmHidingRating;

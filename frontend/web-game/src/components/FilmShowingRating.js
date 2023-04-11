@@ -1,6 +1,6 @@
 import FilmDetails from "./FilmDetails";
 
-function FilmToGuess({ filmObject, onFilmClick }) {
+function FilmShowingRating({ filmObject, onFilmClick }) {
     return (
         <FilmDetails
             filmObject={filmObject}
@@ -10,4 +10,4 @@ function FilmToGuess({ filmObject, onFilmClick }) {
     )
 }
 
-export default FilmToGuess;
+export default FilmShowingRating;
