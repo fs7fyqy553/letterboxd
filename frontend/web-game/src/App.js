@@ -9,32 +9,32 @@ import FilmToGuess from "./components/FilmToGuess";
 function App() {
   const [highScore, setHighScore] = useState(0);
   const [currentScore, setCurrentScore] = useState(0);
-  const [filmDetailsObjectPairArray, setFilmDetailsObjectPairArray] = useState(null);
+  const [filmObjectArray, setFilmObjectArray] = useState(null);
   const changeFilms = () => {
     getTwoFilmsWithDifferentAverageRatings()
       .then((pairArray) => {
-        setFilmDetailsObjectPairArray(pairArray);
+        setFilmObjectArray(pairArray);
       });
   };
   useEffect(() => {
     changeFilms();
   }, []);
   const processReferenceFilmSelection = () => {
-    processFilmSelection(filmDetailsObjectPairArray[0]);
+    processFilmSelection(filmObjectArray[0]);
   }
   const processFilmToGuessSelection = () => {
-    processFilmSelection(filmDetailsObjectPairArray[1]);
+    processFilmSelection(filmObjectArray[1]);
   }
   // TODO: split function up/make it more concise
-  const processFilmSelection = (selectedFilmDetailsObject) => {
-    let opponentFilmDetailsObject;
-    if (selectedFilmDetailsObject === filmDetailsObjectPairArray[0]) {
-      opponentFilmDetailsObject = filmDetailsObjectPairArray[1];
+  const processFilmSelection = (selectedFilmObject) => {
+    let opponentFilmObject;
+    if (selectedFilmObject === filmObjectArray[0]) {
+      opponentFilmObject = filmObjectArray[1];
     } else {
-      opponentFilmDetailsObject = filmDetailsObjectPairArray[0];
+      opponentFilmObject = filmObjectArray[0];
     }
 
-    if (selectedFilmDetailsObject.averageRatingString > opponentFilmDetailsObject.averageRatingString) {
+    if (selectedFilmObject.averageRatingString > opponentFilmObject.averageRatingString) {
       setCurrentScore(currentScore => currentScore + 1);
     } else {
       setCurrentScore(0);
@@ -58,15 +58,15 @@ function App() {
           score={highScore}
         />
       </div>
-      {filmDetailsObjectPairArray &&
+      {filmObjectArray &&
         <div className="Films">
           <ReferenceFilm
-            filmDetailsObject={filmDetailsObjectPairArray[0]}
-            onFilmDetailsClick={processReferenceFilmSelection}
+            filmObject={filmObjectArray[0]}
+            onFilmClick={processReferenceFilmSelection}
           />
           <FilmToGuess
-            filmDetailsObject={filmDetailsObjectPairArray[1]}
-            onFilmDetailsClick={processFilmToGuessSelection}
+            filmObject={filmObjectArray[1]}
+            onFilmClick={processFilmToGuessSelection}
           />
         </div>
       }

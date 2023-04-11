@@ -1,11 +1,11 @@
 import FilmDetails from "./FilmDetails.js";
 
-function ReferenceFilm({ filmDetailsObject, onFilmDetailsClick }) {
+function ReferenceFilm({ filmObject, onFilmClick }) {
     return (
         <FilmDetails
-            filmDetailsObject={filmDetailsObject}
-            averageRatingShown={true}
-            onFilmDetailsClick={onFilmDetailsClick}
+            filmObject={filmObject}
+            showAverageRating={true}
+            onFilmClick={onFilmClick}
         />
     );
 }

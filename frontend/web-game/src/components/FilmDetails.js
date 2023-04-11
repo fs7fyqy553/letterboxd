@@ -1,6 +1,6 @@
 import "../styles/FilmDetails.css";
 
-function FilmDetails({ filmDetailsObject, averageRatingShown, onFilmDetailsClick }) {
+function FilmDetails({ filmObject, showAverageRating, onFilmClick }) {
     const {
         filmTitle,
         releaseYearString,
@@ -8,11 +8,11 @@ function FilmDetails({ filmDetailsObject, averageRatingShown, onFilmDetailsClick
         averageRatingString,
         filmPosterURL
     }
-    = filmDetailsObject;
+    = filmObject;
     return (
         <div
             className="FilmDetails"
-            onClick={onFilmDetailsClick}
+            onClick={onFilmClick}
         >
             <img
                 src={filmPosterURL}
@@ -25,7 +25,7 @@ function FilmDetails({ filmDetailsObject, averageRatingShown, onFilmDetailsClick
                 <div>
                     Directed By: {directorNameArray.join(", ")}
                 </div>
-                {averageRatingShown && 
+                {showAverageRating && 
                     <div>
                         Average Rating: {averageRatingString} / 5
                     </div>
