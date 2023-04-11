@@ -2,7 +2,6 @@ const Film = require("./models/film");
 const { processFilmsInListStartingAt } = require("../scraping");
 require("./mongoConfig");
 
-// TODO: consider enabling parallel saving
 async function saveScrapedFilmDetailsObject (filmDetailsObject) {
     const newFilm = new Film(filmDetailsObject);
     console.log(newFilm);
