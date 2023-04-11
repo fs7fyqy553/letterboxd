@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import getFilmPair from "./functions/getFilmPair";
 import HighScore from "./components/HighScore";
 import CurrentScore from "./components/CurrentScore";
-import ReferenceFilm from "./components/ReferenceFilm";
-import FilmToGuess from "./components/FilmToGuess";
+import ReferenceFilm from "./components/FilmHidingRating";
+import FilmToGuess from "./components/FilmShowingRating";
 
 function App() {
   const [highScore, setHighScore] = useState(0);
@@ -33,6 +33,7 @@ function App() {
     } else {
       opponentFilmObject = filmObjectArray[0];
     }
+    
 
     if (selectedFilmObject.averageRatingString > opponentFilmObject.averageRatingString) {
       setCurrentScore(currentScore => currentScore + 1);
