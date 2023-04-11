@@ -6,18 +6,18 @@
     text-align: center;
 }
 
+.Header, .Footer {
+    padding: 10px;
+}
+
 .Header {
     display: flex;
     justify-content: space-evenly;
 }
 
-.Header, .Footer {
-    padding: 10px;
-}
-
 .Films {
     height: 100%;
+    background-color: #36454F;
     display: flex;
     gap: 5px;
-    background-color: #36454F;
 }
