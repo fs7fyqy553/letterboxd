@@ -4,16 +4,22 @@
     flex-direction: column;
     /* NOTE: currently coloured for development purposes */
     background-color: grey;
+    /* text-align: center; */
 }
 
 .Header {
-    padding: 10px;
     display: flex;
     justify-content: space-evenly;
+}
+
+.Header, .Footer {
+    padding: 10px;
 }
 
 .Films {
     /* NOTE: currently coloured for development purposes */
     height: 100%;
     display: flex;
+    /* gap: 5px;
+    background-color: #36454F; */
 }
