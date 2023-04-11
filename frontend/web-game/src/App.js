@@ -10,6 +10,7 @@ function App() {
   const [highScore, setHighScore] = useState(0);
   const [currentScore, setCurrentScore] = useState(0);
   const [filmObjectArray, setFilmObjectArray] = useState(null);
+  
   const changeFilms = () => {
     getFilmPair()
       .then((pairArray) => {
@@ -20,28 +21,23 @@ function App() {
     changeFilms();
   }, []);
   const processReferenceFilmSelection = () => {
-    processFilmSelection(filmObjectArray[0]);
+    processFilmSelection(0);
   }
   const processFilmToGuessSelection = () => {
-    processFilmSelection(filmObjectArray[1]);
+    processFilmSelection(1);
   }
-  // TODO: split function up/make it more concise
-  const processFilmSelection = (selectedFilmObject) => {
-    let opponentFilmObject;
-    if (selectedFilmObject === filmObjectArray[0]) {
-      opponentFilmObject = filmObjectArray[1];
-    } else {
-      opponentFilmObject = filmObjectArray[0];
-    }
-    
-
+  const processFilmSelection = (selectedFilmObjectIndex) => {
+    const selectedFilmObject = filmObjectArray[selectedFilmObjectIndex];
+    const opponentFilmObject = filmObjectArray[1 - selectedFilmObjectIndex];
+    updateScore(selectedFilmObject, opponentFilmObject);
+    changeFilms();
+  };
+  const updateScore = (selectedFilmObject, opponentFilmObject) => {
     if (selectedFilmObject.averageRatingString > opponentFilmObject.averageRatingString) {
       setCurrentScore(currentScore => currentScore + 1);
     } else {
       setCurrentScore(0);
     }
-
-    changeFilms();
   };
   useEffect(() => {
     if (currentScore > highScore) {
