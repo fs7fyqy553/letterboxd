@@ -1,6 +1,6 @@
 import "./styles/App.css";
 import { useState, useEffect } from "react";
-import getTwoFilmsWithDifferentAverageRatings from "./functions/getTwoFilmsWithDifferentAverageRatings";
+import getFilmPair from "./functions/getFilmPair";
 import HighScore from "./components/HighScore";
 import CurrentScore from "./components/CurrentScore";
 import ReferenceFilm from "./components/ReferenceFilm";
@@ -11,7 +11,7 @@ function App() {
   const [currentScore, setCurrentScore] = useState(0);
   const [filmObjectArray, setFilmObjectArray] = useState(null);
   const changeFilms = () => {
-    getTwoFilmsWithDifferentAverageRatings()
+    getFilmPair()
       .then((pairArray) => {
         setFilmObjectArray(pairArray);
       });

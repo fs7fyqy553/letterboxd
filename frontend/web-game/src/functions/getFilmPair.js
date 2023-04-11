@@ -1,4 +1,5 @@
-async function getTwoFilmsWithDifferentAverageRatings() {
+async function getFilmPair() {
+    // NOTE: the two selected films should have different ratings
     try {
         const response = await fetch("http://localhost:3000/api/films?twoFilmsWithDifferentRatings=true");
         const data = await response.json();
@@ -8,4 +9,4 @@ async function getTwoFilmsWithDifferentAverageRatings() {
     }
 }
 
-export default getTwoFilmsWithDifferentAverageRatings;
+export default getFilmPair;
