@@ -20,6 +20,6 @@
     /* NOTE: currently coloured for development purposes */
     height: 100%;
     display: flex;
-    /* gap: 5px;
-    background-color: #36454F; */
+    gap: 5px;
+    background-color: #36454F;
 }
