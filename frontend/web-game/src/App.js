@@ -9,14 +9,10 @@ import FilmToGuess from "./components/FilmToGuess";
 function App() {
   const [highScore, setHighScore] = useState(0);
   const [currentScore, setCurrentScore] = useState(0);
-  // const [referenceFilmDetailsObject, setReferenceFilmDetailsObject] = useState(null);
-  // const [filmDetailsObjectToGuess, setFilmDetailsObjectToGuess] = useState(null);
   const [filmDetailsObjectPairArray, setFilmDetailsObjectPairArray] = useState(null);
   const changeFilms = () => {
     getTwoFilmsWithDifferentAverageRatings()
       .then((pairArray) => {
-        // setReferenceFilmDetailsObject(film1);
-        // setFilmDetailsObjectToGuess(film2);
         setFilmDetailsObjectPairArray(pairArray);
       });
   };
