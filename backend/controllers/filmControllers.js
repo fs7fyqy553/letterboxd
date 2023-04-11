@@ -1,37 +1,43 @@
-// TODO: clean up file structure
 const Film = require("../models/film");
 
-exports.getFilms = (req, res) => {
+exports.getFilms = async (req, res) => {
     const twoFilmsWithDifferentRatings = req.query.twoFilmsWithDifferentRatings;
-
-    // TODO: add error handling for when required films aren't found
-    const getRandomFilmWithoutThisAverageRatingString = (avoidedAverageRatingString) => {
-        return candidatesAggregate = Film.aggregate([
-            { $match: { averageRatingString: { $ne: avoidedAverageRatingString }}},
-        ])
-        .sample(1)
-        .then(([film]) => film);
+    try {
+        const films = await getFilms(twoFilmsWithDifferentRatings);
+        return res.json(films);
+    } catch(err) {
+        return res.status(503).json({err});
     }
-    const getRandomFilm = () => {
-        return Film.aggregate()
-            .sample(1)
-            .then(([film]) => film);
-    };
-    const getTwoFilmsWithDifferentRatings = async () => {
-        const firstFilm = await getRandomFilm();
-        const secondFilm = await getRandomFilmWithoutThisAverageRatingString(firstFilm.averageRatingString);
-        return [firstFilm, secondFilm];
-    };
-    const getAllFilms = () => Film.find();
-    const respondWithFilmsAsJSON = (films) => res.json(films);
-    const respondWithServerError = (error) => res.status(503).json({error})
+}
+
+async function getFilms(twoFilmsWithDifferentRatings) {
     if (twoFilmsWithDifferentRatings === "true") {
-        getTwoFilmsWithDifferentRatings()
-            .then(respondWithFilmsAsJSON)
-            .catch(respondWithServerError);
+        return await getTwoFilmsWithDifferentRatings();
     } else {
-        getAllFilms()
-            .then(respondWithFilmsAsJSON)
-            .catch(respondWithServerError);
+        return await Film.find();
+    }
+}
+
+async function getTwoFilmsWithDifferentRatings() {
+    try {
+        const film1 = await getRandomFilm();
+        const film2 = await getRandomFilm(film1.averageRatingString);
+        return [film1, film2];
+    } catch(err) {
+        throw(err);
+    }
+}
+
+async function getRandomFilm(avoidedAverageRatingString) {
+    const filmAggregate = getFilmAggregate(avoidedAverageRatingString);
+    const [randomFilm] = await filmAggregate.sample(1);
+    return randomFilm;
+}
+
+function getFilmAggregate(avoidedAverageRatingString) {
+    if (avoidedAverageRatingString === null) {
+        return Film.aggregate();
+    } else {
+        return Film.aggregate([{ $match: { averageRatingString: { $ne: avoidedAverageRatingString }}}]);
     }
 }
