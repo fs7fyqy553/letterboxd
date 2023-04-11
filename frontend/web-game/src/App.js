@@ -56,13 +56,12 @@ function App() {
   return (
     <div className="App">
       <div className="Header">
-        {/* TODO: put CurrentScore before HighScore */}
-        <HighScore
-          score={highScore}
-        />
-        Guess the film with the higher Letterboxd rating...
         <CurrentScore
           score={currentScore}
+        />
+        Guess the film with the higher Letterboxd rating...
+        <HighScore
+          score={highScore}
         />
       </div>
       {filmDetailsObjectPairArray &&
