@@ -60,6 +60,7 @@ function App() {
         <HighScore
           score={highScore}
         />
+        Guess the film with the higher Letterboxd rating...
         <CurrentScore
           score={currentScore}
         />
