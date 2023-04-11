@@ -76,6 +76,9 @@ function App() {
           />
         </div>
       }
+      <div className="Footer">
+        Made by James Graça-Jones
+      </div>
     </div>
   );
 }
