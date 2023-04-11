@@ -4,9 +4,12 @@ const filmControllers = require("../controllers/filmControllers");
 
 const filmRouter = Router();
 
-filmRouter.options("/", cors({
+filmRouter.options(
+  "/",
+  cors({
     origin: "http://localhost:3006",
-}))
+  })
+);
 
 filmRouter.get("/", cors(), filmControllers.getFilms);
 
