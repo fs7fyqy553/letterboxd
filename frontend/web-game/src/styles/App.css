@@ -1,4 +1,5 @@
 .App {
+    height: 100%;
     display: flex;
     flex-direction: column;
     /* NOTE: currently coloured for development purposes */
@@ -13,6 +14,7 @@
 
 .Films {
     /* NOTE: currently coloured for development purposes */
+    height: 100%;
     background-color: red;
     display: flex;
 }
