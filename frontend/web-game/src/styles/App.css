@@ -2,7 +2,6 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    /* NOTE: currently coloured for development purposes */
     background-color: grey;
     text-align: center;
 }
@@ -17,7 +16,6 @@
 }
 
 .Films {
-    /* NOTE: currently coloured for development purposes */
     height: 100%;
     display: flex;
     gap: 5px;
