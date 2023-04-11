@@ -10,4 +10,5 @@
 
 .FilmDetails img {
     width: 250px;
+    border-radius: 10px;
 }
