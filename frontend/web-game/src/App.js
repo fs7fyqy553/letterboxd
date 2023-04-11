@@ -10,16 +10,18 @@ function App() {
   const [highScore, setHighScore] = useState(0);
   const [currentScore, setCurrentScore] = useState(0);
   const [filmObjectArray, setFilmObjectArray] = useState(null);
-  
-  const changeFilms = () => {
-    getFilmPair()
-      .then((pairArray) => {
-        setFilmObjectArray(pairArray);
-      });
-  };
+
+  useEffect(() => changeFilms, []);
   useEffect(() => {
-    changeFilms();
-  }, []);
+    if (currentScore > highScore) {
+      setHighScore(currentScore);
+    }
+  }, [currentScore])
+
+  const changeFilms = async () => {
+    const newFilmObjectArray = await getFilmPair();
+    setFilmObjectArray(newFilmObjectArray);
+  };
   const processReferenceFilmSelection = () => {
     processFilmSelection(0);
   }
@@ -39,11 +41,7 @@ function App() {
       setCurrentScore(0);
     }
   };
-  useEffect(() => {
-    if (currentScore > highScore) {
-      setHighScore(currentScore);
-    }
-  }, [currentScore])
+
   return (
     <div className="App">
       <div className="Header">
