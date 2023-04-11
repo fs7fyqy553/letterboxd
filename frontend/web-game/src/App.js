@@ -47,8 +47,6 @@ function App() {
     changeFilms();
   };
   useEffect(() => {
-    // TODO: make sure you don't need to do something like in class-based React to ensure 
-    // the right values are used below because of async
     if (currentScore > highScore) {
       setHighScore(currentScore);
     }
