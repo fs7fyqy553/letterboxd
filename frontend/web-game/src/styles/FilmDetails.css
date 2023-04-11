@@ -1,17 +1,17 @@
 .FilmDetails {
-    width: 50%;
-    background-color: grey;
-    cursor: pointer;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
+  width: 50%;
+  background-color: grey;
+  cursor: pointer;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 
 .FilmDetails img {
-    box-shadow: 0 0 30px;
-    border-radius: 10px;
-    width: 250px;
+  box-shadow: 0 0 30px;
+  border-radius: 10px;
+  width: 250px;
 }

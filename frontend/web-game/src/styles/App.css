@@ -1,23 +1,24 @@
 .App {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    background-color: grey;
-    text-align: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: grey;
+  text-align: center;
 }
 
-.Header, .Footer {
-    padding: 10px;
+.Header,
+.Footer {
+  padding: 10px;
 }
 
 .Header {
-    display: flex;
-    justify-content: space-evenly;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .Films {
-    height: 100%;
-    background-color: #36454F;
-    display: flex;
-    gap: 5px;
+  height: 100%;
+  background-color: #36454f;
+  display: flex;
+  gap: 5px;
 }

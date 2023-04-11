@@ -16,7 +16,7 @@ function App() {
     if (currentScore > highScore) {
       setHighScore(currentScore);
     }
-  }, [currentScore])
+  }, [currentScore]);
 
   const changeFilms = async () => {
     const newFilmObjectArray = await getFilmPair();
@@ -24,10 +24,10 @@ function App() {
   };
   const selectFilmHidingRating = () => {
     processFilmSelection(0);
-  }
+  };
   const selectFilmShowingRating = () => {
     processFilmSelection(1);
-  }
+  };
   const processFilmSelection = (selectedFilmObjectIndex) => {
     const selectedFilmObject = filmObjectArray[selectedFilmObjectIndex];
     const opponentFilmObject = filmObjectArray[1 - selectedFilmObjectIndex];
@@ -35,8 +35,11 @@ function App() {
     changeFilms();
   };
   const updateScore = (selectedFilmObject, opponentFilmObject) => {
-    if (selectedFilmObject.averageRatingString > opponentFilmObject.averageRatingString) {
-      setCurrentScore(currentScore => currentScore + 1);
+    if (
+      selectedFilmObject.averageRatingString >
+      opponentFilmObject.averageRatingString
+    ) {
+      setCurrentScore((currentScore) => currentScore + 1);
     } else {
       setCurrentScore(0);
     }
@@ -45,15 +48,11 @@ function App() {
   return (
     <div className="App">
       <div className="Header">
-        <CurrentScore
-          score={currentScore}
-        />
+        <CurrentScore score={currentScore} />
         Guess the film with the higher Letterboxd rating...
-        <HighScore
-          score={highScore}
-        />
+        <HighScore score={highScore} />
       </div>
-      {filmObjectArray &&
+      {filmObjectArray && (
         <div className="Films">
           <FilmHidingRating
             filmObject={filmObjectArray[0]}
@@ -64,10 +63,8 @@ function App() {
             onFilmClick={selectFilmShowingRating}
           />
         </div>
-      }
-      <div className="Footer">
-        Made by James Graça-Jones
-      </div>
+      )}
+      <div className="Footer">Made by James Graça-Jones</div>
     </div>
   );
 }
