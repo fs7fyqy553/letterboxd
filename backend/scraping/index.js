@@ -1,7 +1,10 @@
-// TODO: lint and format file
 const { parse } = require('node-html-parser');
 const puppeteer = require('puppeteer');
 const { scrollPageToBottom } = require('puppeteer-autoscroll-down');
+
+async function closeBrowsers(browserArray) {
+  await browserArray.forEach(async (browser) => browser.close());
+}
 
 function getFilmPosterURL(filmPageDoc) {
   return filmPageDoc.querySelector('#poster-zoom > div > div > img').getAttribute('src');
@@ -31,7 +34,7 @@ function checkIfAdult(filmPageDoc) {
   return !!filmPageDoc.querySelector('.-adult');
 }
 
-function getFilmDetailsObject(filmPageDoc) {
+function getFilmObject(filmPageDoc) {
   if (checkIfAdult(filmPageDoc) === true) {
     return null;
   }
@@ -44,27 +47,9 @@ function getFilmDetailsObject(filmPageDoc) {
       filmPosterURL: getFilmPosterURL(filmPageDoc),
     };
   } catch (err) {
+    console.error(err);
     return null;
   }
-}
-
-async function getInnerHTMLFromPage(puppeteerPage) {
-  return puppeteerPage.evaluate(() => document.body.innerHTML);
-}
-
-async function getDynamicFilmPageBody(filmPuppeteerPage, filmPageURL) {
-  await filmPuppeteerPage.goto(filmPageURL);
-  return getInnerHTMLFromPage(filmPuppeteerPage);
-}
-
-async function getFilmPageDoc(filmPuppeteerPage, filmPageURL) {
-  const filmPageBody = await getDynamicFilmPageBody(filmPuppeteerPage, filmPageURL);
-  return parse(filmPageBody);
-}
-
-async function getDetailsObjectFromFilmPage(filmPuppeteerPage, filmPageURL) {
-  const filmPageDoc = await getFilmPageDoc(filmPuppeteerPage, filmPageURL);
-  return getFilmDetailsObject(filmPageDoc);
 }
 
 function getLetterboxdURL(path) {
@@ -80,8 +65,27 @@ async function getNextFilmListPageURL(filmListPageDoc) {
   return getLetterboxdURL(nextPagePath);
 }
 
+async function getInnerHTMLFromPuppeteerPage(page) {
+  return page.evaluate(() => document.body.innerHTML);
+}
+
+async function getDynamicFilmPageBody(filmPageURL, filmPuppeteerPage) {
+  await filmPuppeteerPage.goto(filmPageURL);
+  return getInnerHTMLFromPuppeteerPage(filmPuppeteerPage);
+}
+
+async function getFilmPageDoc(filmPageURL, filmPuppeteerPage) {
+  const filmPageBody = await getDynamicFilmPageBody(filmPageURL, filmPuppeteerPage);
+  return parse(filmPageBody);
+}
+
+async function getDetailsObjectFromFilmPage(filmPageURL, filmPuppeteerPage) {
+  const filmPageDoc = await getFilmPageDoc(filmPageURL, filmPuppeteerPage);
+  return getFilmObject(filmPageDoc);
+}
+
 async function processFilmPage(filmPageURL, filmPuppeteerPage, processor) {
-  const filmDetailsObject = await getDetailsObjectFromFilmPage(filmPuppeteerPage, filmPageURL);
+  const filmDetailsObject = await getDetailsObjectFromFilmPage(filmPageURL, filmPuppeteerPage);
   if (filmDetailsObject !== null) {
     await processor(filmDetailsObject);
   }
@@ -91,8 +95,8 @@ function getFilmPagePath(filmAnchorNode) {
   return filmAnchorNode.getAttribute('href');
 }
 
-async function processListedFilm(filmAnchorNode, filmPuppeteerPage, processor) {
-  const filmPagePath = getFilmPagePath(filmAnchorNode);
+async function processFilmAnchorNode(node, filmPuppeteerPage, processor) {
+  const filmPagePath = getFilmPagePath(node);
   const filmPageURL = getLetterboxdURL(filmPagePath);
   await processFilmPage(filmPageURL, filmPuppeteerPage, processor);
 }
@@ -102,28 +106,24 @@ async function processFilmAnchorNodeList(nodeList, filmPuppeteerPage, processor)
   for (let i = 0; i < nodeList.length; i += 1) {
     const filmAnchorNode = nodeList[i];
     // eslint-disable-next-line no-await-in-loop
-    await processListedFilm(filmAnchorNode, filmPuppeteerPage, processor);
+    await processFilmAnchorNode(filmAnchorNode, filmPuppeteerPage, processor);
   }
 }
 
-async function processFilmsOnListPage(filmListPageDoc, filmPuppeteerPage, processor) {
-  const filmAnchorNodeList = filmListPageDoc.querySelectorAll('.film-list .frame');
+async function processFilmsOnListPage(listPageDoc, filmPuppeteerPage, processor) {
+  const filmAnchorNodeList = listPageDoc.querySelectorAll('.film-list .frame');
   await processFilmAnchorNodeList(filmAnchorNodeList, filmPuppeteerPage, processor);
 }
 
-async function getDynamicFilmListPageBody(puppeteerPage, listPageURL) {
+async function getDynamicFilmListPageBody(listPageURL, puppeteerPage) {
   await puppeteerPage.goto(listPageURL);
   await scrollPageToBottom(puppeteerPage);
-  return getInnerHTMLFromPage(puppeteerPage);
+  return getInnerHTMLFromPuppeteerPage(puppeteerPage);
 }
 
-async function getFilmListPageDoc(filmListPuppeteerPage, listPageURL) {
-  const filmListPageBody = await getDynamicFilmListPageBody(filmListPuppeteerPage, listPageURL);
-  return parse(filmListPageBody);
-}
-
-async function closeBrowsers(browserArray) {
-  await browserArray.forEach(async (browser) => browser.close());
+async function getListPageDoc(listPageURL, listPuppeteerPage) {
+  const listPageBody = await getDynamicFilmListPageBody(listPageURL, listPuppeteerPage);
+  return parse(listPageBody);
 }
 
 async function processListPageAndGetNextURL(
@@ -132,7 +132,7 @@ async function processListPageAndGetNextURL(
   filmPuppeteerPage,
   processor
 ) {
-  const listPageDoc = await getFilmListPageDoc(listPuppeteerPage, listPageURL);
+  const listPageDoc = await getListPageDoc(listPageURL, listPuppeteerPage);
   await processFilmsOnListPage(listPageDoc, filmPuppeteerPage, processor);
   return getNextFilmListPageURL(listPageDoc);
 }
@@ -176,10 +176,11 @@ async function getBrowserArray(quantity) {
   return browserArray;
 }
 
-async function processFilmsInListStartingAt(listPageURL, processor) {
+async function processFilmsInList(firstListPageURL, processor) {
+  // NOTE: list page is the page of a Letterboxd list in grid view
   const browserPair = await getBrowserArray(2);
-  await useBrowsers(browserPair, listPageURL, processor);
+  await useBrowsers(browserPair, firstListPageURL, processor);
   await closeBrowsers(browserPair);
 }
 
-module.exports = { processFilmsInListStartingAt };
+module.exports = { processFilmsInList };
