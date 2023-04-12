@@ -122,6 +122,7 @@ async function getFilmListPageDoc(filmListPuppeteerPage, listPageURL) {
   return filmListPageDoc;
 }
 
+// TODO: paralellise the below
 async function processFilmsInListStartingAt(listPageURL, processor) {
   const puppeteerBrowser = await puppeteer.launch({ headless: false });
   const filmListPuppeteerPage = await puppeteerBrowser.newPage();
