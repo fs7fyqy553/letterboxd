@@ -1,6 +1,6 @@
-const Film = require("./models/film");
-const { processFilmsInListStartingAt } = require("../scraping");
-require("./mongoConfig");
+const Film = require('./models/film');
+const { processFilmsInListStartingAt } = require('../scraping');
+require('./mongoConfig');
 
 async function saveScrapedFilmDetailsObject(filmDetailsObject) {
   const newFilm = new Film(filmDetailsObject);
@@ -9,6 +9,6 @@ async function saveScrapedFilmDetailsObject(filmDetailsObject) {
 }
 
 processFilmsInListStartingAt(
-  "https://letterboxd.com/victorvdb/list/letterboxd-500-most-watched-movies-of-all/",
+  'https://letterboxd.com/victorvdb/list/letterboxd-500-most-watched-movies-of-all/',
   saveScrapedFilmDetailsObject
 );
