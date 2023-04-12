@@ -17,7 +17,7 @@
 }
 
 .Films {
-  height: 100%;
+  flex-grow: 1;
   background-color: #36454f;
   display: flex;
   gap: 5px;
