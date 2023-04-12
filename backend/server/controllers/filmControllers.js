@@ -1,12 +1,10 @@
-const Film = require("../models/film");
+const Film = require('../models/film');
 
 function getFilmAggregate(avoidedAverageRatingString) {
   if (avoidedAverageRatingString === null) {
     return Film.aggregate();
   }
-  return Film.aggregate([
-    { $match: { averageRatingString: { $ne: avoidedAverageRatingString } } },
-  ]);
+  return Film.aggregate([{ $match: { averageRatingString: { $ne: avoidedAverageRatingString } } }]);
 }
 
 async function getRandomFilm(avoidedAverageRatingString) {
@@ -22,7 +20,7 @@ async function getTwoFilmsWithDifferentRatings() {
 }
 
 async function getFilms(twoFilmsWithDifferentRatings) {
-  if (twoFilmsWithDifferentRatings === "true") {
+  if (twoFilmsWithDifferentRatings === 'true') {
     return getTwoFilmsWithDifferentRatings();
   }
   return Film.find();
