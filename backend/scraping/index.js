@@ -80,24 +80,35 @@ async function getNextFilmListPageURL(filmListPageDoc) {
   return getLetterboxdURL(nextPagePath);
 }
 
-async function processListedFilm(filmAnchorNode, filmPuppeteerPage, processor) {
-  const filmPagePath = filmAnchorNode.getAttribute('href');
-  const filmDetailsObject = await getDetailsObjectFromFilmPage(
-    filmPuppeteerPage,
-    getLetterboxdURL(filmPagePath)
-  );
-  // TODO: ensure this conditional doesn't cause issues
+async function processFilmPage(filmPageURL, filmPuppeteerPage, processor) {
+  const filmDetailsObject = await getDetailsObjectFromFilmPage(filmPuppeteerPage, filmPageURL);
   if (filmDetailsObject !== null) {
     await processor(filmDetailsObject);
   }
 }
 
-async function processFilmsOnListPage(filmListPageDoc, filmPuppeteerPage, processor) {
-  const filmAnchorNodeList = filmListPageDoc.querySelectorAll('.film-list .frame');
-  for (let i = 0; i < filmAnchorNodeList.length; i += 1) {
-    const filmAnchorNode = filmAnchorNodeList[i];
+function getFilmPagePath(filmAnchorNode) {
+  return filmAnchorNode.getAttribute('href');
+}
+
+async function processListedFilm(filmAnchorNode, filmPuppeteerPage, processor) {
+  const filmPagePath = getFilmPagePath(filmAnchorNode);
+  const filmPageURL = getLetterboxdURL(filmPagePath);
+  await processFilmPage(filmPageURL, filmPuppeteerPage, processor);
+}
+
+async function processFilmAnchorNodeList(nodeList, filmPuppeteerPage, processor) {
+  // TODO: consider parallel programming;
+  for (let i = 0; i < nodeList.length; i += 1) {
+    const filmAnchorNode = nodeList[i];
+    // eslint-disable-next-line no-await-in-loop
     await processListedFilm(filmAnchorNode, filmPuppeteerPage, processor);
   }
+}
+
+async function processFilmsOnListPage(filmListPageDoc, filmPuppeteerPage, processor) {
+  const filmAnchorNodeList = filmListPageDoc.querySelectorAll('.film-list .frame');
+  await processFilmAnchorNodeList(filmAnchorNodeList, filmPuppeteerPage, processor);
 }
 
 async function getDynamicFilmListPageBody(puppeteerPage, listPageURL) {
@@ -111,19 +122,64 @@ async function getFilmListPageDoc(filmListPuppeteerPage, listPageURL) {
   return parse(filmListPageBody);
 }
 
-// TODO: enable parallel programming
-async function processFilmsInListStartingAt(listPageURL, processor) {
-  const puppeteerBrowser = await puppeteer.launch({ headless: true });
-  const filmListPuppeteerPage = await puppeteerBrowser.newPage();
-  const filmPuppeteerBrowser = await puppeteer.launch({ headless: true });
-  const filmPuppeteerPage = await filmPuppeteerBrowser.newPage();
+async function closeBrowsers(browserArray) {
+  await browserArray.forEach(async (browser) => browser.close());
+}
+
+async function processListPageAndGetNextURL(
+  listPageURL,
+  listPuppeteerPage,
+  filmPuppeteerPage,
+  processor
+) {
+  const listPageDoc = await getFilmListPageDoc(listPuppeteerPage, listPageURL);
+  await processFilmsOnListPage(listPageDoc, filmPuppeteerPage, processor);
+  return getNextFilmListPageURL(listPageDoc);
+}
+
+// TODO: consider parallel programming
+async function usePuppeteerPages(
+  listPuppeteerPage,
+  filmPuppeteerPage,
+  firstListPageURL,
+  processor
+) {
+  let listPageURL = firstListPageURL;
   while (listPageURL !== null) {
-    const filmListPageDoc = await getFilmListPageDoc(filmListPuppeteerPage, listPageURL);
-    await processFilmsOnListPage(filmListPageDoc, filmPuppeteerPage, processor);
-    listPageURL = await getNextFilmListPageURL(filmListPageDoc);
+    // eslint-disable-next-line no-await-in-loop
+    listPageURL = await processListPageAndGetNextURL(
+      listPageURL,
+      listPuppeteerPage,
+      filmPuppeteerPage,
+      processor
+    );
   }
-  puppeteerBrowser.close();
-  filmPuppeteerBrowser.close();
+}
+
+async function getPuppeteerPages(browserArray) {
+  return Promise.all(browserArray.map(async (browser) => browser.newPage()));
+}
+
+async function useBrowsers(browserPair, firstListPageURL, processor) {
+  const puppeteerPagePair = await getPuppeteerPages(browserPair);
+  await usePuppeteerPages(...puppeteerPagePair, firstListPageURL, processor);
+}
+
+async function getBrowserArray(quantity) {
+  const browserArray = [];
+  // TODO: consider parallel programming
+  for (let i = 0; i < quantity; i += 1) {
+    // eslint-disable-next-line no-await-in-loop
+    const browser = await puppeteer.launch({ headless: true });
+    browserArray.push(browser);
+  }
+  return browserArray;
+}
+
+async function processFilmsInListStartingAt(listPageURL, processor) {
+  const browserPair = await getBrowserArray(2);
+  await useBrowsers(browserPair, listPageURL, processor);
+  await closeBrowsers(browserPair);
 }
 
 module.exports = { processFilmsInListStartingAt };
