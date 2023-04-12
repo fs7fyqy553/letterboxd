@@ -113,7 +113,7 @@ async function getFilmListPageDoc(filmListPuppeteerPage, listPageURL) {
 
 // TODO: enable parallel programming
 async function processFilmsInListStartingAt(listPageURL, processor) {
-  const puppeteerBrowser = await puppeteer.launch({ headless: false });
+  const puppeteerBrowser = await puppeteer.launch({ headless: true });
   const filmListPuppeteerPage = await puppeteerBrowser.newPage();
   const filmPuppeteerBrowser = await puppeteer.launch({ headless: true });
   const filmPuppeteerPage = await filmPuppeteerBrowser.newPage();
