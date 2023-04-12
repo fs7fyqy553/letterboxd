@@ -1,5 +1,5 @@
-const Film = require('./models/film');
-const { processFilmsInListStartingAt } = require('../scraping');
+const Film = require('../models/film');
+const { processFilmsInListStartingAt } = require('../../scraping');
 require('./mongoConfig');
 
 async function saveScrapedFilmDetailsObject(filmDetailsObject) {
