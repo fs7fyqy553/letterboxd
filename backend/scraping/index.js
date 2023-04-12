@@ -44,28 +44,31 @@ function getFilmDetailsObject(filmPageDoc) {
       filmPosterURL: getFilmPosterURL(filmPageDoc),
     };
   } catch (err) {
-    console.error(err);
     return null;
   }
 }
 
+async function getInnerHTMLFromPage(puppeteerPage) {
+  return puppeteerPage.evaluate(() => document.body.innerHTML);
+}
+
 async function getDynamicFilmPageBody(filmPuppeteerPage, filmPageURL) {
   await filmPuppeteerPage.goto(filmPageURL);
-  return await getInnerHTMLFromPage(filmPuppeteerPage);
+  return getInnerHTMLFromPage(filmPuppeteerPage);
 }
 
 async function getFilmPageDoc(filmPuppeteerPage, filmPageURL) {
-  try {
-    const filmPageBody = await getDynamicFilmPageBody(filmPuppeteerPage, filmPageURL);
-    return parse(filmPageBody);
-  } catch (err) {
-    throw err;
-  }
+  const filmPageBody = await getDynamicFilmPageBody(filmPuppeteerPage, filmPageURL);
+  return parse(filmPageBody);
 }
 
 async function getDetailsObjectFromFilmPage(filmPuppeteerPage, filmPageURL) {
   const filmPageDoc = await getFilmPageDoc(filmPuppeteerPage, filmPageURL);
-  return await getFilmDetailsObject(filmPageDoc);
+  return getFilmDetailsObject(filmPageDoc);
+}
+
+function getLetterboxdURL(path) {
+  return `https://letterboxd.com${path}`;
 }
 
 async function getNextFilmListPageURL(filmListPageDoc) {
@@ -77,23 +80,15 @@ async function getNextFilmListPageURL(filmListPageDoc) {
   return getLetterboxdURL(nextPagePath);
 }
 
-function getLetterboxdURL(path) {
-  return `https://letterboxd.com${path}`;
-}
-
 async function processListedFilm(filmAnchorNode, filmPuppeteerPage, processor) {
-  try {
-    const filmPagePath = filmAnchorNode.getAttribute('href');
-    const filmDetailsObject = await getDetailsObjectFromFilmPage(
-      filmPuppeteerPage,
-      getLetterboxdURL(filmPagePath)
-    );
-    // TODO: ensure this conditional doesn't cause issues
-    if (filmDetailsObject !== null) {
-      await processor(filmDetailsObject);
-    }
-  } catch (err) {
-    throw err;
+  const filmPagePath = filmAnchorNode.getAttribute('href');
+  const filmDetailsObject = await getDetailsObjectFromFilmPage(
+    filmPuppeteerPage,
+    getLetterboxdURL(filmPagePath)
+  );
+  // TODO: ensure this conditional doesn't cause issues
+  if (filmDetailsObject !== null) {
+    await processor(filmDetailsObject);
   }
 }
 
@@ -101,28 +96,22 @@ async function processFilmsOnListPage(filmListPageDoc, filmPuppeteerPage, proces
   const filmAnchorNodeList = filmListPageDoc.querySelectorAll('.film-list .frame');
   for (let i = 0; i < filmAnchorNodeList.length; i += 1) {
     const filmAnchorNode = filmAnchorNodeList[i];
-    // TODO: consider processing listed films in parallel
     await processListedFilm(filmAnchorNode, filmPuppeteerPage, processor);
   }
-}
-
-async function getInnerHTMLFromPage(puppeteerPage) {
-  return await puppeteerPage.evaluate(() => document.body.innerHTML);
 }
 
 async function getDynamicFilmListPageBody(puppeteerPage, listPageURL) {
   await puppeteerPage.goto(listPageURL);
   await scrollPageToBottom(puppeteerPage);
-  return await getInnerHTMLFromPage(puppeteerPage);
+  return getInnerHTMLFromPage(puppeteerPage);
 }
 
 async function getFilmListPageDoc(filmListPuppeteerPage, listPageURL) {
   const filmListPageBody = await getDynamicFilmListPageBody(filmListPuppeteerPage, listPageURL);
-  filmListPageDoc = parse(filmListPageBody);
-  return filmListPageDoc;
+  return parse(filmListPageBody);
 }
 
-// TODO: paralellise the below
+// TODO: enable parallel programming
 async function processFilmsInListStartingAt(listPageURL, processor) {
   const puppeteerBrowser = await puppeteer.launch({ headless: false });
   const filmListPuppeteerPage = await puppeteerBrowser.newPage();
