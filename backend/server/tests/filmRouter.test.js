@@ -38,7 +38,7 @@ describe('GET /films', () => {
 });
 
 describe('GET /films?twoFilmsWithDifferentRatings=true', () => {
-  it('should only return one film', async () => {
+  it('should return 404 error', async () => {
     const res = await request(app)
       .get('/films?twoFilmsWithDifferentRatings=true')
       .set('Accept', 'application/json');
