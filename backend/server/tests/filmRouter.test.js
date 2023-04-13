@@ -36,3 +36,12 @@ describe('GET /films', () => {
     expect(res.body.films).toHaveLength(testFilmObjArray.length);
   });
 });
+
+describe('GET /films?twoFilmsWithDifferentRatings=true', () => {
+  it('should only return one film', async () => {
+    const res = await request(app)
+      .get('/films?twoFilmsWithDifferentRatings=true')
+      .set('Accept', 'application/json');
+    expect(res.statusCode).toEqual(404);
+  });
+});
