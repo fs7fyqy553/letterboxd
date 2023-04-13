@@ -44,4 +44,25 @@ describe('GET /films?twoFilmsWithDifferentRatings=true', () => {
       .set('Accept', 'application/json');
     expect(res.statusCode).toEqual(404);
   });
+
+  it('should return two films with different ratings', async () => {
+    const testFilmObj = {
+      _id: '64384cdf791d61235a7a52ef',
+      filmTitle: 'Film 2',
+      releaseYearString: '1986',
+      directorNameArray: ['Director 2', 'Director 3'],
+      averageRatingString: '2.1',
+      filmPosterURL: 'filmposter1.com',
+    };
+    const testFilmDoc = new Film(testFilmObj);
+    await testFilmDoc.save();
+
+    const res = await request(app)
+      .get('/films?twoFilmsWithDifferentRatings=true')
+      .set('Accept', 'application/json');
+    expect(res.statusCode).toEqual(200);
+    expect(res.header['content-type']).toEqual(expect.stringMatching(/json/));
+    expect(res.body).toHaveProperty('films');
+    expect(res.body.films).toHaveLength(2);
+  });
 });
