@@ -157,7 +157,7 @@ async function usePuppeteerPages(
   }
 }
 
-async function getPuppeteerPage(browser) {
+function getPuppeteerPage(browser) {
   return browser.newPage();
 }
 
