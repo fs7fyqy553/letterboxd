@@ -1,8 +1,5 @@
 const express = require('express');
-const initializeMongoServer = require('./mongoConfigTesting');
 const APIRouter = require('../routes/APIRouter');
-
-initializeMongoServer();
 
 const app = express();
 
