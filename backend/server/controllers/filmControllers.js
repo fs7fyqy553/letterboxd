@@ -30,7 +30,7 @@ exports.getFilms = async (req, res) => {
   const { twoFilmsWithDifferentRatings } = req.query;
   try {
     const films = await getFilms(twoFilmsWithDifferentRatings);
-    return res.json({films});
+    return res.json({ films });
   } catch (err) {
     return res.status(503).json({ err });
   }
