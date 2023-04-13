@@ -2,8 +2,9 @@ const { parse } = require('node-html-parser');
 const puppeteer = require('puppeteer');
 const { scrollPageToBottom } = require('puppeteer-autoscroll-down');
 
-async function closeBrowsers(browserArray) {
-  await browserArray.forEach(async (browser) => browser.close());
+async function closeBrowser(browser) {
+  // await browserArray.forEach(async (browser) => browser.close());
+  await browser.close();
 }
 
 function getFilmPosterURL(filmPageDoc) {
@@ -156,31 +157,29 @@ async function usePuppeteerPages(
   }
 }
 
-async function getPuppeteerPages(browserArray) {
-  return Promise.all(browserArray.map(async (browser) => browser.newPage()));
+async function getPuppeteerPage(browser) {
+  return browser.newPage();
 }
 
-async function useBrowsers(browserPair, firstListPageURL, processor) {
-  const puppeteerPagePair = await getPuppeteerPages(browserPair);
-  await usePuppeteerPages(...puppeteerPagePair, firstListPageURL, processor);
+async function getPuppeteerPages(browser, numberOfPages) {
+  const promiseArray = Array(numberOfPages).fill(getPuppeteerPage(browser));
+  return Promise.all(promiseArray).then((pageArray) => pageArray);
 }
 
-async function getBrowserArray(quantity) {
-  const browserArray = [];
-  // TODO: consider parallel programming
-  for (let i = 0; i < quantity; i += 1) {
-    // eslint-disable-next-line no-await-in-loop
-    const browser = await puppeteer.launch({ headless: true });
-    browserArray.push(browser);
-  }
-  return browserArray;
+async function useBrowser(browser, firstListPageURL, processor) {
+  const [listPuppeteerPage, filmPuppeteerPage] = await getPuppeteerPages(browser, 2);
+  await usePuppeteerPages(listPuppeteerPage, filmPuppeteerPage, firstListPageURL, processor);
+}
+
+async function getHeadlessBrowser() {
+  return puppeteer.launch({ headless: true });
 }
 
 async function processFilmsInList(firstListPageURL, processor) {
   // NOTE: list page is the page of a Letterboxd list in grid view
-  const browserPair = await getBrowserArray(2);
-  await useBrowsers(browserPair, firstListPageURL, processor);
-  await closeBrowsers(browserPair);
+  const browser = await getHeadlessBrowser();
+  await useBrowser(browser, firstListPageURL, processor);
+  await closeBrowser(browser);
 }
 
 module.exports = { processFilmsInList };
