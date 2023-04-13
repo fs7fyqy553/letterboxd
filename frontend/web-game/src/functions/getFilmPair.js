@@ -1,10 +1,11 @@
 async function getFilmPair() {
   // NOTE: the two selected films should have different ratings
   try {
-    const filmArrayJSON = await fetch(
+    const responseJSON = await fetch(
       "http://localhost:3000/api/films?twoFilmsWithDifferentRatings=true"
     );
-    const filmArray = await filmArrayJSON.json();
+    const responseObject = await responseJSON.json();
+    const filmArray = responseObject.films;
     return filmArray;
   } catch (err) {
     console.log(err);
