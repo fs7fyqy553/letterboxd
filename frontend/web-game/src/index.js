@@ -2,7 +2,6 @@ import "normalize.css";
 import "./styles/index.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import Game from "./components/Game";
 import App from "./components/App";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
