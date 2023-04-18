@@ -5,6 +5,7 @@ function App() {
     return (
         <div className="App">
             <Game/>
+            <div className="Footer">Made by James Graça-Jones</div>
         </div>
     )
 }
