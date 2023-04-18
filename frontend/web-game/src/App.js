@@ -9,7 +9,7 @@ import FilmShowingRating from "./components/FilmShowingRating";
 function App() {
   const [highScore, setHighScore] = useState(0);
   const [currentScore, setCurrentScore] = useState(0);
-  const [filmObjectArray, setFilmObjectArray] = useState(null);
+  const [filmObjectArray, setFilmObjectArray] = useState([]);
 
   useEffect(() => changeFilms, []);
   useEffect(() => {
@@ -52,7 +52,7 @@ function App() {
         Guess the film with the higher Letterboxd rating...
         <HighScore score={highScore} />
       </div>
-      {filmObjectArray && (
+      {filmObjectArray.length === 2 && (
         <div className="Films">
           <FilmHidingRating
             filmObject={filmObjectArray[0]}
