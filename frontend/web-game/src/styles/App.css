@@ -3,10 +3,13 @@
     background-color: grey;
     display: flex;
     flex-direction: column;
-    text-align: center;
 }
 
 .Game > .Header,
 .Footer {
   padding: 10px;
+}
+
+.Footer > a > img {
+  height: 40px;
 }
