@@ -1,12 +1,12 @@
-import "./styles/App.css";
+import "../styles/Game.css";
 import { useState, useEffect } from "react";
-import getFilmPair from "./functions/getFilmPair";
-import HighScore from "./components/HighScore";
-import CurrentScore from "./components/CurrentScore";
-import FilmHidingRating from "./components/FilmHidingRating";
-import FilmShowingRating from "./components/FilmShowingRating";
+import getFilmPair from "../functions/getFilmPair";
+import HighScore from "./HighScore";
+import CurrentScore from "./CurrentScore";
+import FilmHidingRating from "./FilmHidingRating";
+import FilmShowingRating from "./FilmShowingRating";
 
-function App() {
+function Game() {
   const [highScore, setHighScore] = useState(0);
   const [currentScore, setCurrentScore] = useState(0);
   const [filmObjectArray, setFilmObjectArray] = useState([]);
@@ -44,7 +44,7 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className="Game">
       <div className="Header">
         <CurrentScore score={currentScore} />
         Guess the film with the higher Letterboxd rating...
@@ -67,4 +67,4 @@ function App() {
   );
 }
 
-export default App;
+export default Game;
