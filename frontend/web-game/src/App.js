@@ -13,9 +13,7 @@ function App() {
 
   useEffect(() => changeFilms, []);
   useEffect(() => {
-    if (currentScore > highScore) {
-      setHighScore(currentScore);
-    }
+    setHighScore((highScore) => (currentScore > highScore) ? currentScore : highScore);
   }, [currentScore]);
 
   const changeFilms = async () => {
