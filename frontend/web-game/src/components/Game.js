@@ -45,15 +45,15 @@ function Game() {
 
   return (
     <div className="Game">
-      <header>
-        <h1>Click the Film with the Higher Letterboxd Rating...</h1>
-        <div>
+      <header aria-label="Instruction and scores">
+        <h1 id="instruction">Click the Film with the Higher Letterboxd Rating...</h1>
+        <div aria-label="Scores">
           <CurrentScore score={currentScore} />
           <HighScore score={highScore} />
         </div>
       </header>
       {filmObjectArray.length === 2 && (
-        <main>
+        <main aria-labelledby="instruction">
           <FilmHidingRating
             filmObject={filmObjectArray[0]}
             onFilmClick={selectFilmHidingRating}

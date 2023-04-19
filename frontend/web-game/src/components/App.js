@@ -7,7 +7,7 @@ function App() {
     return (
         <div className="App">
             <Game/>
-            <footer>
+            <footer aria-label="Miscellaneous links">
                 <a aria-label="Link to GitHub repository" href="https://github.com/JamesGJ5/letterxbod-higher-or-lower">
                     <img src={invertocat} alt="" />
                 </a>
