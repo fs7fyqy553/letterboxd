@@ -1,7 +1,9 @@
 .FilmDetails {
   flex-grow: 1;
   border: none;
-  background-color: grey;
+  /* NOTE: color selected for contrast ratio with GitHub and LinkedIn logos in footer 
+  that is better than 3.1:1 */
+  background-color: #DEDEDE;
   cursor: pointer;
   padding: 10px;
   display: flex;

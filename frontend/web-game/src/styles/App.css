@@ -1,6 +1,8 @@
 .App {
     height: 100%;
-    background-color: grey;
+    /* NOTE: color selected for contrast ratio with GitHub and LinkedIn logos in footer 
+    that is better than 3.1:1 */
+    background-color: #DEDEDE;
     display: flex;
     flex-direction: column;
 }

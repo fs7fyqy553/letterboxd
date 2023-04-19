@@ -1,6 +1,6 @@
 import "../styles/App.css";
 import Game from "./Game";
-import invertocat from "../logos/github-mark-white.svg";
+import invertocat from "../logos/github-mark.svg";
 import inLogo from "../logos/LI-In-Bug.png";
 
 function App() {
