@@ -10,6 +10,11 @@
   padding: 10px;
 }
 
+.Footer {
+  display: flex;
+  gap: 20px;
+}
+
 .Footer > a > img {
   height: 40px;
 }
