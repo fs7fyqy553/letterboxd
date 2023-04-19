@@ -6,6 +6,7 @@ function FilmShowingRating({ filmObject, onFilmClick }) {
       filmObject={filmObject}
       showAverageRating={true}
       onFilmClick={onFilmClick}
+      showTextFirst={false}
     />
   );
 }

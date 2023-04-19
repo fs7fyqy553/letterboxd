@@ -1,6 +1,8 @@
 import "../styles/FilmDetails.css";
+import FilmPoster from "./FilmPoster";
+import FilmDetailsText from "./FilmDetailsText";
 
-function FilmDetails({ filmObject, showAverageRating, onFilmClick }) {
+function FilmDetails({ filmObject, showAverageRating, onFilmClick, showTextFirst }) {
   const {
     filmTitle,
     releaseYearString,
@@ -8,18 +10,27 @@ function FilmDetails({ filmObject, showAverageRating, onFilmClick }) {
     averageRatingString,
     filmPosterURL,
   } = filmObject;
+  const filmPoster = <FilmPoster filmPosterURL={filmPosterURL}/>;
+  const filmDetailsText = <FilmDetailsText
+    filmTitle={filmTitle}
+    releaseYearString={releaseYearString}
+    directorNameArray={directorNameArray}
+    averageRatingString={averageRatingString}
+    showAverageRating={showAverageRating}
+  />
   return (
     <button className="FilmDetails" onClick={onFilmClick}>
-      <img src={filmPosterURL} alt="" />
-      <div className="text">
-        <div>
-          {filmTitle} ({releaseYearString})
-        </div>
-        <div>Directed By: {directorNameArray.join(", ")}</div>
-        {showAverageRating && (
-          <div>Average Rating: {averageRatingString} / 5</div>
-        )}
-      </div>
+      {showTextFirst === true ?
+        <>
+          {filmDetailsText}
+          {filmPoster}
+        </>
+      :
+        <>
+          {filmPoster}
+          {filmDetailsText}
+        </>
+      }
     </button>
   );
 }
