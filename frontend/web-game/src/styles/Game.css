@@ -19,7 +19,7 @@ header > div {
   gap: 10px;
 }
 
-.Films {
+main {
   flex-grow: 1;
   background-color: #36454f;
   display: flex;

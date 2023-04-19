@@ -53,7 +53,7 @@ function Game() {
         </div>
       </header>
       {filmObjectArray.length === 2 && (
-        <div className="Films">
+        <main>
           <FilmHidingRating
             filmObject={filmObjectArray[0]}
             onFilmClick={selectFilmHidingRating}
@@ -62,7 +62,7 @@ function Game() {
             filmObject={filmObjectArray[1]}
             onFilmClick={selectFilmShowingRating}
           />
-        </div>
+        </main>
       )}
     </div>
   );
