@@ -9,10 +9,10 @@ function App() {
             <Game/>
             <footer>
                 <a href="https://github.com/JamesGJ5/letterxbod-higher-or-lower">
-                    <img src={invertocat}/>
+                    <img src={invertocat} alt="" />
                 </a>
                 <a href="https://www.linkedin.com/in/james-graca-jones/">
-                    <img src={inLogo}/>
+                    <img src={inLogo} alt="" />
                 </a>
             </footer>
         </div>
