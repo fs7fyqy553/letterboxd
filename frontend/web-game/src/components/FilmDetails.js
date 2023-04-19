@@ -9,7 +9,7 @@ function FilmDetails({ filmObject, showAverageRating, onFilmClick }) {
     filmPosterURL,
   } = filmObject;
   return (
-    <div className="FilmDetails" onClick={onFilmClick}>
+    <button className="FilmDetails" onClick={onFilmClick}>
       <img src={filmPosterURL} alt={`Film Poster For ${filmTitle}`} />
       <div className="text">
         <div>
@@ -20,7 +20,7 @@ function FilmDetails({ filmObject, showAverageRating, onFilmClick }) {
           <div>Average Rating: {averageRatingString} / 5</div>
         )}
       </div>
-    </div>
+    </button>
   );
 }
 
