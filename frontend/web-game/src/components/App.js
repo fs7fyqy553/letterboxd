@@ -7,14 +7,14 @@ function App() {
     return (
         <div className="App">
             <Game/>
-            <div className="Footer">
+            <footer>
                 <a href="https://github.com/JamesGJ5/letterxbod-higher-or-lower">
                     <img src={invertocat}/>
                 </a>
                 <a href="https://www.linkedin.com/in/james-graca-jones/">
                     <img src={inLogo}/>
                 </a>
-            </div>
+            </footer>
         </div>
     )
 }
