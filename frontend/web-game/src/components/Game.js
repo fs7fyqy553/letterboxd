@@ -54,6 +54,9 @@ function Game() {
       </header>
       {filmObjectArray.length === 2 && (
         <main aria-labelledby="instruction">
+          {/* TODO: improve code by tying filmObject passed in as props to onFilmClick 
+          callback. Currently, if filmObject were to be changed to filmObjectArray[1], 
+          onFilmClick would call selectFilmShowing ratio which selects filmObjectArray[0] */}
           <FilmShowingRating
             filmObject={filmObjectArray[0]}
             onFilmClick={selectFilmShowingRating}
