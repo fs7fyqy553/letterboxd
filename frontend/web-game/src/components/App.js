@@ -8,10 +8,10 @@ function App() {
         <div className="App">
             <Game/>
             <footer>
-                <a href="https://github.com/JamesGJ5/letterxbod-higher-or-lower">
+                <a aria-label="Link to GitHub repository" href="https://github.com/JamesGJ5/letterxbod-higher-or-lower">
                     <img src={invertocat} alt="" />
                 </a>
-                <a href="https://www.linkedin.com/in/james-graca-jones/">
+                <a aria-label="Link to LinkedIn profile" href="https://www.linkedin.com/in/james-graca-jones/">
                     <img src={inLogo} alt="" />
                 </a>
             </footer>
