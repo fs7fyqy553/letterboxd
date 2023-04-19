@@ -7,7 +7,16 @@
 
 .Header {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
+}
+
+.Header > h1 {
+  margin-top: 0;
+}
+
+.Header > div {
+  display: flex;
+  gap: 10px;
 }
 
 .Films {

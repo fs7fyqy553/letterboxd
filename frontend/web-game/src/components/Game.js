@@ -46,9 +46,11 @@ function Game() {
   return (
     <div className="Game">
       <div className="Header">
-        <CurrentScore score={currentScore} />
-        Guess the film with the higher Letterboxd rating...
-        <HighScore score={highScore} />
+        <h1>Guess the film with the higher Letterboxd rating...</h1>
+        <div>
+          <CurrentScore score={currentScore} />
+          <HighScore score={highScore} />
+        </div>
       </div>
       {filmObjectArray.length === 2 && (
         <div className="Films">
