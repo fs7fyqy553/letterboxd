@@ -4,7 +4,7 @@ function FilmHidingRating({ filmObject, onFilmClick }) {
   return (
     <FilmDetails
       filmObject={filmObject}
-      showAverageRating={true}
+      showAverageRating={false}
       onFilmClick={onFilmClick}
     />
   );

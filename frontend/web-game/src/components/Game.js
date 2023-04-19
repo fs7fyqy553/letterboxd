@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import getFilmPair from "../functions/getFilmPair";
 import HighScore from "./HighScore";
 import CurrentScore from "./CurrentScore";
-import FilmHidingRating from "./FilmHidingRating";
 import FilmShowingRating from "./FilmShowingRating";
+import FilmHidingRating from "./FilmHidingRating";
 
 function Game() {
   const [highScore, setHighScore] = useState(0);
@@ -20,10 +20,10 @@ function Game() {
     const newFilmObjectArray = await getFilmPair();
     setFilmObjectArray(newFilmObjectArray);
   };
-  const selectFilmHidingRating = () => {
+  const selectFilmShowingRating = () => {
     processFilmSelection(0);
   };
-  const selectFilmShowingRating = () => {
+  const selectFilmHidingRating = () => {
     processFilmSelection(1);
   };
   const processFilmSelection = (selectedFilmObjectIndex) => {
@@ -54,13 +54,13 @@ function Game() {
       </header>
       {filmObjectArray.length === 2 && (
         <main aria-labelledby="instruction">
-          <FilmHidingRating
-            filmObject={filmObjectArray[0]}
-            onFilmClick={selectFilmHidingRating}
-          />
           <FilmShowingRating
-            filmObject={filmObjectArray[1]}
+            filmObject={filmObjectArray[0]}
             onFilmClick={selectFilmShowingRating}
+          />
+          <FilmHidingRating
+            filmObject={filmObjectArray[1]}
+            onFilmClick={selectFilmHidingRating}
           />
         </main>
       )}
