@@ -46,7 +46,7 @@ function Game() {
   return (
     <div className="Game">
       <div className="Header">
-        <h1>Guess the film with the higher Letterboxd rating...</h1>
+        <h1>Click the Film with the Higher Letterboxd Rating...</h1>
         <div>
           <CurrentScore score={currentScore} />
           <HighScore score={highScore} />
