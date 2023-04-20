@@ -14,5 +14,5 @@
 .FilmDetails img {
   box-shadow: 0 0 30px;
   border-radius: 10px;
-  width: 250px;
+  max-height: 205px;
 }
