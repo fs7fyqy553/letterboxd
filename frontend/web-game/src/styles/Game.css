@@ -1,5 +1,5 @@
 .Game {
-  flex-grow: 1;
+  flex: 1;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -22,7 +22,7 @@ header > div {
 }
 
 main {
-  flex-grow: 1;
+  flex: 1;
   background-color: #36454f;
   display: flex;
   flex-wrap: wrap;

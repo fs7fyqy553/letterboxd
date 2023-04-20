@@ -1,5 +1,5 @@
 .FilmDetails {
-  flex-grow: 1;
+  flex: 1;
   border: none;
   background-color: #DEDEDE;
   cursor: pointer;
