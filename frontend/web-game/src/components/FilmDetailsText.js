@@ -4,11 +4,11 @@ function FilmDetailsText(
     return (
         <div className="text">
         <div>
-            {filmTitle} ({releaseYearString})
+            <strong>{filmTitle}</strong> ({releaseYearString})
         </div>
-        <div>Directed By: {directorNameArray.join(", ")}</div>
+        <div><strong>Directed By:</strong> {directorNameArray.join(", ")}</div>
         {showAverageRating && (
-            <div>Average Rating: {averageRatingString} / 5</div>
+            <div><strong>Average Rating:</strong> {averageRatingString}/5</div>
         )}
         </div>
     )
