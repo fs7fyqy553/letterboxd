@@ -13,7 +13,7 @@ header {
 
 header > h1 {
   margin-top: 0;
-  font-size: clamp(1em, 7vw, 2em)
+  font-size: clamp(1em, min(7vw, 7vh), 2em)
 }
 
 header > div {
