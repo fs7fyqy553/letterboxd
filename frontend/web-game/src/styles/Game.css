@@ -25,6 +25,5 @@ main {
   flex: 1;
   background-color: #36454f;
   display: flex;
-  /* flex-wrap: wrap; */
   gap: 5px;
 }
