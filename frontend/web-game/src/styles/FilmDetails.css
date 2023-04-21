@@ -11,13 +11,15 @@
   gap: 20px;
 }
 
-/* .FilmDetails > img {
-  box-shadow: 0 0 30px;
-  border-radius: 10px;
-  max-width: 250px;
-} */
-
+/* TODO: consider implementing a media query for mobile landscape mode, e.g. one that uses film 
+"cover photo" from Letterboxd */
 .FilmDetails > .img {
   width: 100%;
+  max-width: 250px;
+  max-height: 400px;
   flex: 1;
+  background-position: center;
+  background-size: cover;
+  border-radius: 10px;
+  box-shadow: 0 0 30px;
 }
