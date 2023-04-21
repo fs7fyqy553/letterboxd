@@ -1,10 +1,10 @@
 .App {
-    flex: 1;
-    /* NOTE: color selected for contrast ratio with GitHub and LinkedIn logos in footer 
+  flex: 1;
+  /* NOTE: color selected for contrast ratio with GitHub and LinkedIn logos in footer 
     that is better than 3.1:1 */
-    background-color: #DEDEDE;
-    display: flex;
-    flex-direction: column;
+  background-color: #dedede;
+  display: flex;
+  flex-direction: column;
 }
 
 .Game > header,

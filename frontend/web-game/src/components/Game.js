@@ -13,7 +13,9 @@ function Game() {
 
   useEffect(() => changeFilms, []);
   useEffect(() => {
-    setHighScore((highScore) => (currentScore > highScore) ? currentScore : highScore);
+    setHighScore((highScore) =>
+      currentScore > highScore ? currentScore : highScore
+    );
   }, [currentScore]);
 
   const changeFilms = async () => {
@@ -46,7 +48,9 @@ function Game() {
   return (
     <div className="Game">
       <header aria-label="Instruction and scores">
-        <h1 id="instruction">Click the Film with the Higher Letterboxd Rating...</h1>
+        <h1 id="instruction">
+          Click the Film with the Higher Letterboxd Rating...
+        </h1>
         <div aria-label="Scores">
           <CurrentScore score={currentScore} />
           <HighScore score={highScore} />

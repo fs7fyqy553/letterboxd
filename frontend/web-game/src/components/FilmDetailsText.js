@@ -1,18 +1,25 @@
-function FilmDetailsText(
-    { filmTitle, releaseYearString, directorNameArray, averageRatingString, showAverageRating }
-) {
-    return (
-        <div className="text">
+function FilmDetailsText({
+  filmTitle,
+  releaseYearString,
+  directorNameArray,
+  averageRatingString,
+  showAverageRating,
+}) {
+  return (
+    <div className="text">
+      <div>
+        <strong>{filmTitle}</strong> ({releaseYearString})
+      </div>
+      <div>
+        <strong>Directed By:</strong> {directorNameArray.join(", ")}
+      </div>
+      {showAverageRating && (
         <div>
-            <strong>{filmTitle}</strong> ({releaseYearString})
+          <strong>Average Rating:</strong> {averageRatingString}/5
         </div>
-        <div><strong>Directed By:</strong> {directorNameArray.join(", ")}</div>
-        {showAverageRating && (
-            <div><strong>Average Rating:</strong> {averageRatingString}/5</div>
-        )}
-        </div>
-    )
-
+      )}
+    </div>
+  );
 }
 
 export default FilmDetailsText;

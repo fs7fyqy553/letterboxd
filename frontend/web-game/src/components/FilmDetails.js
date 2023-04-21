@@ -2,7 +2,12 @@ import "../styles/FilmDetails.css";
 import FilmPoster from "./FilmPoster";
 import FilmDetailsText from "./FilmDetailsText";
 
-function FilmDetails({ filmObject, showAverageRating, onFilmClick, showTextFirst }) {
+function FilmDetails({
+  filmObject,
+  showAverageRating,
+  onFilmClick,
+  showTextFirst,
+}) {
   const {
     filmTitle,
     releaseYearString,
@@ -10,14 +15,16 @@ function FilmDetails({ filmObject, showAverageRating, onFilmClick, showTextFirst
     averageRatingString,
     filmPosterURL,
   } = filmObject;
-  const filmPoster = <FilmPoster filmPosterURL={filmPosterURL}/>;
-  const filmDetailsText = <FilmDetailsText
-    filmTitle={filmTitle}
-    releaseYearString={releaseYearString}
-    directorNameArray={directorNameArray}
-    averageRatingString={averageRatingString}
-    showAverageRating={showAverageRating}
-  />
+  const filmPoster = <FilmPoster filmPosterURL={filmPosterURL} />;
+  const filmDetailsText = (
+    <FilmDetailsText
+      filmTitle={filmTitle}
+      releaseYearString={releaseYearString}
+      directorNameArray={directorNameArray}
+      averageRatingString={averageRatingString}
+      showAverageRating={showAverageRating}
+    />
+  );
   return (
     <button className="FilmDetails" onClick={onFilmClick}>
       {filmPoster}
