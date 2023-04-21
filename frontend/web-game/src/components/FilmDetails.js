@@ -20,17 +20,8 @@ function FilmDetails({ filmObject, showAverageRating, onFilmClick, showTextFirst
   />
   return (
     <button className="FilmDetails" onClick={onFilmClick}>
-      {showTextFirst === true ?
-        <>
-          {filmDetailsText}
-          {filmPoster}
-        </>
-      :
-        <>
-          {filmPoster}
-          {filmDetailsText}
-        </>
-      }
+      {filmPoster}
+      {filmDetailsText}
     </button>
   );
 }

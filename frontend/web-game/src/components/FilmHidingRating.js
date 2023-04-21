@@ -6,7 +6,6 @@ function FilmHidingRating({ filmObject, onFilmClick }) {
       filmObject={filmObject}
       showAverageRating={false}
       onFilmClick={onFilmClick}
-      showTextFirst={false}
     />
   );
 }
