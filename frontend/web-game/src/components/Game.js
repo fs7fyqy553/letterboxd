@@ -18,31 +18,31 @@ function Game() {
     );
   }, [currentScore]);
 
-  const changeFilms = async () => {
-    const newFilmObjectArray = await getFilmPair();
-    setFilmObjectArray(newFilmObjectArray);
-  };
   const selectFilmShowingRating = () => {
     processFilmSelection(0);
   };
-  const selectFilmHidingRating = () => {
-    processFilmSelection(1);
-  };
   const processFilmSelection = (selectedFilmObjectIndex) => {
     const selectedFilmObject = filmObjectArray[selectedFilmObjectIndex];
-    const opponentFilmObject = filmObjectArray[1 - selectedFilmObjectIndex];
-    updateScore(selectedFilmObject, opponentFilmObject);
+    const otherFilmObject = filmObjectArray[1 - selectedFilmObjectIndex];
+    updateScore(selectedFilmObject, otherFilmObject);
     changeFilms();
   };
-  const updateScore = (selectedFilmObject, opponentFilmObject) => {
+  const updateScore = (selectedFilmObject, otherFilmObject) => {
     if (
       selectedFilmObject.averageRatingString >
-      opponentFilmObject.averageRatingString
+      otherFilmObject.averageRatingString
     ) {
       setCurrentScore((currentScore) => currentScore + 1);
     } else {
       setCurrentScore(0);
     }
+  };
+  const changeFilms = async () => {
+    const newFilmObjectArray = await getFilmPair();
+    setFilmObjectArray(newFilmObjectArray);
+  };
+  const selectFilmHidingRating = () => {
+    processFilmSelection(1);
   };
 
   return (
@@ -58,9 +58,6 @@ function Game() {
       </header>
       {filmObjectArray.length === 2 && (
         <main aria-labelledby="instruction">
-          {/* TODO: improve code by tying filmObject passed in as props to onFilmClick 
-          callback. Currently, if filmObject were to be changed to filmObjectArray[1], 
-          onFilmClick would call selectFilmShowing ratio which selects filmObjectArray[0] */}
           <FilmShowingRating
             filmObject={filmObjectArray[0]}
             onFilmClick={selectFilmShowingRating}
