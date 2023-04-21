@@ -1,6 +1,6 @@
 function FilmPoster({ filmPosterURL }) {
     return (
-        <img src={filmPosterURL} alt=""/>
+        <div className="img" style={{backgroundImage: `url(${filmPosterURL})`}}/>
     )
 }
 
