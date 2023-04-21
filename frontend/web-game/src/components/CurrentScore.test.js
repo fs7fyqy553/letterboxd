@@ -4,7 +4,7 @@ import '@testing-library/jest-dom';
 import CurrentScore from "./CurrentScore";
 
 describe("CurrentScore component", () => {
-    it("renders correct div", () => {
+    it("renders correct score", () => {
         const testScore = 10;
         render(<CurrentScore score={testScore}/>);
         const expectedText = `Current Score: ${testScore}`;
