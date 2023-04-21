@@ -6,7 +6,6 @@ function FilmDetails({
   filmObject,
   showAverageRating,
   onFilmClick,
-  showTextFirst,
 }) {
   const {
     filmTitle,
