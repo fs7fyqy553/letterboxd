@@ -3,8 +3,7 @@ import { useState, useEffect } from "react";
 import getFilmPair from "../functions/getFilmPair";
 import HighScore from "./HighScore";
 import CurrentScore from "./CurrentScore";
-import FilmShowingRating from "./FilmShowingRating";
-import FilmHidingRating from "./FilmHidingRating";
+import FilmDetails from "./FilmDetails";
 
 function Game() {
   const [highScore, setHighScore] = useState(0);
@@ -58,13 +57,15 @@ function Game() {
       </header>
       {filmObjectArray.length === 2 && (
         <main aria-labelledby="instruction">
-          <FilmShowingRating
+          <FilmDetails
             filmObject={filmObjectArray[0]}
             onFilmClick={selectFilmShowingRating}
+            showAverageRating={true}
           />
-          <FilmHidingRating
+          <FilmDetails
             filmObject={filmObjectArray[1]}
             onFilmClick={selectFilmHidingRating}
+            showAverageRating={false}
           />
         </main>
       )}
