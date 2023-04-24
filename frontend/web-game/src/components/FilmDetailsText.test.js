@@ -29,9 +29,9 @@ describe("FilmDetailsText component", () => {
             const testDirectorNamesString = testDirectorNameArray.join(", ");
             expect(screen.getByText(testDirectorNamesString, {exact: false})).toBeInTheDocument();
         });
-        // it("shows average rating", () => {
-        //     render(testFilmDetailsText);
-        //     expect(screen.getByText(testAverageRatingString, {exact: false})).toBeInTheDocument();
-        // })
+        it("shows average rating", () => {
+            render(testFilmDetailsText);
+            expect(screen.getByText(testAverageRatingString, {exact: false})).toBeInTheDocument();
+        })
     })
 });
