@@ -23,9 +23,10 @@ describe("FilmDetailsText component", () => {
             render(testFilmDetailsText);
             expect(screen.getByText(testReleaseYearString, {exact: false})).toBeInTheDocument();
         })
-        // it("mentions correct director names", () => {
-        //     render(testFilmDetailsText);
-        //     expect()
-        // })
+        it("mentions correct director names", () => {
+            render(testFilmDetailsText);
+            const testDirectorNamesString = testDirectorNameArray.join(", ");
+            expect(screen.getByText(testDirectorNamesString, {exact: false})).toBeInTheDocument();
+        })
     })
 });
