@@ -45,7 +45,7 @@ describe("FilmDetails component", () => {
         showAverageRating={testShowAverageRating}
         onFilmClick={testOnFilmClick}
     />
-    it("renders filmPoster with correct props", () => {
+    it("renders FilmPoster with correct props", () => {
         render(testFilmDetails);
         expect(screen.getByTestId("FilmPoster's filmPosterURL prop").textContent).toBe(
             testFilmPosterURL
@@ -67,4 +67,5 @@ describe("FilmDetails component", () => {
         );
         expect(screen.getByTestId("FilmDetailsText's showAverageRating prop")).toBeInTheDocument();
     });
+    // it("renders ")
 });
