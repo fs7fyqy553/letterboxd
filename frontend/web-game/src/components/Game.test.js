@@ -11,6 +11,18 @@ jest.mock("./HighScore", () => ({score}) =>
     <div data-testid="HighScore's score prop">{score}</div>
 );
 
+// TODO: Make async
+jest.mock("../functions/getFilmPair", () => () => {
+    // NOTE: omitting keys unnecessary for test of Game component
+    const lowerRatingFilm = {
+        averageRatingString: "3.7",
+    };
+    const higherRatingFilm = {
+        averageRatingString: "4.5",
+    };
+    return [lowerRatingFilm, higherRatingFilm];
+})
+
 describe("Game component", () => {
     const testGame = <Game />;
     it("renders CurrentScore with correct initial score prop", () => {
