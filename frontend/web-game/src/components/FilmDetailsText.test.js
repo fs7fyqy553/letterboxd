@@ -14,6 +14,7 @@ describe("FilmDetailsText component", () => {
             releaseYearString={testReleaseYearString}
             directorNameArray={testDirectorNameArray}
             averageRatingString={testAverageRatingString}
+            showAverageRating={true}
         />
         it("mentions correct film", () => {
             render(testFilmDetailsText);
@@ -22,11 +23,15 @@ describe("FilmDetailsText component", () => {
         it("mentions correct release year", () => {
             render(testFilmDetailsText);
             expect(screen.getByText(testReleaseYearString, {exact: false})).toBeInTheDocument();
-        })
+        });
         it("mentions correct director names", () => {
             render(testFilmDetailsText);
             const testDirectorNamesString = testDirectorNameArray.join(", ");
             expect(screen.getByText(testDirectorNamesString, {exact: false})).toBeInTheDocument();
-        })
+        });
+        // it("shows average rating", () => {
+        //     render(testFilmDetailsText);
+        //     expect(screen.getByText(testAverageRatingString, {exact: false})).toBeInTheDocument();
+        // })
     })
 });
