@@ -43,6 +43,24 @@ const testShowAverageRating = true;
 const testOnFilmClick = jest.fn();
 
 describe("FilmDetails component", () => {
+    describe("renders button", () => {
+        it("with correct onClick callback", () => {
+            render(testFilmDetails);
+            const button = screen.getByRole("button");
+            userEvent.click(button);
+            expect(testOnFilmClick).toHaveBeenCalledTimes(1);
+        });
+        it("with FilmPoster inside it", () => {
+            render(testFilmDetails);
+            const button = screen.getByRole("button");
+            expect(within(button).getByTestId("FilmPoster")).not.toBeNull();
+        });
+        it("with FilmDetailsText inside it", () => {
+            render(testFilmDetails);
+            const button = screen.getByRole("button");
+            expect(within(button).getByTestId("FilmDetailsText")).not.toBeNull();
+        });
+    });
     const testFilmDetails = <FilmDetails
         filmObject={testFilmObject}
         showAverageRating={testShowAverageRating}
@@ -69,23 +87,5 @@ describe("FilmDetails component", () => {
             testAverageRatingString
         );
         expect(screen.getByTestId("FilmDetailsText's showAverageRating prop")).toBeInTheDocument();
-    });
-    describe("renders button", () => {
-        it("with correct onClick callback", () => {
-            render(testFilmDetails);
-            const button = screen.getByRole("button");
-            userEvent.click(button);
-            expect(testOnFilmClick).toHaveBeenCalledTimes(1);
-        });
-        it("with FilmPoster inside it", () => {
-            render(testFilmDetails);
-            const button = screen.getByRole("button");
-            expect(within(button).getByTestId("FilmPoster")).not.toBeNull();
-        });
-        it("with FilmDetailsText inside it", () => {
-            render(testFilmDetails);
-            const button = screen.getByRole("button");
-            expect(within(button).getByTestId("FilmDetailsText")).not.toBeNull();
-        });
     });
 });
