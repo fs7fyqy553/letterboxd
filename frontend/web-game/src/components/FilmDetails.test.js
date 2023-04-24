@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import FilmDetails from "./FilmDetails";
 import userEvent from "@testing-library/user-event";
@@ -80,12 +80,12 @@ describe("FilmDetails component", () => {
         it("with FilmPoster inside it", () => {
             render(testFilmDetails);
             const button = screen.getByRole("button");
-            expect(button.querySelector("[data-testid=FilmPoster]")).not.toBeNull();
+            expect(within(button).getByTestId("FilmPoster")).not.toBeNull();
         });
         it("with FilmDetailsText inside it", () => {
             render(testFilmDetails);
             const button = screen.getByRole("button");
-            expect(button.querySelector("[data-testid=FilmDetailsText]")).not.toBeNull();
+            expect(within(button).getByTestId("FilmDetailsText")).not.toBeNull();
         });
     });
 });
