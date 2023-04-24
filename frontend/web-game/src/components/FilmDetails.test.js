@@ -17,7 +17,7 @@ jest.mock("./FilmDetailsText", () => ({
     averageRatingString,
     showAverageRating
 }) => 
-    <div data-testid="FilmDetailText">
+    <div data-testid="FilmDetailsText">
         <div data-testid="FilmDetailsText's filmTitle prop">{filmTitle}</div>
         <div data-testid="FilmDetailsText's releaseYearString prop">{releaseYearString}</div>
         <div data-testid="FilmDetailsText's directorNameArray prop">{directorNameArray}</div>
@@ -81,6 +81,11 @@ describe("FilmDetails component", () => {
             render(testFilmDetails);
             const button = screen.getByRole("button");
             expect(button.querySelector("[data-testid=FilmPoster]")).not.toBeNull();
+        });
+        it("with FilmDetailsText inside it", () => {
+            render(testFilmDetails);
+            const button = screen.getByRole("button");
+            expect(button.querySelector("[data-testid=FilmDetailsText]")).not.toBeNull();
         });
     });
 });
