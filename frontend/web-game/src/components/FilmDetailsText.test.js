@@ -15,9 +15,13 @@ describe("FilmDetailsText component", () => {
             directorNameArray={testDirectorNameArray}
             averageRatingString={testAverageRatingString}
         />
-        render(testFilmDetailsText);
         it("mentions correct film", () => {
+            render(testFilmDetailsText);
             expect(screen.getByText(testFilmTitle)).toBeInTheDocument();
         });
+        it("mentions correct release year", () => {
+            render(testFilmDetailsText);
+            expect(screen.getByText(testReleaseYearString, {exact: false})).toBeInTheDocument();
+        })
     })
 });
