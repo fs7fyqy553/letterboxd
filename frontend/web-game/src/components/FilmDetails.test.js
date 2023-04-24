@@ -7,6 +7,22 @@ jest.mock("./FilmPoster", () => ({filmPosterURL}) =>
     <div data-testid="FilmPoster's filmPosterURL prop">{filmPosterURL}</div>
 );
 
+jest.mock("./FilmDetailsText", () => ({
+    filmTitle,
+    releaseYearString,
+    directorNameArray,
+    averageRatingString,
+    showAverageRating
+}) => 
+    <>
+        <div data-testid="FilmDetailsText's filmTitle prop">{filmTitle}</div>
+        <div data-testid="FilmDetailsText's releaseYearString prop">{releaseYearString}</div>
+        <div data-testid="FilmDetailsText's directorNameArray prop">{directorNameArray}</div>
+        <div data-testid="FilmDetailsText's averageRatingString prop">{averageRatingString}</div>
+        {showAverageRating && <div data-testid="FilmDetailsText's showAverageRating prop"></div>}
+    </>
+);
+
 const testFilmTitle = "Film 1";
 const testReleaseYearString = "1989";
 const testDirectorNameArray = ["Director 1", "Director 2"];
@@ -34,5 +50,21 @@ describe("FilmDetails component", () => {
         expect(screen.getByTestId("FilmPoster's filmPosterURL prop").textContent).toBe(
             testFilmPosterURL
         );
+    });
+    it("renders FilmDetailsText with correct props", () => {
+        render(testFilmDetails);
+        expect(screen.getByTestId("FilmDetailsText's filmTitle prop").textContent).toBe(
+            testFilmTitle
+        );
+        expect(screen.getByTestId("FilmDetailsText's releaseYearString prop").textContent).toBe(
+            testReleaseYearString
+        );
+        expect(screen.getByTestId("FilmDetailsText's directorNameArray prop").textContent).toBe(
+            testDirectorNameArray.join("")
+        );
+        expect(screen.getByTestId("FilmDetailsText's averageRatingString prop").textContent).toBe(
+            testAverageRatingString
+        );
+        expect(screen.getByTestId("FilmDetailsText's showAverageRating prop")).toBeInTheDocument();
     });
 });
