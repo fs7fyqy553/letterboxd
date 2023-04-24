@@ -43,6 +43,11 @@ const testShowAverageRating = true;
 const testOnFilmClick = jest.fn();
 
 describe("FilmDetails component", () => {
+    const testFilmDetails = <FilmDetails
+        filmObject={testFilmObject}
+        showAverageRating={testShowAverageRating}
+        onFilmClick={testOnFilmClick}
+    />
     describe("renders button", () => {
         it("with correct onClick callback", () => {
             render(testFilmDetails);
@@ -61,11 +66,6 @@ describe("FilmDetails component", () => {
             expect(within(button).getByTestId("FilmDetailsText")).not.toBeNull();
         });
     });
-    const testFilmDetails = <FilmDetails
-        filmObject={testFilmObject}
-        showAverageRating={testShowAverageRating}
-        onFilmClick={testOnFilmClick}
-    />
     it("renders FilmPoster with correct props", () => {
         render(testFilmDetails);
         expect(screen.getByTestId("FilmPoster's filmPosterURL prop").textContent).toBe(
