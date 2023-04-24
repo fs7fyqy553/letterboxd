@@ -3,11 +3,6 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import FilmDetailsText from "./FilmDetailsText";
 
-function checkAverageRating(testFilmDetailsText, testAverageRatingString) {
-    render(testFilmDetailsText);
-    expect(screen.getByText(testAverageRatingString, {exact: false})).toBeInTheDocument();
-}
-
 function checkDirectorNames(testFilmDetailsText, testDirectorNameArray) {
     render(testFilmDetailsText);
     const testDirectorNamesString = testDirectorNameArray.join(", ");
@@ -47,7 +42,8 @@ describe("FilmDetailsText component", () => {
             checkDirectorNames(testFilmDetailsText, testDirectorNameArray);
         });
         it("shows average rating", () => {
-            checkAverageRating(testFilmDetailsText, testAverageRatingString);
+            render(testFilmDetailsText);
+            expect(screen.getByText(testAverageRatingString, {exact: false})).toBeInTheDocument();
         });
     });
     describe("chosen to hide average rating", () => {
@@ -67,5 +63,9 @@ describe("FilmDetailsText component", () => {
         it("mentions correct director names", () => {
             checkDirectorNames(testFilmDetailsText, testDirectorNameArray);
         });
+        it("hides average rating", () => {
+            render(testFilmDetailsText);
+            expect(screen.queryByText(testAverageRatingString, {exact: false})).toBeNull();
+        })
     });
 });
