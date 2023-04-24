@@ -2,6 +2,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import FilmDetails from "./FilmDetails";
+import userEvent from "@testing-library/user-event";
 
 jest.mock("./FilmPoster", () => ({filmPosterURL}) => 
     <div data-testid="FilmPoster's filmPosterURL prop">{filmPosterURL}</div>
@@ -67,5 +68,12 @@ describe("FilmDetails component", () => {
         );
         expect(screen.getByTestId("FilmDetailsText's showAverageRating prop")).toBeInTheDocument();
     });
-    // it("renders ")
+    describe("renders button", () => {
+        it("with correct onClick callback", () => {
+            render(testFilmDetails);
+            const button = screen.getByRole("button");
+            userEvent.click(button);
+            expect(testOnFilmClick).toHaveBeenCalledTimes(1);
+        });
+    });
 });
