@@ -5,7 +5,9 @@ import FilmDetails from "./FilmDetails";
 import userEvent from "@testing-library/user-event";
 
 jest.mock("./FilmPoster", () => ({filmPosterURL}) => 
-    <div data-testid="FilmPoster's filmPosterURL prop">{filmPosterURL}</div>
+    <div data-testid="FilmPoster">
+        <div data-testid="FilmPoster's filmPosterURL prop">{filmPosterURL}</div>
+    </div>
 );
 
 jest.mock("./FilmDetailsText", () => ({
@@ -15,13 +17,13 @@ jest.mock("./FilmDetailsText", () => ({
     averageRatingString,
     showAverageRating
 }) => 
-    <>
+    <div data-testid="FilmDetailText">
         <div data-testid="FilmDetailsText's filmTitle prop">{filmTitle}</div>
         <div data-testid="FilmDetailsText's releaseYearString prop">{releaseYearString}</div>
         <div data-testid="FilmDetailsText's directorNameArray prop">{directorNameArray}</div>
         <div data-testid="FilmDetailsText's averageRatingString prop">{averageRatingString}</div>
         {showAverageRating && <div data-testid="FilmDetailsText's showAverageRating prop"></div>}
-    </>
+    </div>
 );
 
 const testFilmTitle = "Film 1";
@@ -75,5 +77,10 @@ describe("FilmDetails component", () => {
             userEvent.click(button);
             expect(testOnFilmClick).toHaveBeenCalledTimes(1);
         });
+        it("with FilmPoster inside it", () => {
+            render(testFilmDetails);
+            const filmPoster = screen.getByTestId("FilmPoster");
+            expect(filmPoster.closest("button")).not.toBeNull();
+        })
     });
 });
