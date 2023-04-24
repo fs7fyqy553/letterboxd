@@ -58,5 +58,14 @@ describe("FilmDetailsText component", () => {
             averageRatingString={testAverageRatingString}
             showAverageRating={false}
         />
+        it("mentions correct film", () => {
+            checkFilmTitle(testFilmDetailsText, testFilmTitle);
+        });
+        it("mentions correct release year", () => {
+            checkReleaseYear(testFilmDetailsText, testReleaseYearString);
+        });
+        it("mentions correct director names", () => {
+            checkDirectorNames(testFilmDetailsText, testDirectorNameArray);
+        });
     });
 });
