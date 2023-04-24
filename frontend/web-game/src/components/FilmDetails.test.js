@@ -79,8 +79,8 @@ describe("FilmDetails component", () => {
         });
         it("with FilmPoster inside it", () => {
             render(testFilmDetails);
-            const filmPoster = screen.getByTestId("FilmPoster");
-            expect(filmPoster.closest("button")).not.toBeNull();
-        })
+            const button = screen.getByRole("button");
+            expect(button.querySelector("[data-testid=FilmPoster]")).not.toBeNull();
+        });
     });
 });
