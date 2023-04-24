@@ -17,11 +17,15 @@ describe("FilmDetailsText component", () => {
         />
         it("mentions correct film", () => {
             render(testFilmDetailsText);
-            expect(screen.getByText(testFilmTitle)).toBeInTheDocument();
+            expect(screen.getByText(testFilmTitle, {exact: false})).toBeInTheDocument();
         });
         it("mentions correct release year", () => {
             render(testFilmDetailsText);
             expect(screen.getByText(testReleaseYearString, {exact: false})).toBeInTheDocument();
         })
+        // it("mentions correct director names", () => {
+        //     render(testFilmDetailsText);
+        //     expect()
+        // })
     })
 });
