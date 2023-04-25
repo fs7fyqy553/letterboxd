@@ -28,7 +28,7 @@ jest.mock("./FilmDetails", () => ({filmObject, onFilmClick, showAverageRating}) 
         <div data-testid="FilmDetails' filmObject prop">
             {JSON.stringify(filmObject)}
         </div>
-        {showAverageRating && <div data-testid="FilmDetails' showAverageRating prop"></div>}
+        {!showAverageRating && <div data-testid="FilmDetails' showAverageRating prop falsy"></div>}
     </button>
 );
 
@@ -51,5 +51,10 @@ describe("Game component", () => {
         const filmObjectElementArray = await screen.findAllByTestId("FilmDetails' filmObject prop");
         const filmObjectStringArray = filmObjectElementArray.map((element) => element.textContent);
         expect(filmObjectStringArray).toContain(lowerRatingTestFilmString, higherRatingTestFilmString);
+    });
+    it("renders at least one FilmDetails with falsy showAverageRating prop", async () => {
+        render(testGame);
+        const falsyShowAverageRatingElementArray = await screen.findAllByTestId("FilmDetails' showAverageRating prop falsy");
+        expect(falsyShowAverageRatingElementArray.length).toBeGreaterThanOrEqual(1);
     });
 });
