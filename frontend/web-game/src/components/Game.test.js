@@ -1,5 +1,5 @@
 import React from "react";
-import { findAllByTestId, render, screen, waitFor, act } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Game from "./Game";
 
