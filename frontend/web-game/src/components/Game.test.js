@@ -44,11 +44,12 @@ describe("Game component", () => {
         const highScorePropDiv = await screen.findByTestId("HighScore's score prop");
         expect(highScorePropDiv.textContent).toBe("0");
     });
-    // it("renders FilmDetails components with the correct film object props", async () => {
-    //     const lowerRatingTestFilmString = JSON.stringify(lowerRatingTestFilm);
-    //     const higherRatingTestFilmString = JSON.stringify(higherRatingTestFilm);
-    //     render(testGame);
-    //     const filmObjectElementArray = await screen.findAllByTestId("FilmDetails' filmObject prop");
-    //     console.log(filmObjectElementArray[0].textContent);
-    // });
+    it("renders FilmDetails components with the correct film object props", async () => {
+        const lowerRatingTestFilmString = JSON.stringify(lowerRatingTestFilm);
+        const higherRatingTestFilmString = JSON.stringify(higherRatingTestFilm);
+        render(testGame);
+        const filmObjectElementArray = await screen.findAllByTestId("FilmDetails' filmObject prop");
+        const filmObjectStringArray = filmObjectElementArray.map((element) => element.textContent);
+        expect(filmObjectStringArray).toContain(lowerRatingTestFilmString, higherRatingTestFilmString);
+    });
 });
