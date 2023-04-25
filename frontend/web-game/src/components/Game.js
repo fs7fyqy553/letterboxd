@@ -10,7 +10,9 @@ function Game() {
   const [currentScore, setCurrentScore] = useState(0);
   const [filmObjectArray, setFilmObjectArray] = useState([]);
 
-  useEffect(() => changeFilms, []);
+  useEffect(() => {
+    changeFilms();
+  }, []);
   useEffect(() => {
     setHighScore((highScore) =>
       currentScore > highScore ? currentScore : highScore
