@@ -28,7 +28,7 @@ function Game() {
     ) {
       setScoreObject(({currentScore, highScore}) => {
         const newCurrentScore = currentScore + 1;
-        const newHighScore = (newCurrentScore > highScore) ? newCurrentScore : highScore;
+        const newHighScore = Math.max(newCurrentScore, highScore);
         return {currentScore: newCurrentScore, highScore: newHighScore};
       });
     } else {
