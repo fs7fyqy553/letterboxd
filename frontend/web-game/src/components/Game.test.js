@@ -1,7 +1,9 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, act, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Game from "./Game";
+import userEvent from "@testing-library/user-event";
+import { nextTick } from "process";
 
 // NOTE: omitting keys unnecessary for test of Game component
 const lowerRatingTestFilm = {
@@ -23,8 +25,8 @@ jest.mock("./HighScore", () => ({score}) =>
     <div data-testid="HighScore's score prop">{score}</div>
 );
 
-jest.mock("./FilmDetails", () => ({filmObject, onFilmClick, showAverageRating}) => 
-    <button data-testid="FilmDetails" onClick={onFilmClick}>
+jest.mock("./FilmDetails", () => ({filmObject, onFilmClick, showAverageRating}) =>
+    <button data-testid={filmObject.averageRatingString} onClick={onFilmClick}>
         <div data-testid="FilmDetails' filmObject prop">
             {JSON.stringify(filmObject)}
         </div>
@@ -56,5 +58,17 @@ describe("Game component", () => {
         render(testGame);
         const falsyShowAverageRatingElementArray = await screen.findAllByTestId("FilmDetails' showAverageRating prop falsy");
         expect(falsyShowAverageRatingElementArray.length).toBeGreaterThanOrEqual(1);
+    });
+    it("film selections alter scores correctly", async () => {
+        render(testGame);
+        const lowerRatingFilmDetailsElement = await screen.findByTestId(lowerRatingTestFilm.averageRatingString);
+        const higherRatingFilmDetailsElement = await screen.findByTestId(higherRatingTestFilm.averageRatingString);
+        userEvent.click(higherRatingFilmDetailsElement);
+        userEvent.click(higherRatingFilmDetailsElement);
+        userEvent.click(lowerRatingFilmDetailsElement);
+        const currentScorePropDiv = await screen.findByTestId("CurrentScore's score prop");
+        expect(currentScorePropDiv.textContent).toBe("0");
+        const highScorePropDiv = await screen.findByTestId("HighScore's score prop");
+        expect(highScorePropDiv.textContent).toBe("2");
     });
 });
