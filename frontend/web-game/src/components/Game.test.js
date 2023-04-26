@@ -1,9 +1,8 @@
 import React from "react";
-import { render, screen, act, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Game from "./Game";
 import userEvent from "@testing-library/user-event";
-import { nextTick } from "process";
 
 // NOTE: omitting keys unnecessary for test of Game component
 const lowerRatingTestFilm = {
