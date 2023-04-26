@@ -9,6 +9,6 @@ async function saveScrapedFilmDetailsObject(filmDetailsObject) {
 }
 
 processFilmsInList(
-  'https://letterboxd.com/victorvdb/list/letterboxd-500-most-watched-movies-of-all/',
+  'https://letterboxd.com/bucksalypse/list/letterboxd-500-most-watched-movies-of-all/',
   saveScrapedFilmDetailsObject
 );
