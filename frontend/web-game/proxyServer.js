@@ -10,7 +10,7 @@ app.use(cors());
 app.get("/getFilmPair", async (req, res) => {
     try {
         const response = await axios.get(
-            "https://letterxbod-guessing-game-production.up.railway.app/api/films?twoFilmsWithDifferentRatings=true",
+            "https://letterboxd-scraped-server.up.railway.app/api/films?twoFilmsWithDifferentRatings=true",
             {
                 headers: {
                     "API-Key": process.env.API_KEY,
