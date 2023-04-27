@@ -10,8 +10,7 @@ app.use(cors());
 app.get("/getFilmPair", async (req, res) => {
     try {
         const response = await axios.get(
-            // "https://letterxbod-guessing-game-production.up.railway.app/api/films?twoFilmsWithDifferentRatings=true"
-            "http://localhost:3000/api/films?twoFilmsWithDifferentRatings=true",
+            "https://letterxbod-guessing-game-production.up.railway.app/api/films?twoFilmsWithDifferentRatings=true",
             {
                 headers: {
                     "API-Key": process.env.API_KEY,
