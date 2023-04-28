@@ -2,7 +2,8 @@
   "name": "letterboxd-scraper",
   "version": "0.0.0",
   "description": "Scraper of letterboxd.com for film data",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc"

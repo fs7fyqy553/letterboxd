@@ -1,4 +1,6 @@
-const { processFilmsInList } = require('./dist/index');
+// TODO: '.js' extension specified for the sake of NodeNext (see https://www.youtube.com/watch?v=H91aqUHn8sE), 
+// adjust ESLint accordingly
+import processFilmsInList from './dist/index.js';
 
 const testFilmListScraper = true;
 

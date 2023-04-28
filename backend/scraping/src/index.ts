@@ -1,6 +1,10 @@
-const { parse } = require('node-html-parser');
-const puppeteer = require('puppeteer');
-const { scrollPageToBottom } = require('puppeteer-autoscroll-down');
+import puppeteer from "puppeteer";
+import { parse } from "node-html-parser";
+import { scrollPageToBottom } from "puppeteer-autoscroll-down";
+
+// const { parse } = require('node-html-parser');
+// const puppeteer = require('puppeteer');
+// const { scrollPageToBottom } = require('puppeteer-autoscroll-down');
 
 async function closeBrowser(browser) {
   // await browserArray.forEach(async (browser) => browser.close());
@@ -171,7 +175,7 @@ async function useBrowser(browser, firstListPageURL, processor) {
   await usePuppeteerPages(listPuppeteerPage, filmPuppeteerPage, firstListPageURL, processor);
 }
 
-async function getHeadlessBrowser() {
+async function getHeadlessBrowser(): puppeteer.Browser {
   return puppeteer.launch({ headless: true });
 }
 
@@ -182,4 +186,4 @@ async function processFilmsInList(firstListPageURL, processor) {
   await closeBrowser(browser);
 }
 
-module.exports = { processFilmsInList };
+export default processFilmsInList;
