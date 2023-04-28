@@ -2,12 +2,7 @@ import puppeteer from "puppeteer";
 import { parse } from "node-html-parser";
 import { scrollPageToBottom } from "puppeteer-autoscroll-down";
 
-// const { parse } = require('node-html-parser');
-// const puppeteer = require('puppeteer');
-// const { scrollPageToBottom } = require('puppeteer-autoscroll-down');
-
 async function closeBrowser(browser) {
-  // await browserArray.forEach(async (browser) => browser.close());
   await browser.close();
 }
 
