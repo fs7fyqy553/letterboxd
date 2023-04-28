@@ -4,7 +4,8 @@
   "description": "Scraper of letterboxd.com for film data",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
   },
   "author": "James Graça-Jones <jamesgracajones@gmail.com> (https://github.com/JamesGJ5)",
   "license": "ISC",
@@ -14,7 +15,8 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-prettier": "^4.2.1",
-    "prettier": "^2.8.7"
+    "prettier": "^2.8.7",
+    "typescript": "^5.0.4"
   },
   "dependencies": {
     "node-html-parser": "^6.1.5",

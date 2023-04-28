@@ -1,4 +1,4 @@
-const { processFilmsInList } = require('./index');
+const { processFilmsInList } = require('./dist/index');
 
 const testFilmListScraper = true;
 
