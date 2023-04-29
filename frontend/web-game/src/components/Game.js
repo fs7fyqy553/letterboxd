@@ -13,14 +13,10 @@ function Game() {
   useEffect(() => {
     changeFilms();
   }, []);
-  function selectFilmShowingRating() {
-    processFilmSelection(0);
-  };
-  function processFilmSelection(selectedFilmObjectIndex) {
-    const selectedFilmObject = filmObjectArray[selectedFilmObjectIndex];
-    const otherFilmObject = filmObjectArray[1 - selectedFilmObjectIndex];
-    updateScore(selectedFilmObject, otherFilmObject);
-    changeFilms();
+  
+  async function changeFilms() {
+    const newFilmObjectArray = await getFilmPair();
+    setFilmObjectArray(newFilmObjectArray);
   };
   function updateScore(selectedFilmObject, otherFilmObject) {
     if (
@@ -33,12 +29,17 @@ function Game() {
       currentScore.current = 0;
     }
   };
-  async function changeFilms() {
-    const newFilmObjectArray = await getFilmPair();
-    setFilmObjectArray(newFilmObjectArray);
+  function processFilmSelection(selectedFilmObjectIndex) {
+    const selectedFilmObject = filmObjectArray[selectedFilmObjectIndex];
+    const otherFilmObject = filmObjectArray[1 - selectedFilmObjectIndex];
+    updateScore(selectedFilmObject, otherFilmObject);
+    changeFilms();
   };
   function selectFilmHidingRating() {
     processFilmSelection(1);
+  };
+  function selectFilmShowingRating() {
+    processFilmSelection(0);
   };
 
   return (
