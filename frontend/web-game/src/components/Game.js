@@ -45,21 +45,13 @@ function Game() {
     updateScore(selectedFilmObject, otherFilmObject);
     changeFilms();
   }
-  function getFilmObject(filmObjectIndex) {
-    return filmObjectArray[filmObjectIndex];
+  function getOtherFilmObject(selectedFilmObject) {
+    return (selectedFilmObject === filmObjectArray[0]) ? filmObjectArray[1] : filmObjectArray[0];
   }
 
-  function processFilmSelection(selectedFilmObjectIndex) {
-    const selectedFilmObject = getFilmObject(selectedFilmObjectIndex);
-    const otherFilmObject = getFilmObject(1 - selectedFilmObjectIndex);
+  function selectFilm(selectedFilmObject) {
+    const otherFilmObject = getOtherFilmObject(selectedFilmObject);
     endRound(selectedFilmObject, otherFilmObject);
-  }
-
-  function selectFilmHidingRating() {
-    processFilmSelection(1);
-  }
-  function selectFilmShowingRating() {
-    processFilmSelection(0);
   }
 
   return (
@@ -77,12 +69,12 @@ function Game() {
         <main aria-labelledby="instruction">
           <FilmDetails
             filmObject={filmObjectArray[0]}
-            onFilmClick={selectFilmShowingRating}
+            onFilmClick={selectFilm}
             showAverageRating={true}
           />
           <FilmDetails
             filmObject={filmObjectArray[1]}
-            onFilmClick={selectFilmHidingRating}
+            onFilmClick={selectFilm}
             showAverageRating={false}
           />
         </main>

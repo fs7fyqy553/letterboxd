@@ -25,7 +25,7 @@ function FilmDetails({
     />
   );
   return (
-    <button className="FilmDetails" onClick={onFilmClick}>
+    <button className="FilmDetails" onClick={() => onFilmClick(filmObject)}>
       {filmPoster}
       {filmDetailsText}
     </button>
