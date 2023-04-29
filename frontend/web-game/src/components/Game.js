@@ -13,16 +13,16 @@ function Game() {
   useEffect(() => {
     changeFilms();
   }, []);
-  const selectFilmShowingRating = () => {
+  function selectFilmShowingRating() {
     processFilmSelection(0);
   };
-  const processFilmSelection = (selectedFilmObjectIndex) => {
+  function processFilmSelection(selectedFilmObjectIndex) {
     const selectedFilmObject = filmObjectArray[selectedFilmObjectIndex];
     const otherFilmObject = filmObjectArray[1 - selectedFilmObjectIndex];
     updateScore(selectedFilmObject, otherFilmObject);
     changeFilms();
   };
-  const updateScore = (selectedFilmObject, otherFilmObject) => {
+  function updateScore(selectedFilmObject, otherFilmObject) {
     if (
       selectedFilmObject.averageRatingString >
       otherFilmObject.averageRatingString
@@ -33,11 +33,11 @@ function Game() {
       currentScore.current = 0;
     }
   };
-  const changeFilms = async () => {
+  async function changeFilms() {
     const newFilmObjectArray = await getFilmPair();
     setFilmObjectArray(newFilmObjectArray);
   };
-  const selectFilmHidingRating = () => {
+  function selectFilmHidingRating() {
     processFilmSelection(1);
   };
 
