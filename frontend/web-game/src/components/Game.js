@@ -1,12 +1,13 @@
 import "../styles/Game.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import getFilmPair from "../functions/getFilmPair";
 import HighScore from "./HighScore";
 import CurrentScore from "./CurrentScore";
 import FilmDetails from "./FilmDetails";
 
 function Game() {
-  const [scoreObject, setScoreObject] = useState({currentScore: 0, highScore: 0});
+  const currentScore = useRef(0);
+  const highScore = useRef(0);
   const [filmObjectArray, setFilmObjectArray] = useState([]);
 
   useEffect(() => {
@@ -26,13 +27,10 @@ function Game() {
       selectedFilmObject.averageRatingString >
       otherFilmObject.averageRatingString
     ) {
-      setScoreObject(({currentScore, highScore}) => {
-        const newCurrentScore = currentScore + 1;
-        const newHighScore = Math.max(newCurrentScore, highScore);
-        return {currentScore: newCurrentScore, highScore: newHighScore};
-      });
+      currentScore.current += 1;
+      highScore.current = Math.max(currentScore.current, highScore.current);
     } else {
-      setScoreObject((scoreObject) => ({currentScore: 0, highScore: scoreObject.highScore}));
+      currentScore.current = 0;
     }
   };
   const changeFilms = async () => {
@@ -50,8 +48,8 @@ function Game() {
           Click the Film with the Higher Letterboxd Rating...
         </h1>
         <div aria-label="Scores">
-          <CurrentScore score={scoreObject.currentScore} />
-          <HighScore score={scoreObject.highScore} />
+          <CurrentScore score={currentScore.current} />
+          <HighScore score={highScore.current} />
         </div>
       </header>
       {filmObjectArray.length === 2 && (
