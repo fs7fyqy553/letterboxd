@@ -13,34 +13,54 @@ function Game() {
   useEffect(() => {
     changeFilms();
   }, []);
-  
+
+  function updateHighScore() {
+    highScore.current = Math.max(currentScore.current, highScore.current);
+  }
+
+  function resetCurrentScore() {
+    currentScore.current = 0;
+  }
+  function incrementCurrentScore() {
+    currentScore.current += 1;
+    updateHighScore();
+  }
+
   async function changeFilms() {
     const newFilmObjectArray = await getFilmPair();
     setFilmObjectArray(newFilmObjectArray);
-  };
+  }
   function updateScore(selectedFilmObject, otherFilmObject) {
     if (
       selectedFilmObject.averageRatingString >
       otherFilmObject.averageRatingString
     ) {
-      currentScore.current += 1;
-      highScore.current = Math.max(currentScore.current, highScore.current);
+      incrementCurrentScore();
     } else {
-      currentScore.current = 0;
+      resetCurrentScore();
     }
-  };
-  function processFilmSelection(selectedFilmObjectIndex) {
-    const selectedFilmObject = filmObjectArray[selectedFilmObjectIndex];
-    const otherFilmObject = filmObjectArray[1 - selectedFilmObjectIndex];
+  }
+
+  function endRound(selectedFilmObject, otherFilmObject) {
     updateScore(selectedFilmObject, otherFilmObject);
     changeFilms();
-  };
+  }
+  function getFilmObject(filmObjectIndex) {
+    return filmObjectArray[filmObjectIndex];
+  }
+
+  function processFilmSelection(selectedFilmObjectIndex) {
+    const selectedFilmObject = getFilmObject(selectedFilmObjectIndex);
+    const otherFilmObject = getFilmObject(1 - selectedFilmObjectIndex);
+    endRound(selectedFilmObject, otherFilmObject);
+  }
+
   function selectFilmHidingRating() {
     processFilmSelection(1);
-  };
+  }
   function selectFilmShowingRating() {
     processFilmSelection(0);
-  };
+  }
 
   return (
     <div className="Game">
