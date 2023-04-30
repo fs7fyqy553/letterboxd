@@ -6,24 +6,28 @@ import CurrentScore from "./CurrentScore";
 import FilmDetails from "./FilmDetails";
 
 function Game() {
-  const currentScore = useRef(0);
-  const highScore = useRef(0);
+  const [scoreObject, setScoreObject] = useState({ currentScore: 0, highScore: 0 });
   const [filmObjectArray, setFilmObjectArray] = useState([]);
 
   useEffect(() => {
     changeFilms();
   }, []);
 
-  function updateHighScore() {
-    highScore.current = Math.max(currentScore.current, highScore.current);
+  function getNewHighScore(newCurrentScore, prevHighScore) {
+    return Math.max(newCurrentScore, prevHighScore);
+  }
+  function getNewCurrentScore(selectionWasCorrect, prevCurrentScore) {
+    return (selectionWasCorrect) ? prevCurrentScore + 1 : 0;
   }
 
-  function resetCurrentScore() {
-    currentScore.current = 0;
+  function getUpdatedScoreObject(selectionWasCorrect, prevCurrentScore, prevHighScore) {
+    const newCurrentScore = getNewCurrentScore(selectionWasCorrect, prevCurrentScore);
+    const newHighScore = getNewHighScore(newCurrentScore, prevHighScore);
+    return { currentScore: newCurrentScore, highScore: newHighScore };
   }
-  function incrementCurrentScore() {
-    currentScore.current += 1;
-    updateHighScore();
+
+  function updateScoreObject(selectionWasCorrect) {
+    setScoreObject(({currentScore, highScore}) => getUpdatedScoreObject(selectionWasCorrect, currentScore, highScore));
   }
 
   async function changeFilms() {
@@ -31,14 +35,8 @@ function Game() {
     setFilmObjectArray(newFilmObjectArray);
   }
   function updateScore(selectedFilmObject, otherFilmObject) {
-    if (
-      selectedFilmObject.averageRatingString >
-      otherFilmObject.averageRatingString
-    ) {
-      incrementCurrentScore();
-    } else {
-      resetCurrentScore();
-    }
+    const selectionWasCorrect = selectedFilmObject.averageRatingString > otherFilmObject.averageRatingString;
+    updateScoreObject(selectionWasCorrect);
   }
 
   function endRound(selectedFilmObject, otherFilmObject) {
@@ -61,8 +59,8 @@ function Game() {
           Click the Film with the Higher Letterboxd Rating...
         </h1>
         <div aria-label="Scores">
-          <CurrentScore score={currentScore.current} />
-          <HighScore score={highScore.current} />
+          <CurrentScore score={scoreObject.currentScore} />
+          <HighScore score={scoreObject.highScore} />
         </div>
       </header>
       {filmObjectArray.length === 2 && (
