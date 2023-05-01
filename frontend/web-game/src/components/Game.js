@@ -8,6 +8,7 @@ import FilmDetails from "./FilmDetails";
 function Game() {
   const [scoreObject, setScoreObject] = useState({ currentScore: 0, highScore: 0 });
   const [filmObjectArray, setFilmObjectArray] = useState([]);
+  const [isSelectionProcessing, setIsSelectionProcessing] = useState(false);
 
   useEffect(() => {
     changeFilms();
@@ -39,17 +40,19 @@ function Game() {
     updateScoreObject(selectionWasCorrect);
   }
 
-  function endRound(selectedFilmObject, otherFilmObject) {
+  async function endRound(selectedFilmObject, otherFilmObject) {
     updateScore(selectedFilmObject, otherFilmObject);
-    changeFilms();
+    await changeFilms();
   }
   function getOtherFilmObject(selectedFilmObject) {
     return (selectedFilmObject === filmObjectArray[0]) ? filmObjectArray[1] : filmObjectArray[0];
   }
 
-  function selectFilm(selectedFilmObject) {
+  async function selectFilm(selectedFilmObject) {
+    setIsSelectionProcessing(true);
     const otherFilmObject = getOtherFilmObject(selectedFilmObject);
-    endRound(selectedFilmObject, otherFilmObject);
+    await endRound(selectedFilmObject, otherFilmObject);
+    setIsSelectionProcessing(false);
   }
 
   return (
@@ -69,11 +72,13 @@ function Game() {
             filmObject={filmObjectArray[0]}
             onFilmClick={selectFilm}
             showAverageRating={true}
+            isFilmClickDisabled={isSelectionProcessing}
           />
           <FilmDetails
             filmObject={filmObjectArray[1]}
             onFilmClick={selectFilm}
             showAverageRating={false}
+            isFilmClickDisabled={isSelectionProcessing}
           />
         </main>
       )}
