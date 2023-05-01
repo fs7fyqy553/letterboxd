@@ -19,11 +19,11 @@ function getDirectorNameArray(filmPageDoc: HTMLElement) {
   if (directorNodeList.length === 0) {
     throw new Error('Director data not read correctly');
   }
-  return directorNodeList.map((directorNode) => directorNode.text);
+  // @ts-ignore
+  return directorNodeList.map((directorNode: HTMLElement) => directorNode.textContent);
 }
 
 function getReleaseYearString(filmPageDoc: HTMLElement): string {
-  console.log(filmPageDoc.querySelector("[href^='/films/year/']"));
   return filmPageDoc.querySelector("[href^='/films/year/']").textContent;
 }
 
