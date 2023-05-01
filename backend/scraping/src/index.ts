@@ -2,6 +2,14 @@ import puppeteer from "puppeteer";
 import { parse } from "node-html-parser";
 import { scrollPageToBottom } from "puppeteer-autoscroll-down";
 
+function extractNodeListText(nodeList: NodeListOf<Element>): (string | null)[] {
+  const textArray = [];
+  for (let i = 0; i < nodeList.length; i += 1) {
+    textArray.push(nodeList[i].textContent);
+  }
+  return textArray;
+}
+
 function getFilmPosterURL(filmPageDoc: HTMLElement): string | null {
   const filmPosterURLElement = filmPageDoc.querySelector('#poster-zoom > div > div > img');
   return filmPosterURLElement && filmPosterURLElement.getAttribute('src');
@@ -10,13 +18,9 @@ function getAverageRatingString(filmPageDoc: HTMLElement): string | null {
   const averageRatingStringElement = filmPageDoc.querySelector('.display-rating');
   return averageRatingStringElement && averageRatingStringElement.textContent;
 }
-function getDirectorNameArray(filmPageDoc: HTMLElement) {
+function getDirectorNameArray(filmPageDoc: HTMLElement): (string | null)[] {
   const directorNodeList = filmPageDoc.querySelectorAll("[href^='/director/']>span");
-  if (directorNodeList.length === 0) {
-    throw new Error('Director data not read correctly');
-  }
-  // @ts-ignore
-  return directorNodeList.map((directorNode: HTMLElement) => directorNode.textContent);
+  return extractNodeListText(directorNodeList);
 }
 function getReleaseYearString(filmPageDoc: HTMLElement): string | null {
   const releaseYearStringElement = filmPageDoc.querySelector("[href^='/films/year/']");
