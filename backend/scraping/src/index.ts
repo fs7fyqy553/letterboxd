@@ -39,21 +39,16 @@ async function getDynamicFilmPageBody(filmPageURL: string, filmPuppeteerPage: pu
 }
 
 function getFilmObject(filmPageDoc: HTMLElement) {
-  if (checkIfAdult(filmPageDoc) === true) {
+  if (checkIfAdult(filmPageDoc)) {
     return null;
   }
-  try {
-    return {
-      filmTitle: getFilmTitle(filmPageDoc),
-      releaseYearString: getReleaseYearString(filmPageDoc),
-      directorNameArray: getDirectorNameArray(filmPageDoc),
-      averageRatingString: getAverageRatingString(filmPageDoc),
-      filmPosterURL: getFilmPosterURL(filmPageDoc),
-    };
-  } catch (err) {
-    console.error(err);
-    return null;
-  }
+  return {
+    filmTitle: getFilmTitle(filmPageDoc),
+    releaseYearString: getReleaseYearString(filmPageDoc),
+    directorNameArray: getDirectorNameArray(filmPageDoc),
+    averageRatingString: getAverageRatingString(filmPageDoc),
+    filmPosterURL: getFilmPosterURL(filmPageDoc),
+  };
 }
 async function getFilmPageDoc(filmPageURL: string, filmPuppeteerPage: puppeteer.Page): Promise<HTMLElement> {
   const filmPageBody = await getDynamicFilmPageBody(filmPageURL, filmPuppeteerPage);
