@@ -51,14 +51,26 @@ async function getFilmPageDoc(filmPageURL, filmPuppeteerPage) {
     const filmPageBody = await getDynamicFilmPageBody(filmPageURL, filmPuppeteerPage);
     return parse(filmPageBody);
 }
+function isValidFilmObject(filmObject) {
+    return (filmObject.filmTitle !== undefined && typeof (filmObject.filmTitle) === "string" &&
+        filmObject.releaseYearString !== undefined && typeof (filmObject.releaseYearString) === "string" &&
+        filmObject.directorNameArray !== undefined && Array.isArray(filmObject.directorNameArray) &&
+        // @ts-ignore
+        filmObject.directorNameArray.every((element) => typeof (element) === "boolean") &&
+        filmObject.averageRatingString !== undefined && typeof (filmObject.averageRatingString) === "string" &&
+        filmObject.filmPosterURL !== undefined && typeof (filmObject.filmPosterURL) === "string");
+}
 async function getDetailsObjectFromFilmPage(filmPageURL, filmPuppeteerPage) {
     const filmPageDoc = await getFilmPageDoc(filmPageURL, filmPuppeteerPage);
     return getFilmObject(filmPageDoc);
 }
 async function processFilmPage(filmPageURL, filmPuppeteerPage, processor) {
     const filmDetailsObject = await getDetailsObjectFromFilmPage(filmPageURL, filmPuppeteerPage);
-    if (filmDetailsObject !== null) {
+    if (isValidFilmObject(filmDetailsObject)) {
         await processor(filmDetailsObject);
+    }
+    else {
+        console.error(`Extracted film object invalid. Object: ${JSON.stringify(filmDetailsObject)}`);
     }
 }
 function getFilmPagePath(filmAnchorNode) {

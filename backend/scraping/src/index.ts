@@ -1,6 +1,7 @@
 import puppeteer from "puppeteer";
 import { parse } from "node-html-parser";
 import { scrollPageToBottom } from "puppeteer-autoscroll-down";
+import { validFilmObject } from "./types.js";
 
 function extractNodeListText(nodeList: NodeListOf<Element>): (string | null)[] {
   const textArray = [];
@@ -55,6 +56,17 @@ async function getFilmPageDoc(filmPageURL: string, filmPuppeteerPage: puppeteer.
   return parse(filmPageBody) as unknown as HTMLElement;
 }
 
+function isValidFilmObject(filmObject: any): filmObject is validFilmObject {
+  return (
+    filmObject.filmTitle !== undefined && typeof(filmObject.filmTitle) === "string" &&
+    filmObject.releaseYearString !== undefined && typeof(filmObject.releaseYearString) === "string" && 
+    filmObject.directorNameArray !== undefined && Array.isArray(filmObject.directorNameArray) &&
+    // @ts-ignore
+    filmObject.directorNameArray.every((element) => typeof(element) === "string") &&
+    filmObject.averageRatingString !== undefined && typeof(filmObject.averageRatingString) === "string" && 
+    filmObject.filmPosterURL !== undefined && typeof(filmObject.filmPosterURL) === "string"
+  );
+}
 async function getDetailsObjectFromFilmPage(filmPageURL: string, filmPuppeteerPage: puppeteer.Page): Promise<object | null> {
   const filmPageDoc = await getFilmPageDoc(filmPageURL, filmPuppeteerPage);
   return getFilmObject(filmPageDoc);
@@ -62,8 +74,10 @@ async function getDetailsObjectFromFilmPage(filmPageURL: string, filmPuppeteerPa
 
 async function processFilmPage(filmPageURL: string, filmPuppeteerPage: puppeteer.Page, processor: Function): Promise<void> {
   const filmDetailsObject = await getDetailsObjectFromFilmPage(filmPageURL, filmPuppeteerPage);
-  if (filmDetailsObject !== null) {
+  if (isValidFilmObject(filmDetailsObject)) {
     await processor(filmDetailsObject);
+  } else {
+    console.error(`Extracted film object invalid. Object: ${JSON.stringify(filmDetailsObject)}`);
   }
 }
 function getFilmPagePath(filmAnchorNode: Element) {
