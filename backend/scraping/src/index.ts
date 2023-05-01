@@ -2,11 +2,13 @@ import puppeteer from "puppeteer";
 import { parse } from "node-html-parser";
 import { scrollPageToBottom } from "puppeteer-autoscroll-down";
 
-function getFilmPosterURL(filmPageDoc: HTMLElement) {
-  return filmPageDoc.querySelector('#poster-zoom > div > div > img').getAttribute('src');
+function getFilmPosterURL(filmPageDoc: HTMLElement): string | null {
+  const filmPosterURLElement = filmPageDoc.querySelector('#poster-zoom > div > div > img');
+  return filmPosterURLElement && filmPosterURLElement.getAttribute('src');
 }
-function getAverageRatingString(filmPageDoc: HTMLElement) {
-  return filmPageDoc.querySelector('.display-rating').textContent;
+function getAverageRatingString(filmPageDoc: HTMLElement): string | null {
+  const averageRatingStringElement = filmPageDoc.querySelector('.display-rating');
+  return averageRatingStringElement && averageRatingStringElement.textContent;
 }
 function getDirectorNameArray(filmPageDoc: HTMLElement) {
   const directorNodeList = filmPageDoc.querySelectorAll("[href^='/director/']>span");
@@ -16,11 +18,13 @@ function getDirectorNameArray(filmPageDoc: HTMLElement) {
   // @ts-ignore
   return directorNodeList.map((directorNode: HTMLElement) => directorNode.textContent);
 }
-function getReleaseYearString(filmPageDoc: HTMLElement): string {
-  return filmPageDoc.querySelector("[href^='/films/year/']").textContent;
+function getReleaseYearString(filmPageDoc: HTMLElement): string | null {
+  const releaseYearStringElement = filmPageDoc.querySelector("[href^='/films/year/']");
+  return releaseYearStringElement && releaseYearStringElement.textContent;
 }
-function getFilmTitle(filmPageDoc: HTMLElement): string {
-  return filmPageDoc.querySelector('.headline-1').textContent;
+function getFilmTitle(filmPageDoc: HTMLElement): string | null {
+  const filmTitleElement = filmPageDoc.querySelector(".headline-1");
+  return filmTitleElement && filmTitleElement.textContent;
 }
 function checkIfAdult(filmPageDoc: HTMLElement): boolean {
   return !!filmPageDoc.querySelector('.-adult');
