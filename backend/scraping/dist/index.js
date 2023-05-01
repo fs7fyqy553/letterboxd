@@ -8,7 +8,7 @@ function getFilmPosterURL(filmPageDoc) {
     return filmPageDoc.querySelector('#poster-zoom > div > div > img').getAttribute('src');
 }
 function getAverageRatingString(filmPageDoc) {
-    return filmPageDoc.querySelector('.display-rating').text;
+    return filmPageDoc.querySelector('.display-rating').textContent;
 }
 function getDirectorNameArray(filmPageDoc) {
     const directorNodeList = filmPageDoc.querySelectorAll("[href^='/director/']>span");
@@ -18,10 +18,11 @@ function getDirectorNameArray(filmPageDoc) {
     return directorNodeList.map((directorNode) => directorNode.text);
 }
 function getReleaseYearString(filmPageDoc) {
-    return filmPageDoc.querySelector("[href^='/films/year/']").text;
+    console.log(filmPageDoc.querySelector("[href^='/films/year/']"));
+    return filmPageDoc.querySelector("[href^='/films/year/']").textContent;
 }
 function getFilmTitle(filmPageDoc) {
-    return filmPageDoc.querySelector('.headline-1').text;
+    return filmPageDoc.querySelector('.headline-1').textContent;
 }
 function checkIfAdult(filmPageDoc) {
     return !!filmPageDoc.querySelector('.-adult');

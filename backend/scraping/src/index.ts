@@ -11,7 +11,7 @@ function getFilmPosterURL(filmPageDoc: HTMLElement) {
 }
 
 function getAverageRatingString(filmPageDoc: HTMLElement) {
-  return filmPageDoc.querySelector('.display-rating').text;
+  return filmPageDoc.querySelector('.display-rating').textContent;
 }
 
 function getDirectorNameArray(filmPageDoc: HTMLElement) {
@@ -22,19 +22,20 @@ function getDirectorNameArray(filmPageDoc: HTMLElement) {
   return directorNodeList.map((directorNode) => directorNode.text);
 }
 
-function getReleaseYearString(filmPageDoc: HTMLElement) {
-  return filmPageDoc.querySelector("[href^='/films/year/']").text;
+function getReleaseYearString(filmPageDoc: HTMLElement): string {
+  console.log(filmPageDoc.querySelector("[href^='/films/year/']"));
+  return filmPageDoc.querySelector("[href^='/films/year/']").textContent;
 }
 
-function getFilmTitle(filmPageDoc: HTMLElement) {
-  return filmPageDoc.querySelector('.headline-1').text;
+function getFilmTitle(filmPageDoc: HTMLElement): string {
+  return filmPageDoc.querySelector('.headline-1').textContent;
 }
 
-function checkIfAdult(filmPageDoc: HTMLElement) {
+function checkIfAdult(filmPageDoc: HTMLElement): boolean {
   return !!filmPageDoc.querySelector('.-adult');
 }
 
-function getFilmObject(filmPageDoc: ) {
+function getFilmObject(filmPageDoc: HTMLElement) {
   if (checkIfAdult(filmPageDoc) === true) {
     return null;
   }
@@ -79,12 +80,12 @@ async function getFilmPageDoc(filmPageURL: string, filmPuppeteerPage: puppeteer.
   return parse(filmPageBody);
 }
 
-async function getDetailsObjectFromFilmPage(filmPageURL: string, filmPuppeteerPage: puppeteer.Page) {
+async function getDetailsObjectFromFilmPage(filmPageURL: string, filmPuppeteerPage: puppeteer.Page): Promise<object | null> {
   const filmPageDoc = await getFilmPageDoc(filmPageURL, filmPuppeteerPage);
   return getFilmObject(filmPageDoc);
 }
 
-async function processFilmPage(filmPageURL: string, filmPuppeteerPage: puppeteer.Page, processor: Function) {
+async function processFilmPage(filmPageURL: string, filmPuppeteerPage: puppeteer.Page, processor: Function): Promise<void> {
   const filmDetailsObject = await getDetailsObjectFromFilmPage(filmPageURL, filmPuppeteerPage);
   if (filmDetailsObject !== null) {
     await processor(filmDetailsObject);
@@ -95,13 +96,13 @@ function getFilmPagePath(filmAnchorNode: Element) {
   return filmAnchorNode.getAttribute('href');
 }
 
-async function processFilmAnchorNode(node: Element, filmPuppeteerPage: puppeteer.Page, processor: Function) {
+async function processFilmAnchorNode(node: Element, filmPuppeteerPage: puppeteer.Page, processor: Function): Promise<void> {
   const filmPagePath = getFilmPagePath(node);
   const filmPageURL = getLetterboxdURL(filmPagePath);
   await processFilmPage(filmPageURL, filmPuppeteerPage, processor);
 }
 
-async function processFilmAnchorNodeList(nodeList: NodeListOf<Element>, filmPuppeteerPage: puppeteer.Page, processor: Function) {
+async function processFilmAnchorNodeList(nodeList: NodeListOf<Element>, filmPuppeteerPage: puppeteer.Page, processor: Function): Promise<void> {
   // TODO: consider parallel programming;
   for (let i = 0; i < nodeList.length; i += 1) {
     const filmAnchorNode = nodeList[i];
@@ -110,7 +111,7 @@ async function processFilmAnchorNodeList(nodeList: NodeListOf<Element>, filmPupp
   }
 }
 
-async function processFilmsOnListPage(listPageDoc: HTMLElement, filmPuppeteerPage: puppeteer.Page, processor: Function) {
+async function processFilmsOnListPage(listPageDoc: HTMLElement, filmPuppeteerPage: puppeteer.Page, processor: Function): Promise<void> {
   const filmAnchorNodeList = listPageDoc.querySelectorAll('.film-list .frame');
   await processFilmAnchorNodeList(filmAnchorNodeList, filmPuppeteerPage, processor);
 }
@@ -122,7 +123,7 @@ async function getDynamicFilmListPageBody(listPageURL: string, puppeteerPage: pu
   return getInnerHTMLFromPuppeteerPage(puppeteerPage);
 }
 
-async function getListPageDoc(listPageURL: string, listPuppeteerPage: puppeteer.Page) {
+async function getListPageDoc(listPageURL: string, listPuppeteerPage: puppeteer.Page): Promise<HTMLElement> {
   const listPageBody = await getDynamicFilmListPageBody(listPageURL, listPuppeteerPage);
   return parse(listPageBody) as unknown as HTMLElement;
 }
