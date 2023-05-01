@@ -56,7 +56,7 @@ function isValidFilmObject(filmObject) {
         filmObject.releaseYearString !== undefined && typeof (filmObject.releaseYearString) === "string" &&
         filmObject.directorNameArray !== undefined && Array.isArray(filmObject.directorNameArray) &&
         // @ts-ignore
-        filmObject.directorNameArray.every((element) => typeof (element) === "boolean") &&
+        filmObject.directorNameArray.every((element) => typeof (element) === "string") &&
         filmObject.averageRatingString !== undefined && typeof (filmObject.averageRatingString) === "string" &&
         filmObject.filmPosterURL !== undefined && typeof (filmObject.filmPosterURL) === "string");
 }
