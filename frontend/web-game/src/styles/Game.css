@@ -21,7 +21,7 @@ header > div {
   gap: 10px;
 }
 
-main {
+main, main .img {
   flex: 1;
   background-color: #36454f;
   display: flex;
