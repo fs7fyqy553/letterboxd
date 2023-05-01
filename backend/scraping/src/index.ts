@@ -11,8 +11,9 @@ function extractNodeListText(nodeList: NodeListOf<Element>): (string | null)[] {
   return textArray;
 }
 
-function getFilmPosterURL(filmPageDoc: HTMLElement): string | null {
-  const filmPosterURLElement = filmPageDoc.querySelector('#poster-zoom > div > div > img');
+function getFilmPosterURL(filmPageDoc: HTMLElement, filmTitle: string | null): string | null {
+  const selector = (filmTitle !== null) ? `[alt='${filmTitle}']` : "#poster-large > div > div > img";
+  const filmPosterURLElement = filmPageDoc.querySelector(selector);
   return filmPosterURLElement && filmPosterURLElement.getAttribute('src');
 }
 function getAverageRatingString(filmPageDoc: HTMLElement): string | null {
@@ -43,12 +44,13 @@ function getFilmObject(filmPageDoc: HTMLElement) {
   if (checkIfAdult(filmPageDoc)) {
     return null;
   }
+  const filmTitle = getFilmTitle(filmPageDoc);
   return {
-    filmTitle: getFilmTitle(filmPageDoc),
+    filmTitle,
     releaseYearString: getReleaseYearString(filmPageDoc),
     directorNameArray: getDirectorNameArray(filmPageDoc),
     averageRatingString: getAverageRatingString(filmPageDoc),
-    filmPosterURL: getFilmPosterURL(filmPageDoc),
+    filmPosterURL: getFilmPosterURL(filmPageDoc, filmTitle),
   };
 }
 async function getFilmPageDoc(filmPageURL: string, filmPuppeteerPage: puppeteer.Page): Promise<HTMLElement> {

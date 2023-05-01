@@ -8,8 +8,9 @@ function extractNodeListText(nodeList) {
     }
     return textArray;
 }
-function getFilmPosterURL(filmPageDoc) {
-    const filmPosterURLElement = filmPageDoc.querySelector('#poster-zoom > div > div > img');
+function getFilmPosterURL(filmPageDoc, filmTitle) {
+    const selector = (filmTitle !== null) ? `[alt='${filmTitle}']` : "#poster-large > div > div > img";
+    const filmPosterURLElement = filmPageDoc.querySelector(selector);
     return filmPosterURLElement && filmPosterURLElement.getAttribute('src');
 }
 function getAverageRatingString(filmPageDoc) {
@@ -39,12 +40,13 @@ function getFilmObject(filmPageDoc) {
     if (checkIfAdult(filmPageDoc)) {
         return null;
     }
+    const filmTitle = getFilmTitle(filmPageDoc);
     return {
-        filmTitle: getFilmTitle(filmPageDoc),
+        filmTitle,
         releaseYearString: getReleaseYearString(filmPageDoc),
         directorNameArray: getDirectorNameArray(filmPageDoc),
         averageRatingString: getAverageRatingString(filmPageDoc),
-        filmPosterURL: getFilmPosterURL(filmPageDoc),
+        filmPosterURL: getFilmPosterURL(filmPageDoc, filmTitle),
     };
 }
 async function getFilmPageDoc(filmPageURL, filmPuppeteerPage) {
