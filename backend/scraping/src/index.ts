@@ -161,9 +161,9 @@ function getPuppeteerPage(browser: puppeteer.Browser): Promise<puppeteer.Page> {
   return browser.newPage();
 }
 
-async function getPuppeteerPages(browser: puppeteer.Browser, numberOfPages: number): Promise<any[]> {
-  const promiseArray = Array(numberOfPages).fill(getPuppeteerPage(browser));
-  return Promise.all(promiseArray).then((pageArray) => pageArray);
+function getPuppeteerPages(browser: puppeteer.Browser, numberOfPages: number): Promise<puppeteer.Page[]> {
+  const promiseArray = Array(numberOfPages).fill(getPuppeteerPage(browser)) as Promise<puppeteer.Page>[];
+  return Promise.all(promiseArray);
 }
 
 async function useBrowser(browser: puppeteer.Browser, firstListPageURL: string, processor: Function): Promise<void> {

@@ -98,6 +98,7 @@ async function processFilmsOnListPage(listPageDoc, filmPuppeteerPage, processor)
 }
 async function getDynamicFilmListPageBody(listPageURL, puppeteerPage) {
     await puppeteerPage.goto(listPageURL);
+    // @ts-ignore
     await scrollPageToBottom(puppeteerPage, {});
     return getInnerHTMLFromPuppeteerPage(puppeteerPage);
 }
@@ -107,7 +108,6 @@ async function getListPageDoc(listPageURL, listPuppeteerPage) {
 }
 async function processListPageAndGetNextURL(listPageURL, listPuppeteerPage, filmPuppeteerPage, processor) {
     const listPageDoc = await getListPageDoc(listPageURL, listPuppeteerPage);
-    console.log(typeof listPageDoc);
     await processFilmsOnListPage(listPageDoc, filmPuppeteerPage, processor);
     return getNextFilmListPageURL(listPageDoc);
 }
@@ -122,9 +122,9 @@ async function usePuppeteerPages(listPuppeteerPage, filmPuppeteerPage, firstList
 function getPuppeteerPage(browser) {
     return browser.newPage();
 }
-async function getPuppeteerPages(browser, numberOfPages) {
+function getPuppeteerPages(browser, numberOfPages) {
     const promiseArray = Array(numberOfPages).fill(getPuppeteerPage(browser));
-    return Promise.all(promiseArray).then((pageArray) => pageArray);
+    return Promise.all(promiseArray);
 }
 async function useBrowser(browser, firstListPageURL, processor) {
     const [listPuppeteerPage, filmPuppeteerPage] = await getPuppeteerPages(browser, 2);
