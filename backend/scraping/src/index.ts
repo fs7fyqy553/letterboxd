@@ -75,7 +75,7 @@ async function getDynamicFilmPageBody(filmPageURL: string, filmPuppeteerPage: pu
   return getInnerHTMLFromPuppeteerPage(filmPuppeteerPage);
 }
 
-async function getFilmPageDoc(filmPageURL: string, filmPuppeteerPage: puppeteer.Page): HTMLElement {
+async function getFilmPageDoc(filmPageURL: string, filmPuppeteerPage: puppeteer.Page): Promise<HTMLElement> {
   const filmPageBody = await getDynamicFilmPageBody(filmPageURL, filmPuppeteerPage);
   return parse(filmPageBody) as unknown as HTMLElement;
 }
