@@ -23,7 +23,10 @@ header > div {
 
 main {
   flex: 1;
-  background-color: #36454f;
   display: flex;
   gap: 5px;
+}
+
+main, main .img {
+  background-color: #36454f;
 }

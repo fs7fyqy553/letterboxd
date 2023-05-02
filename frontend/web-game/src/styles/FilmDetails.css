@@ -1,7 +1,6 @@
 .FilmDetails {
   flex: 1;
   border: none;
-  background-color: #dedede;
   cursor: pointer;
   padding: 10px;
   display: flex;
@@ -19,7 +18,8 @@
   max-height: 400px;
   flex: 1;
   background-position: center;
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
   border-radius: 10px;
   box-shadow: 0 0 30px;
 }
