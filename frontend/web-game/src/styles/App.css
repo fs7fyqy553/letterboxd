@@ -2,9 +2,12 @@
   flex: 1;
   /* NOTE: color selected for contrast ratio with GitHub and LinkedIn logos in footer 
     that is better than 3.1:1 */
-  background-color: #dedede;
   display: flex;
   flex-direction: column;
+}
+
+.App, .App .FilmDetails {
+  background-color: #dedede;
 }
 
 .Game > header,

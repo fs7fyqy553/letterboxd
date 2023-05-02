@@ -1,7 +1,6 @@
 .FilmDetails {
   flex: 1;
   border: none;
-  background-color: #dedede;
   cursor: pointer;
   padding: 10px;
   display: flex;
