@@ -9,6 +9,7 @@ app.use(cors());
 
 app.get("/getFilmPair", async (req, res) => {
     try {
+        console.log("Hello");
         const response = await axios.get(
             "https://letterboxd-scraped-server.up.railway.app/api/films?twoFilmsWithDifferentRatings=true",
             {
