@@ -2,7 +2,7 @@ async function getFilmPair() {
   // NOTE: the two selected films should have different ratings
   try {
     const responseJSON = await fetch(
-      "https://letterxbod-guessing-game-production.up.railway.app/api/films?twoFilmsWithDifferentRatings=true",
+      "https://letterboxd-scraped-server.up.railway.app/api/films?twoFilmsWithDifferentRatings=true",
       // "http://localhost:8000/getFilmPair",
     );
     const responseObject = await responseJSON.json();
