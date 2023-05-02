@@ -4,7 +4,7 @@ const authControllers = require('../controllers/authControllers');
 const filmRouter = require('./filmRouter');
 
 const APIRouter = Router();
-APIRouter.use(cors());
+APIRouter.use(cors({ origin: 'https://letterboxd-guessing-game.up.railway.app/' }));
 // APIRouter.use(authControllers.authenticateAPICall);
 APIRouter.use('/films', filmRouter);
 
