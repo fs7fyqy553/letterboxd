@@ -24,11 +24,9 @@
   },
   "scripts": {
     "start": "npm run start:client",
-    "start2": "concurrently --kill-others \"npm run start:proxyserver\" \"npm run start:client\" ",
-    "devstart": "concurrently --kill-others \"npm run devstart:proxyserver\" \"npm run start:client\" ",
-    "start:proxyserver": "node proxyServer.js",
-    "devstart:proxyserver": "nodemon proxyServer.js",
     "start:client": "react-scripts start",
+    "devstart": "concurrently --kill-others \"npm run start:proxyserver\" \"npm run start:client\" ",
+    "start:proxyserver": "node proxyServer.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
