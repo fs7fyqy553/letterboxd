@@ -23,7 +23,8 @@
     "prettier": "^2.8.7"
   },
   "scripts": {
-    "start": "concurrently --kill-others \"npm run start:proxyserver\" \"npm run start:client\" ",
+    "start": "PORT=3006 start-client",
+    "start2": "concurrently --kill-others \"npm run start:proxyserver\" \"npm run start:client\" ",
     "devstart": "concurrently --kill-others \"npm run devstart:proxyserver\" \"npm run start:client\" ",
     "start:proxyserver": "node proxyServer.js",
     "devstart:proxyserver": "nodemon proxyServer.js",

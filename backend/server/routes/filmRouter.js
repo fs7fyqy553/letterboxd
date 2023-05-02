@@ -7,7 +7,8 @@ const filmRouter = Router();
 filmRouter.options(
   '/',
   cors({
-    origin: 'https://letterboxd-guessing-game.up.railway.app/',
+    // origin: 'https://letterboxd-guessing-game.up.railway.app/',
+    origin: 'http://localhost:3006',
   })
 );
 
