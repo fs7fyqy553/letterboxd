@@ -1,9 +1,8 @@
 const { Router } = require('express');
-const cors = require('cors');
 const filmControllers = require('../controllers/filmControllers');
 
 const filmRouter = Router();
 
-filmRouter.get('/', cors(), filmControllers.getFilms);
+filmRouter.get('/', filmControllers.getFilms);
 
 module.exports = filmRouter;
