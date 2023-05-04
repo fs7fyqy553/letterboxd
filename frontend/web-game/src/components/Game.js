@@ -4,14 +4,19 @@ import getFilmPair from "../functions/getFilmPair";
 import HighScore from "./HighScore";
 import CurrentScore from "./CurrentScore";
 import FilmDetails from "./FilmDetails";
+import { useSessionStorage } from "usehooks-ts";
 
 function Game() {
-  const [scoreObject, setScoreObject] = useState({ currentScore: 0, highScore: 0 });
-  const [filmObjectArray, setFilmObjectArray] = useState([]);
+  const [scoreObject, setScoreObject] = useSessionStorage(
+    "scoreObject", { currentScore: 0, highScore: 0 }
+  );
+  const [filmObjectArray, setFilmObjectArray] = useSessionStorage("filmObjectArray", []);
   const [isSelectionProcessing, setIsSelectionProcessing] = useState(false);
 
   useEffect(() => {
-    changeFilms();
+    if (filmObjectArray.length === 0) {
+      changeFilms();
+    }
   }, []);
 
   function getNewHighScore(newCurrentScore, prevHighScore) {
@@ -33,6 +38,7 @@ function Game() {
 
   async function changeFilms() {
     const newFilmObjectArray = await getFilmPair();
+    console.log(newFilmObjectArray);
     setFilmObjectArray(newFilmObjectArray);
   }
   function updateScore(selectedFilmObject, otherFilmObject) {
