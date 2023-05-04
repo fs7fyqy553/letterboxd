@@ -1,5 +1,5 @@
 import "../styles/Game.css";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import getFilmPair from "../functions/getFilmPair";
 import HighScore from "./HighScore";
 import CurrentScore from "./CurrentScore";
