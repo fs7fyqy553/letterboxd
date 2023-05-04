@@ -26,7 +26,7 @@
   },
   "scripts": {
     "start": "npm run start:client",
-    "start:client": "react-dotenv && react-scripts start",
+    "start:client": "react-scripts start",
     "devstart": "concurrently --kill-others \"npm run start:proxyserver\" \"npm run start:client\" ",
     "start:proxyserver": "node proxyServer.js",
     "build": "react-dotenv && react-scripts build",
