@@ -1,5 +1,3 @@
-"use client";
-
 import "../styles/FilmDetails.css";
 import FilmPoster from "./FilmPoster";
 import FilmDetailsText from "./FilmDetailsText";

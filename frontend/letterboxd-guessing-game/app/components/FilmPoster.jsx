@@ -1,5 +1,3 @@
-"use client";
-
 function FilmPoster({ filmPosterURL }) {
   return (
     <div className="img" style={{ backgroundImage: `url(${filmPosterURL})` }} />
