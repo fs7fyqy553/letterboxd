@@ -1,7 +1,7 @@
 async function getFilmPair() {
   // NOTE: the two selected films should have different ratings
-  // const requestURL = "http://localhost:3001/api/films?twoFilmsWithDifferentRatings=true";
-  const requestURL = "https://letterboxd-scraped-server.up.railway.app/api/films?twoFilmsWithDifferentRatings=true";
+  const requestURL = "http://localhost:3001/api/films?twoFilmsWithDifferentRatings=true";
+  // const requestURL = "https://letterboxd-scraped-server.up.railway.app/api/films?twoFilmsWithDifferentRatings=true";
   try {
     const responseJSON = await fetch(
       requestURL
