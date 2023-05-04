@@ -1,8 +1,7 @@
-import env from "react-dotenv";
-
 async function getFilmPair() {
   // NOTE: the two selected films should have different ratings
-  const requestURL = env.DEVELOPMENT_API_URL || env.PRODUCTION_API_URL;
+  // const requestURL = "http://localhost:3001/api/films?twoFilmsWithDifferentRatings=true";
+  const requestURL = "https://letterboxd-scraped-server.up.railway.app/api/films?twoFilmsWithDifferentRatings=true";
   try {
     const responseJSON = await fetch(
       requestURL
