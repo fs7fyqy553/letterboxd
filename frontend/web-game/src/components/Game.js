@@ -38,7 +38,6 @@ function Game() {
 
   async function changeFilms() {
     const newFilmObjectArray = await getFilmPair();
-    console.log(newFilmObjectArray);
     setFilmObjectArray(newFilmObjectArray);
   }
   function updateScore(selectedFilmObject, otherFilmObject) {
