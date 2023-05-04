@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import styles from './page.module.css';
+// import styles from './page.module.css';
+import "./styles/App.css";
 import Game from './components/Game';
 
 export default function App() {

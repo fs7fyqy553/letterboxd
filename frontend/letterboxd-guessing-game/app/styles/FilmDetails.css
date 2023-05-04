@@ -1,0 +1,25 @@
+.FilmDetails {
+  flex: 1;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+/* TODO: consider implementing a media query for mobile landscape mode, e.g. one that uses film 
+"cover photo" from Letterboxd */
+.FilmDetails > .img {
+  width: 100%;
+  max-width: 250px;
+  max-height: 400px;
+  flex: 1;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+  box-shadow: 0 0 30px;
+}

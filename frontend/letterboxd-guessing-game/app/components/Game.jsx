@@ -1,6 +1,6 @@
 "use client";
 
-// import "../styles/Game.css";
+import "../styles/Game.css";
 import { useState, useEffect } from "react";
 import getFilmPair from "../functions/getFilmPair";
 import HighScore from "./HighScore";
