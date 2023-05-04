@@ -1,5 +1,5 @@
 import "../styles/Game.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import getFilmPair from "../functions/getFilmPair";
 import HighScore from "./HighScore";
 import CurrentScore from "./CurrentScore";
@@ -17,7 +17,7 @@ function Game() {
     if (filmObjectArray.length === 0) {
       changeFilms();
     }
-  }, []);
+  });
 
   function getNewHighScore(newCurrentScore, prevHighScore) {
     return Math.max(newCurrentScore, prevHighScore);
