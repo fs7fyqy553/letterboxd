@@ -1,9 +1,14 @@
 import "normalize.css";
 // import './globals.css'
 import "./styles/index.css";
-// import { Inter } from 'next/font/google'
+import { Roboto } from "next/font/google";
 
-// const inter = Inter({ subsets: ['latin'] })
+const roboto = Roboto({
+  weight: ["300", "400"],
+  style: ["italic"],
+  // TODO: revise the choice of font subset
+  subsets: ["latin"],
+})
 
 // TODO: try to make sure the following (from CRA version) are implemented:
 // <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -16,7 +21,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body className={roboto.className}>
         <div id="root">
           {children}
         </div>
