@@ -6,20 +6,21 @@ import getFilmPair from "../functions/getFilmPair";
 import HighScore from "./HighScore";
 import CurrentScore from "./CurrentScore";
 import FilmDetails from "./FilmDetails";
-import { useSessionStorage } from "usehooks-ts";
 
 function Game() {
-  const [scoreObject, setScoreObject] = useSessionStorage(
-    "scoreObject", { currentScore: 0, highScore: 0 }
-  );
-  const [filmObjectArray, setFilmObjectArray] = useSessionStorage("filmObjectArray", []);
+  const [scoreObject, setScoreObject] = useState({ currentScore: 0, highScore: 0 });
+  const [filmObjectArray, setFilmObjectArray] = useState([]);
   const [isSelectionProcessing, setIsSelectionProcessing] = useState(false);
 
+  useEffect(loadScoreObject, []);
   useEffect(() => {
-    if (filmObjectArray.length === 0) {
-      changeFilms();
-    }
-  });
+    storeInSession("scoreObject", scoreObject);
+  }, [scoreObject]);
+
+  useEffect(loadFilmObjectArray, []);
+  useEffect(() => {
+    storeInSession("filmObjectArray", filmObjectArray);
+  }, [filmObjectArray]);
 
   function getNewHighScore(newCurrentScore, prevHighScore) {
     return Math.max(newCurrentScore, prevHighScore);
@@ -54,12 +55,32 @@ function Game() {
   function getOtherFilmObject(selectedFilmObject) {
     return (selectedFilmObject === filmObjectArray[0]) ? filmObjectArray[1] : filmObjectArray[0];
   }
+  function getFromSessionStorage(key) {
+    return JSON.parse(sessionStorage.getItem(key));
+  }
 
   async function selectFilm(selectedFilmObject) {
     setIsSelectionProcessing(true);
     const otherFilmObject = getOtherFilmObject(selectedFilmObject);
     await endRound(selectedFilmObject, otherFilmObject);
     setIsSelectionProcessing(false);
+  }
+  function loadFilmObjectArray() {
+    const sessionStoredFilmObjectArray = getFromSessionStorage("filmObjectArray");
+    if (sessionStoredFilmObjectArray !== null) {
+      setFilmObjectArray(sessionStoredFilmObjectArray);
+    } else {
+      changeFilms();
+    }
+  }
+  function storeInSession(key, value) {
+    sessionStorage.setItem(key, JSON.stringify(value));
+  }
+  function loadScoreObject() {
+    const sessionStoredScoreObject = getFromSessionStorage("scoreObject");
+    if (sessionStoredScoreObject !== null) {
+      setScoreObject(sessionStoredScoreObject);
+    }
   }
 
   return (
