@@ -3,7 +3,10 @@ async function getFilmPairArray(numberOfPairs) {
   const requestURL = process.env.PUBLIC_API_URL || process.env.DEVELOPMENT_API_URL;
   try {
     const responseJSON = await fetch(
-      `${requestURL}&numberOfPairs=${numberOfPairs}`
+      `${requestURL}&numberOfPairs=${numberOfPairs}`,
+      {
+        cache: "no-store",
+      }
     );
     const responseObject = await responseJSON.json();
     const filmPairArray = responseObject.films;
