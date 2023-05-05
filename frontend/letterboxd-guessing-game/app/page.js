@@ -11,11 +11,10 @@ export default function App() {
           aria-label="Link to GitHub repository"
           href="https://github.com/JamesGJ5/letterxbod-higher-or-lower"
         >
-          {/* TODO: sort out image */}
           <Image
             src="/logos/github-mark.svg"
             alt=""
-            width={50}
+            width={50/96*98}
             height={50}
             priority
           />
@@ -24,11 +23,10 @@ export default function App() {
           aria-label="Link to LinkedIn profile"
           href="https://www.linkedin.com/in/james-graca-jones/"
         >
-          {/* TODO: sort out image dimensions */}
           <Image
             src="/logos/LI-In-Bug.png"
             alt=""
-            width={50}
+            width={50/540*635}
             height={50}
             priority
           />
