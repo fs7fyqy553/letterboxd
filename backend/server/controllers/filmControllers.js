@@ -26,9 +26,11 @@ async function getTwoFilmsWithDifferentRatings() {
   return [film1, film2];
 }
 
-async function getFilms(twoFilmsWithDifferentRatings) {
-  // throw new Error(get404Message());
+async function getFilms(twoFilmsWithDifferentRatings, numberOfPairs) {
   if (twoFilmsWithDifferentRatings === 'true') {
+    if (Number.isInteger(numberOfPairs) === true) {
+      return Promise.all(Array(numberOfPairs).fill(getTwoFilmsWithDifferentRatings()));
+    }
     return getTwoFilmsWithDifferentRatings();
   }
   return Film.find();
@@ -43,8 +45,9 @@ function handleError(res, err) {
 
 exports.getFilms = async (req, res) => {
   const { twoFilmsWithDifferentRatings } = req.query;
+  const numberOfPairs = parseInt(req.query.numberOfPairs, 10);
   try {
-    const films = await getFilms(twoFilmsWithDifferentRatings);
+    const films = await getFilms(twoFilmsWithDifferentRatings, numberOfPairs);
     return res.json({ films });
   } catch (err) {
     return handleError(res, err);
