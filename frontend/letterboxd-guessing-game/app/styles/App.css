@@ -22,7 +22,3 @@ footer {
   display: flex;
   gap: 20px;
 }
-
-footer > a > img {
-  height: 50px;
-}
