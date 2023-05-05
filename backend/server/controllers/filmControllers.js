@@ -27,6 +27,7 @@ async function getTwoFilmsWithDifferentRatings() {
 }
 
 async function getFilms(twoFilmsWithDifferentRatings) {
+  // throw new Error(get404Message());
   if (twoFilmsWithDifferentRatings === 'true') {
     return getTwoFilmsWithDifferentRatings();
   }
@@ -35,9 +36,9 @@ async function getFilms(twoFilmsWithDifferentRatings) {
 
 function handleError(res, err) {
   if (err.message === get404Message()) {
-    return res.status(404).json({ err });
+    return res.status(404).json({ error: err.message });
   }
-  return res.status(503).json({ err });
+  return res.status(503).json({ error: err.message });
 }
 
 exports.getFilms = async (req, res) => {
@@ -46,6 +47,6 @@ exports.getFilms = async (req, res) => {
     const films = await getFilms(twoFilmsWithDifferentRatings);
     return res.json({ films });
   } catch (err) {
-    handleError(res, err);
+    return handleError(res, err);
   }
 };
