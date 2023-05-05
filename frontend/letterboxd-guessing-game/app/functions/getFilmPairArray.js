@@ -6,6 +6,9 @@ async function getFilmPairArray(numberOfPairs) {
       `${requestURL}&numberOfPairs=${numberOfPairs}`,
       {
         cache: "no-store",
+        headers: {
+          "API-Key": process.env.API_KEY,
+        }
       }
     );
     const responseObject = await responseJSON.json();

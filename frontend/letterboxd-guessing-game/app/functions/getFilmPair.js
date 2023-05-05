@@ -4,7 +4,12 @@ async function getFilmPair() {
   // const requestURL = "https://letterboxd-scraped-server.up.railway.app/api/films?twoFilmsWithDifferentRatings=true";
   try {
     const responseJSON = await fetch(
-      requestURL
+      requestURL,
+      {
+        headers: {
+          "API-Key": process.env.API_KEY,
+        }
+      }
     );
     const responseObject = await responseJSON.json();
     const filmArray = responseObject.films;
