@@ -4,7 +4,7 @@ import "./styles/index.css";
 import { Roboto } from "next/font/google";
 
 const roboto = Roboto({
-  weight: ["300", "400"],
+  weight: ["400"],
   style: ["italic"],
   // TODO: revise the choice of font subset
   subsets: ["latin"],
