@@ -1,16 +1,16 @@
 "use client";
 
 import "../styles/Game.css";
-import { useState, useEffect } from "react";
-import getFilmPair from "../functions/getFilmPair";
+import { useState, useEffect, useRef } from "react";
 import HighScore from "./HighScore";
 import CurrentScore from "./CurrentScore";
 import FilmDetails from "./FilmDetails";
 
-function Game() {
+function Game({ filmPairArray }) {
   const [scoreObject, setScoreObject] = useState({ currentScore: 0, highScore: 0 });
   const [filmObjectArray, setFilmObjectArray] = useState([]);
-  const [isSelectionProcessing, setIsSelectionProcessing] = useState(false);
+
+  const filmPairs = useRef([...filmPairArray]);
 
   useEffect(loadScoreObject, []);
   useEffect(() => {
@@ -38,10 +38,23 @@ function Game() {
   function updateScoreObject(selectionWasCorrect) {
     setScoreObject(({currentScore, highScore}) => getUpdatedScoreObject(selectionWasCorrect, currentScore, highScore));
   }
+  function reloadPage() {
+    // NOTE: doing this so that server can fetch new data from Letterboxd Guessing Game API.
+    // Not using routes to do this, since it is desired for access to the API to be 
+    // completely limited to this app and routes are public in deployment.
+    // TODO: replace with NextJS router
+    window.location.reload();
+  }
+  function getNextFilmPair() {
+    return filmPairs.current.pop();
+  }
 
-  async function changeFilms() {
-    const newFilmObjectArray = await getFilmPair();
+  function changeFilms() {
+    const newFilmObjectArray = getNextFilmPair();
     setFilmObjectArray(newFilmObjectArray);
+    if (filmPairs.current.length === 0) {
+      reloadPage();
+    }
   }
   function updateScore(selectedFilmObject, otherFilmObject) {
     const selectionWasCorrect = selectedFilmObject.averageRatingString > otherFilmObject.averageRatingString;
@@ -50,7 +63,7 @@ function Game() {
 
   async function endRound(selectedFilmObject, otherFilmObject) {
     updateScore(selectedFilmObject, otherFilmObject);
-    await changeFilms();
+    changeFilms();
   }
   function getOtherFilmObject(selectedFilmObject) {
     return (selectedFilmObject === filmObjectArray[0]) ? filmObjectArray[1] : filmObjectArray[0];
@@ -59,11 +72,9 @@ function Game() {
     return JSON.parse(sessionStorage.getItem(key));
   }
 
-  async function selectFilm(selectedFilmObject) {
-    setIsSelectionProcessing(true);
+  function selectFilm(selectedFilmObject) {
     const otherFilmObject = getOtherFilmObject(selectedFilmObject);
-    await endRound(selectedFilmObject, otherFilmObject);
-    setIsSelectionProcessing(false);
+    endRound(selectedFilmObject, otherFilmObject);
   }
   function loadFilmObjectArray() {
     const sessionStoredFilmObjectArray = getFromSessionStorage("filmObjectArray");
@@ -100,13 +111,11 @@ function Game() {
             filmObject={filmObjectArray[0]}
             onFilmClick={selectFilm}
             showAverageRating={true}
-            isFilmClickDisabled={isSelectionProcessing}
           />
           <FilmDetails
             filmObject={filmObjectArray[1]}
             onFilmClick={selectFilm}
             showAverageRating={false}
-            isFilmClickDisabled={isSelectionProcessing}
           />
         </main>
       )}

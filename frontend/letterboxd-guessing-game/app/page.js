@@ -1,11 +1,15 @@
 import Image from 'next/image';
 import "./styles/App.css";
+import getFilmPairArray from './functions/getFilmPairArray';
 import Game from './components/Game';
 
-export default function App() {
+export default async function App() {
+  const filmPairArray = await getFilmPairArray(5);
   return (
     <div className="App">
-      <Game />
+      <Game 
+        filmPairArray={filmPairArray}
+      />
       <footer aria-label="Miscellaneous links">
         <a
           aria-label="Link to GitHub repository"

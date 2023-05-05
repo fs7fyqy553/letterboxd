@@ -6,7 +6,6 @@ function FilmDetails({
   filmObject,
   showAverageRating,
   onFilmClick,
-  isFilmClickDisabled,
 }) {
   const {
     filmTitle,
@@ -29,8 +28,6 @@ function FilmDetails({
     <button 
       className="FilmDetails"
       onClick={() => onFilmClick(filmObject)}
-      disabled={isFilmClickDisabled}
-      aria-disabled={isFilmClickDisabled}
     >
       {filmPoster}
       {filmDetailsText}
