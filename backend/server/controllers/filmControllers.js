@@ -26,14 +26,23 @@ async function getTwoFilmsWithDifferentRatings() {
   return [film1, film2];
 }
 
-async function getFilms(twoFilmsWithDifferentRatings, numberOfPairs) {
-  if (twoFilmsWithDifferentRatings === 'true') {
-    if (Number.isInteger(numberOfPairs) === true) {
-      return Promise.all(Array(numberOfPairs).fill(getTwoFilmsWithDifferentRatings()));
-    }
-    return getTwoFilmsWithDifferentRatings();
+// TODO: improve performance
+function getFilmPairs(numberOfPairs) {
+  const promiseArray = [];
+  for (let i = 0; i < numberOfPairs; i += 1) {
+    promiseArray.push(getTwoFilmsWithDifferentRatings());
   }
-  return Film.find();
+  return Promise.all(promiseArray);
+}
+
+async function getFilms(twoFilmsWithDifferentRatings, numberOfPairs) {
+  if (twoFilmsWithDifferentRatings !== 'true') {
+    return Film.find();
+  }
+  if (Number.isInteger(numberOfPairs) === true) {
+    return getFilmPairs(numberOfPairs);
+  }
+  return getTwoFilmsWithDifferentRatings();
 }
 
 function handleError(res, err) {
