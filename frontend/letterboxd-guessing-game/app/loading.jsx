@@ -2,7 +2,7 @@ function LoadingPage() {
     // TODO: ensure loading is accessible and use a spinner
     return (
         <p>
-            Loading Film Data...
+            Loading Letterboxd Guessing Game...
         </p>
     );
 }
