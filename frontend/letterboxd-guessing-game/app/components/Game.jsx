@@ -112,7 +112,7 @@ function Game() {
     <div className="Game">
       <header aria-label="Instruction and scores">
         <h1 id="instruction">
-          Click the Film with the Higher Letterboxd Rating...
+          Guess the Film with the Higher Letterboxd Rating...
         </h1>
         <div aria-label="Scores">
           <CurrentScore score={scoreObject.currentScore} />
