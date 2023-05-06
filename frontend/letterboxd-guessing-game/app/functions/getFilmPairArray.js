@@ -1,9 +1,11 @@
+import getAPIRequestURL from "./getAPIRequestURL";
+
 async function getFilmPairArray(numberOfPairs) {
   // NOTE: the two selected films should have different ratings
-  const requestURL = process.env.PUBLIC_API_URL || process.env.DEVELOPMENT_API_URL;
+  const requestURL = getAPIRequestURL(`/films?twoFilmsWithDifferentRatings=true&numberOfPairs=${numberOfPairs}`);
   try {
     const responseJSON = await fetch(
-      `${requestURL}&numberOfPairs=${numberOfPairs}`,
+      requestURL,
       {
         cache: "no-store",
         headers: {
