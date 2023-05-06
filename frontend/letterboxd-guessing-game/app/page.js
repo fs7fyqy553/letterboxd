@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import "./styles/App.css";
-import getFilmPairArray from './functions/getFilmPairArray';
 import Game from './components/Game';
 
 export default async function App() {
