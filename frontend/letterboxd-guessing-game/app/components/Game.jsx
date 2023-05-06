@@ -9,12 +9,15 @@ import LoadingFilmDetails from "./LoadingFilmDetails";
 
 async function getFilmPairArray(numberOfPairs) {
   const filmPairArray = await fetch(`/api/filmPairs?numberOfPairs=${numberOfPairs}`);
+  await new Promise((res) => setTimeout(res, 3000));
   return await filmPairArray.json();
 } 
 
 function Game() {
   const [scoreObject, setScoreObject] = useState({ currentScore: 0, highScore: 0 });
   const [currentFilmPair, setCurrentFilmPair] = useState([]);
+  // NOTE: giving animations ability to be disabled helps satisfy WCAG Level A
+  const [areLoadingAnimationsEnabled, setAreLoadingAnimationsEnabled] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
 
   const filmPairArray = useRef([]);
@@ -50,7 +53,7 @@ function Game() {
     setScoreObject(({currentScore, highScore}) => getUpdatedScoreObject(selectionWasCorrect, currentScore, highScore));
   }
   async function loadFilmPairArray() {
-    const newFilmPairArray = await getFilmPairArray(100);
+    const newFilmPairArray = await getFilmPairArray(5);
     filmPairArray.current = newFilmPairArray;
   }
   function getNextFilmPair() {
@@ -141,7 +144,10 @@ function Game() {
             </>
           )
           :
-          <LoadingFilmDetails />
+          <LoadingFilmDetails
+            areLoadingAnimationsEnabled={areLoadingAnimationsEnabled}
+            setAreLoadingAnimationsEnabled={setAreLoadingAnimationsEnabled}
+          />
         }
       </main>
     </div>
