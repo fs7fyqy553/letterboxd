@@ -119,28 +119,31 @@ function Game() {
           <HighScore score={scoreObject.highScore} />
         </div>
       </header>
-      <main aria-labelledby="instruction">
-      {currentFilmPair.length === 2
-        ?
-        (
-          <>
-            <FilmDetails
-              filmObject={currentFilmPair[0]}
-              onFilmClick={selectFilm}
-              showAverageRating={true}
-              isFilmClickDisabled={isLoading}
-            />
-            <FilmDetails
-              filmObject={currentFilmPair[1]}
-              onFilmClick={selectFilm}
-              showAverageRating={false}
-              isFilmClickDisabled={isLoading}
-            />
-          </>
-        )
-        :
-        <LoadingFilmDetails />
-      }
+      <main
+        aria-labelledby="instruction"
+        aria-busy={currentFilmPair.length !== 2 || isLoading === true}
+      >
+        {currentFilmPair.length === 2
+          ?
+          (
+            <>
+              <FilmDetails
+                filmObject={currentFilmPair[0]}
+                onFilmClick={selectFilm}
+                showAverageRating={true}
+                isFilmClickDisabled={isLoading}
+              />
+              <FilmDetails
+                filmObject={currentFilmPair[1]}
+                onFilmClick={selectFilm}
+                showAverageRating={false}
+                isFilmClickDisabled={isLoading}
+              />
+            </>
+          )
+          :
+          <LoadingFilmDetails />
+        }
       </main>
     </div>
   );

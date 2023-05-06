@@ -27,6 +27,7 @@ main {
   gap: 5px;
 }
 
-main, main .img {
+main,
+main .img {
   background-color: #36454f;
 }
