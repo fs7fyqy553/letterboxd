@@ -15,7 +15,7 @@ async function getFilmPairArray(numberOfPairs) {
 function Game() {
   const [scoreObject, setScoreObject] = useState({ currentScore: 0, highScore: 0 });
   const [currentFilmPair, setCurrentFilmPair] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const filmPairArray = useRef([]);
 
@@ -50,7 +50,7 @@ function Game() {
     setScoreObject(({currentScore, highScore}) => getUpdatedScoreObject(selectionWasCorrect, currentScore, highScore));
   }
   async function loadFilmPairArray() {
-    const newFilmPairArray = await getFilmPairArray(100);
+    const newFilmPairArray = await getFilmPairArray(5);
     filmPairArray.current = newFilmPairArray;
   }
   function getNextFilmPair() {
@@ -86,17 +86,18 @@ function Game() {
     const otherFilmObject = getOtherFilmObject(selectedFilmObject);
     endRound(selectedFilmObject, otherFilmObject);
   }
-  function loadCurrentFilmPair() {
+  async function loadInitialCurrentFilmPair() {
     const sessionStoredCurrentFilmPair = getFromSessionStorage("currentFilmPair");
     if (sessionStoredCurrentFilmPair !== null) {
       setCurrentFilmPair(sessionStoredCurrentFilmPair);
     } else {
-      changeFilms();
+      await changeFilms();
     }
   }
   async function initialiseFilmPairs() {
     await loadFilmPairArray();
-    loadCurrentFilmPair();
+    await loadInitialCurrentFilmPair();
+    setIsLoading(false);
   }
   function storeInSession(key, value) {
     sessionStorage.setItem(key, JSON.stringify(value));
@@ -121,9 +122,9 @@ function Game() {
       </header>
       <main
         aria-labelledby="instruction"
-        aria-busy={currentFilmPair.length !== 2 || isLoading === true}
+        aria-busy={isLoading === true}
       >
-        {currentFilmPair.length === 2
+        {isLoading === false
           ?
           (
             <>
@@ -131,13 +132,11 @@ function Game() {
                 filmObject={currentFilmPair[0]}
                 onFilmClick={selectFilm}
                 showAverageRating={true}
-                isFilmClickDisabled={isLoading}
               />
               <FilmDetails
                 filmObject={currentFilmPair[1]}
                 onFilmClick={selectFilm}
                 showAverageRating={false}
-                isFilmClickDisabled={isLoading}
               />
             </>
           )
