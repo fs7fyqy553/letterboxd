@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import HighScore from "./HighScore";
 import CurrentScore from "./CurrentScore";
 import FilmDetails from "./FilmDetails";
+import LoadingFilmDetails from "./LoadingFilmDetails";
 
 async function getFilmPairArray(numberOfPairs) {
   const filmPairArray = await fetch(`/api/filmPairs?numberOfPairs=${numberOfPairs}`);
@@ -118,22 +119,29 @@ function Game() {
           <HighScore score={scoreObject.highScore} />
         </div>
       </header>
-      {currentFilmPair.length === 2 && (
-        <main aria-labelledby="instruction">
-          <FilmDetails
-            filmObject={currentFilmPair[0]}
-            onFilmClick={selectFilm}
-            showAverageRating={true}
-            isFilmClickDisabled={isLoading}
-          />
-          <FilmDetails
-            filmObject={currentFilmPair[1]}
-            onFilmClick={selectFilm}
-            showAverageRating={false}
-            isFilmClickDisabled={isLoading}
-          />
-        </main>
-      )}
+      <main aria-labelledby="instruction">
+      {currentFilmPair.length === 2
+        ?
+        (
+          <>
+            <FilmDetails
+              filmObject={currentFilmPair[0]}
+              onFilmClick={selectFilm}
+              showAverageRating={true}
+              isFilmClickDisabled={isLoading}
+            />
+            <FilmDetails
+              filmObject={currentFilmPair[1]}
+              onFilmClick={selectFilm}
+              showAverageRating={false}
+              isFilmClickDisabled={isLoading}
+            />
+          </>
+        )
+        :
+        <LoadingFilmDetails />
+      }
+      </main>
     </div>
   );
 }

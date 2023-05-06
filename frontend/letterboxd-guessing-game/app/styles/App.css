@@ -6,7 +6,9 @@
   flex-direction: column;
 }
 
-.App, .App .FilmDetails {
+.App,
+.App .FilmDetails,
+.App .LoadingFilmDetails {
   background-color: #dedede;
 }
 
