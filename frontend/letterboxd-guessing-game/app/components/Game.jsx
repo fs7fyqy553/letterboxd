@@ -6,21 +6,31 @@ import HighScore from "./HighScore";
 import CurrentScore from "./CurrentScore";
 import FilmDetails from "./FilmDetails";
 
-function Game({ filmPairArray }) {
-  const [scoreObject, setScoreObject] = useState({ currentScore: 0, highScore: 0 });
-  const [filmObjectArray, setFilmObjectArray] = useState([]);
+async function getFilmPairArray(numberOfPairs) {
+  const filmPairArray = await fetch(`/api/filmPairs?numberOfPairs=${numberOfPairs}`);
+  return await filmPairArray.json();
+} 
 
-  const filmPairs = useRef([...filmPairArray]);
+function Game() {
+  const [scoreObject, setScoreObject] = useState({ currentScore: 0, highScore: 0 });
+  const [currentFilmPair, setCurrentFilmPair] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const filmPairArray = useRef([]);
 
   useEffect(loadScoreObject, []);
   useEffect(() => {
     storeInSession("scoreObject", scoreObject);
   }, [scoreObject]);
 
-  useEffect(loadFilmObjectArray, []);
   useEffect(() => {
-    storeInSession("filmObjectArray", filmObjectArray);
-  }, [filmObjectArray]);
+    initialiseFilmPairs();
+  }, []);
+  useEffect(() => {
+    if (currentFilmPair.length === 2) {
+      storeInSession("currentFilmPair", currentFilmPair);
+    }
+  }, [currentFilmPair]);
 
   function getNewHighScore(newCurrentScore, prevHighScore) {
     return Math.max(newCurrentScore, prevHighScore);
@@ -38,22 +48,22 @@ function Game({ filmPairArray }) {
   function updateScoreObject(selectionWasCorrect) {
     setScoreObject(({currentScore, highScore}) => getUpdatedScoreObject(selectionWasCorrect, currentScore, highScore));
   }
-  function reloadPage() {
-    // NOTE: doing this so that server can fetch new data from Letterboxd Guessing Game API.
-    // Not using routes to do this, since it is desired for access to the API to be 
-    // completely limited to this app and routes are public in deployment.
-    // TODO: replace with NextJS router
-    window.location.reload();
+  async function loadFilmPairArray() {
+    const newFilmPairArray = await getFilmPairArray(100);
+    filmPairArray.current = newFilmPairArray;
   }
   function getNextFilmPair() {
-    return filmPairs.current.pop();
+    return filmPairArray.current.pop();
   }
 
-  function changeFilms() {
-    const newFilmObjectArray = getNextFilmPair();
-    setFilmObjectArray(newFilmObjectArray);
-    if (filmPairs.current.length === 0) {
-      reloadPage();
+  async function changeFilms() {
+    const newCurrentFilmPair = getNextFilmPair();
+    setCurrentFilmPair(newCurrentFilmPair);
+    console.log(filmPairArray.current.length);
+    if (filmPairArray.current.length === 0) {
+      setIsLoading(true);
+      await loadFilmPairArray();
+      setIsLoading(false);
     }
   }
   function updateScore(selectedFilmObject, otherFilmObject) {
@@ -66,7 +76,7 @@ function Game({ filmPairArray }) {
     changeFilms();
   }
   function getOtherFilmObject(selectedFilmObject) {
-    return (selectedFilmObject === filmObjectArray[0]) ? filmObjectArray[1] : filmObjectArray[0];
+    return (selectedFilmObject === currentFilmPair[0]) ? currentFilmPair[1] : currentFilmPair[0];
   }
   function getFromSessionStorage(key) {
     return JSON.parse(sessionStorage.getItem(key));
@@ -76,13 +86,17 @@ function Game({ filmPairArray }) {
     const otherFilmObject = getOtherFilmObject(selectedFilmObject);
     endRound(selectedFilmObject, otherFilmObject);
   }
-  function loadFilmObjectArray() {
-    const sessionStoredFilmObjectArray = getFromSessionStorage("filmObjectArray");
-    if (sessionStoredFilmObjectArray !== null) {
-      setFilmObjectArray(sessionStoredFilmObjectArray);
+  function loadCurrentFilmPair() {
+    const sessionStoredCurrentFilmPair = getFromSessionStorage("currentFilmPair");
+    if (sessionStoredCurrentFilmPair !== null) {
+      setCurrentFilmPair(sessionStoredCurrentFilmPair);
     } else {
       changeFilms();
     }
+  }
+  async function initialiseFilmPairs() {
+    await loadFilmPairArray();
+    loadCurrentFilmPair();
   }
   function storeInSession(key, value) {
     sessionStorage.setItem(key, JSON.stringify(value));
@@ -105,17 +119,19 @@ function Game({ filmPairArray }) {
           <HighScore score={scoreObject.highScore} />
         </div>
       </header>
-      {filmObjectArray.length === 2 && (
+      {currentFilmPair.length === 2 && (
         <main aria-labelledby="instruction">
           <FilmDetails
-            filmObject={filmObjectArray[0]}
+            filmObject={currentFilmPair[0]}
             onFilmClick={selectFilm}
             showAverageRating={true}
+            isFilmClickDisabled={isLoading}
           />
           <FilmDetails
-            filmObject={filmObjectArray[1]}
+            filmObject={currentFilmPair[1]}
             onFilmClick={selectFilm}
             showAverageRating={false}
+            isFilmClickDisabled={isLoading}
           />
         </main>
       )}
