@@ -59,7 +59,6 @@ function Game() {
   async function changeFilms() {
     const newCurrentFilmPair = getNextFilmPair();
     setCurrentFilmPair(newCurrentFilmPair);
-    console.log(filmPairArray.current.length);
     if (filmPairArray.current.length === 0) {
       setIsLoading(true);
       await loadFilmPairArray();
