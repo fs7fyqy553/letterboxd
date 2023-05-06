@@ -9,7 +9,6 @@ import LoadingFilmDetails from "./LoadingFilmDetails";
 
 async function getFilmPairArray(numberOfPairs) {
   const filmPairArray = await fetch(`/api/filmPairs?numberOfPairs=${numberOfPairs}`);
-  await new Promise((res) => setTimeout(res, 3000));
   return await filmPairArray.json();
 } 
 
