@@ -53,7 +53,7 @@ function Game() {
     setScoreObject(({currentScore, highScore}) => getUpdatedScoreObject(selectionWasCorrect, currentScore, highScore));
   }
   async function loadFilmPairArray() {
-    const newFilmPairArray = await getFilmPairArray(5);
+    const newFilmPairArray = await getFilmPairArray(100);
     filmPairArray.current = newFilmPairArray;
   }
   function getNextFilmPair() {
