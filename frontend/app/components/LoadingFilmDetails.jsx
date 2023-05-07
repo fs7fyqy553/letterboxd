@@ -8,14 +8,14 @@ function LoadingFilmDetails({ areLoadingAnimationsEnabled, setAreLoadingAnimatio
                 className="Spinner"
                 data-enabled={areLoadingAnimationsEnabled}
                 onClick={() => setAreLoadingAnimationsEnabled((false))}
-                aria-hidden="true"
+                aria-label="Loading animation, clicking simply removes it"
             >
             </button>
             <span
                 className="TooltipText"
                 aria-hidden="true"
             >
-                    Click Animation to Disable
+                Click Animation to Disable
             </span>
             <div className="LoadingText"
                 data-shown={!areLoadingAnimationsEnabled}
