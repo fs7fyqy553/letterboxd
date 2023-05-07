@@ -18,7 +18,13 @@ Tools:
         - Accessible using a REST API with Authentication
         - Uses a MongoDB Database
         - Tested using MongoDB In-Memory Server and Supertest in Jest
-        
+
     - Web Scraper:
         - Written in TypeScript
         - Uses Puppeteer
+
+Ongoing:
+
+- Improving Appearance on Mobile
+- Finishing Frontend Tests
+- Implementing Rate Limiting in API
