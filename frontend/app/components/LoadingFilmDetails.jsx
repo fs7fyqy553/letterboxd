@@ -1,5 +1,4 @@
 import "../styles/LoadingFilmDetails.css";
-import { useState } from "react";
 
 function LoadingFilmDetails({ areLoadingAnimationsEnabled, setAreLoadingAnimationsEnabled }) {
 
