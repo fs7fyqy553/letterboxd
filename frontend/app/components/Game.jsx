@@ -128,20 +128,18 @@ function Game() {
       >
         {isLoading === false
           ?
-          (
-            <>
-              <FilmDetails
-                filmObject={currentFilmPair[0]}
-                onFilmClick={selectFilm}
-                showAverageRating={true}
-              />
-              <FilmDetails
-                filmObject={currentFilmPair[1]}
-                onFilmClick={selectFilm}
-                showAverageRating={false}
-              />
-            </>
-          )
+          (<>
+            <FilmDetails
+              filmObject={currentFilmPair[0]}
+              onFilmClick={selectFilm}
+              showAverageRating={true}
+            />
+            <FilmDetails
+              filmObject={currentFilmPair[1]}
+              onFilmClick={selectFilm}
+              showAverageRating={false}
+            />
+          </>)
           :
           <LoadingFilmDetails
             areLoadingAnimationsEnabled={areLoadingAnimationsEnabled}
