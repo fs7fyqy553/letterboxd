@@ -1,25 +1,38 @@
-.FilmDetails {
-  flex: 1;
-  border: none;
-  cursor: pointer;
-  padding: 10px;
+.FilmPosterCell {
+  --blur-radius: 15px;
+
+  padding: var(--outer-padding);
+  padding-bottom: var(--blur-radius);
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  gap: 20px;
+  align-items: flex-end;
+  cursor: pointer;
 }
 
 /* TODO: consider implementing a media query for mobile landscape mode, e.g. one that uses film 
 "cover photo" from Letterboxd */
-.FilmDetails > .img {
-  width: 100%;
-  max-width: 250px;
-  max-height: 400px;
+.FilmPosterCell > .img {
   flex: 1;
+  height: 100%;
+  max-width: 250px;
+  max-height: var(--film-poster-max-height);
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
   border-radius: 10px;
-  box-shadow: 0 0 30px;
+  box-shadow: 0 0 var(--blur-radius);
+}
+
+.FilmTextButton {
+  order: 1;
+  border: none;
+  padding: var(--outer-padding);
+  padding-top: 0;
+  display: flex;
+  cursor: pointer;
+}
+
+.text {
+  flex: 1;
+  height: 100%;
 }

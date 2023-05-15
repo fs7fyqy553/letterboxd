@@ -128,7 +128,7 @@ function Game() {
       >
         {isLoading === false
           ?
-          (<>
+          (<div className="FilmGrid">
             <FilmDetails
               filmObject={currentFilmPair[0]}
               onFilmClick={selectFilm}
@@ -139,7 +139,7 @@ function Game() {
               onFilmClick={selectFilm}
               showAverageRating={false}
             />
-          </>)
+          </div>)
           :
           <LoadingFilmDetails
             areLoadingAnimationsEnabled={areLoadingAnimationsEnabled}

@@ -24,14 +24,20 @@ function FilmDetails({
       showAverageRating={showAverageRating}
     />
   );
+
+  function handleClick() {
+    onFilmClick(filmObject);
+  }
+
   return (
-    <button 
-      className="FilmDetails"
-      onClick={() => onFilmClick(filmObject)}
-    >
-      {filmPoster}
-      {filmDetailsText}
-    </button>
+    <>
+      <div className="FilmPosterCell" onClick={handleClick}>
+        {filmPoster}
+      </div>
+      <button className="FilmTextButton" onClick={handleClick}>
+        {filmDetailsText}
+      </button>
+    </>
   );
 }
 

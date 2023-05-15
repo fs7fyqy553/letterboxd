@@ -7,8 +7,9 @@
 }
 
 .App,
-.App .FilmDetails,
-.App .LoadingFilmDetails {
+.App .LoadingFilmDetails,
+.App .FilmPosterCell,
+.App button {
   background-color: #dedede;
 }
 

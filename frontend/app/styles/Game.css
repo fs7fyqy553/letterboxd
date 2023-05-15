@@ -13,6 +13,7 @@ header {
 
 header > h1 {
   margin-top: 0;
+  margin-bottom: 5px;
   font-size: clamp(1em, min(7vw, 7vh), 2em);
 }
 
@@ -24,10 +25,20 @@ header > div {
 main {
   flex: 1;
   display: flex;
-  gap: 5px;
 }
 
 main,
 main .img {
   background-color: #36454f;
+}
+
+.FilmGrid {
+  --film-poster-max-height: 400px;
+  --outer-padding: 5px;
+
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: minmax(0, calc(45% + var(--film-poster-max-height) / 2));
+  column-gap: 5px;
 }
