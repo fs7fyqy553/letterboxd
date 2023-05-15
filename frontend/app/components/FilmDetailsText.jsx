@@ -15,7 +15,7 @@ function FilmDetailsText({
       </div>
       {showAverageRating && (
         <div>
-          <strong>Average Rating:</strong> {averageRatingString}/5
+          <strong>Rating:</strong> {averageRatingString}/5
         </div>
       )}
     </div>
