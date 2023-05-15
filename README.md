@@ -4,7 +4,6 @@ Game in each round of which the player must guess which of two films is more hig
 
 Ongoing:
 
-- Improving Appearance on Mobile
 - Finishing Frontend Tests
 - Implementing Rate Limiting in API
 
