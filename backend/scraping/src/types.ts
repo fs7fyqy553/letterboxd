@@ -4,4 +4,5 @@ export type validFilmObject = {
     directorNameArray: string[],
     averageRatingString: string,
     filmPosterURL: string,
+    filmBackdropImageURL: string,
 }

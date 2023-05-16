@@ -3,6 +3,9 @@ import { parse } from "node-html-parser";
 import { scrollPageToBottom } from "puppeteer-autoscroll-down";
 import { validFilmObject } from "./types.js";
 
+function getFilmBackdropWrapper(filmPageDoc: HTMLElement): HTMLElement | null {
+  return filmPageDoc.querySelector('#backdrop');
+}
 function extractNodeListText(nodeList: NodeListOf<Element>): (string | null)[] {
   const textArray = [];
   for (let i = 0; i < nodeList.length; i += 1) {
@@ -11,6 +14,10 @@ function extractNodeListText(nodeList: NodeListOf<Element>): (string | null)[] {
   return textArray;
 }
 
+function getFilmBackdropImageURL(filmPageDoc: HTMLElement): string | null {
+  const filmBackdropWrapper = getFilmBackdropWrapper(filmPageDoc);
+  return filmBackdropWrapper && filmBackdropWrapper.getAttribute('data-backdrop');
+}
 function getFilmPosterURL(filmPageDoc: HTMLElement, filmTitle: string | null): string | null {
   const selector = (filmTitle !== null) ? `[alt='${filmTitle}']` : "#poster-large > div > div > img";
   const filmPosterURLElement = filmPageDoc.querySelector(selector);
@@ -51,6 +58,7 @@ function getFilmObject(filmPageDoc: HTMLElement) {
     directorNameArray: getDirectorNameArray(filmPageDoc),
     averageRatingString: getAverageRatingString(filmPageDoc),
     filmPosterURL: getFilmPosterURL(filmPageDoc, filmTitle),
+    filmBackdropImageURL: getFilmBackdropImageURL(filmPageDoc),
   };
 }
 async function getFilmPageDoc(filmPageURL: string, filmPuppeteerPage: puppeteer.Page): Promise<HTMLElement> {
@@ -66,7 +74,8 @@ function isValidFilmObject(filmObject: any): filmObject is validFilmObject {
     // @ts-ignore
     filmObject.directorNameArray.every((element) => typeof(element) === "string") &&
     filmObject.averageRatingString !== undefined && typeof(filmObject.averageRatingString) === "string" && 
-    filmObject.filmPosterURL !== undefined && typeof(filmObject.filmPosterURL) === "string"
+    filmObject.filmPosterURL !== undefined && typeof(filmObject.filmPosterURL) === "string" &&
+    filmObject.filmBackdropImageURL !== undefined && typeof(filmObject.filmBackdropImageURL) === "string"
   );
 }
 async function getDetailsObjectFromFilmPage(filmPageURL: string, filmPuppeteerPage: puppeteer.Page): Promise<object | null> {
