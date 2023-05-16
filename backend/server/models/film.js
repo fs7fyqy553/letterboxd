@@ -7,6 +7,7 @@ const FilmSchema = new Schema(
     directorNameArray: { type: Array, required: true },
     averageRatingString: { type: String, required: true },
     filmPosterURL: { type: String, required: true },
+    filmBackdropImageURL: { type: String, required: true },
   },
   {
     timestamps: true,
