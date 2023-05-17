@@ -13,8 +13,14 @@ function FilmDetails({
     directorNameArray,
     averageRatingString,
     filmPosterURL,
+    filmBackdropImageURL,
   } = filmObject;
-  const filmPoster = <FilmPoster filmPosterURL={filmPosterURL} />;
+  const filmPoster = (
+    <FilmPoster
+      filmPosterURL={filmPosterURL}
+      filmBackdropImageURL={filmBackdropImageURL}
+    />
+  )
   const filmDetailsText = (
     <FilmDetailsText
       filmTitle={filmTitle}
