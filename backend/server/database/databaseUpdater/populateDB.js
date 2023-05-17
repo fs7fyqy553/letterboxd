@@ -1,6 +1,7 @@
 import '../mongoConfig.js';
 import processFilmsInList from '../../../scraping/dist/index.js';
 import Film from '../../models/film.js';
+import { CronJob } from 'cron';
 
 function updateAverageRatingString(existingFilmDoc, newAverageRatingString) {
   const updatedFilmDoc = existingFilmDoc;
@@ -36,7 +37,16 @@ async function saveScrapedFilmDetailsObject(filmDetailsObject) {
   }
 }
 
-processFilmsInList(
-  'https://letterboxd.com/bucksalypse/list/letterboxd-500-most-watched-movies-of-all/',
-  saveScrapedFilmDetailsObject
+const _ = new CronJob(
+  // '0 0 * * *',
+  '* * * * *',
+  async () => {
+    await processFilmsInList(
+      'https://letterboxd.com/bucksalypse/list/letterboxd-500-most-watched-movies-of-all/',
+      saveScrapedFilmDetailsObject
+    );
+  },
+  null,
+  true,
+  'Europe/London'
 );
