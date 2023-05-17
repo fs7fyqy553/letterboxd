@@ -18,9 +18,8 @@ function getFilmBackdropImageURL(filmPageDoc: HTMLElement): string | null {
   const filmBackdropWrapper = getFilmBackdropWrapper(filmPageDoc);
   return filmBackdropWrapper && filmBackdropWrapper.getAttribute('data-backdrop');
 }
-function getFilmPosterURL(filmPageDoc: HTMLElement, filmTitle: string | null): string | null {
-  const selector = (filmTitle !== null) ? `[alt='${filmTitle}']` : "#poster-large > div > div > img";
-  const filmPosterURLElement = filmPageDoc.querySelector(selector);
+function getFilmPosterURL(filmPageDoc: HTMLElement): string | null {
+  const filmPosterURLElement = filmPageDoc.querySelector('#poster-large > div > div > img');
   return filmPosterURLElement && filmPosterURLElement.getAttribute('src');
 }
 function getAverageRatingString(filmPageDoc: HTMLElement): string | null {
@@ -57,7 +56,7 @@ function getFilmObject(filmPageDoc: HTMLElement) {
     releaseYearString: getReleaseYearString(filmPageDoc),
     directorNameArray: getDirectorNameArray(filmPageDoc),
     averageRatingString: getAverageRatingString(filmPageDoc),
-    filmPosterURL: getFilmPosterURL(filmPageDoc, filmTitle),
+    filmPosterURL: getFilmPosterURL(filmPageDoc),
     filmBackdropImageURL: getFilmBackdropImageURL(filmPageDoc),
   };
 }
@@ -119,6 +118,7 @@ async function getDynamicFilmListPageBody(listPageURL: string, puppeteerPage: pu
   await puppeteerPage.goto(listPageURL);
   // @ts-ignore
   await scrollPageToBottom(puppeteerPage, {});
+  await new Promise((res) => setTimeout(res, 1000));
   return getInnerHTMLFromPuppeteerPage(puppeteerPage);
 }
 
