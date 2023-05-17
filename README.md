@@ -13,7 +13,7 @@ Tools:
 
     - Written in React within NextJS
     - WCAG Level A Accessibility
-    - Responsive Design using Vanilla CSS
+    - Responsive Design using Vanilla CSS and Material UI
     - Tested (unfinished) using the React Testing Library in Jest
 
 - Backend:
