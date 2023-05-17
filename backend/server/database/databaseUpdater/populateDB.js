@@ -1,6 +1,6 @@
-import '../database/mongoConfig.js';
-import processFilmsInList from '../../scraping/dist/index.js';
-import Film from '../models/film.js';
+import '../mongoConfig.js';
+import processFilmsInList from '../../../scraping/dist/index.js';
+import Film from '../../models/film.js';
 
 async function saveScrapedFilmDetailsObject(filmDetailsObject) {
   const newFilm = new Film(filmDetailsObject);
