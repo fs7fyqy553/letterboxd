@@ -185,7 +185,11 @@ async function useBrowser(browser: puppeteer.Browser, firstListPageURL: string, 
   await usePuppeteerPages(listPuppeteerPage, filmPuppeteerPage, firstListPageURL, processor);
 }
 async function getHeadlessBrowser(): Promise<puppeteer.Browser> {
-  return puppeteer.launch({ headless: true });
+  return puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox'],
+    ignoreDefaultArgs: ['--disable-extensions'],
+  });
 }
 
 async function processFilmsInList(firstListPageURL: string, processor: Function): Promise<void> {
