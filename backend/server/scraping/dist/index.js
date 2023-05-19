@@ -133,8 +133,10 @@ async function processListPageAndGetNextURL(listPageURL, listPuppeteerPage, film
     await processFilmsOnListPage(listPageDoc, filmPuppeteerPage, processor);
     return getNextFilmListPageURL(listPageDoc);
 }
-function getPuppeteerPage(browser) {
-    return browser.newPage();
+async function getPuppeteerPage(browser) {
+    const page = await browser.newPage();
+    page.setDefaultNavigationTimeout(0);
+    return page;
 }
 // TODO: consider parallel programming
 async function usePuppeteerPages(listPuppeteerPage, filmPuppeteerPage, firstListPageURL, processor) {

@@ -150,8 +150,10 @@ async function processListPageAndGetNextURL(
   return getNextFilmListPageURL(listPageDoc);
 }
 
-function getPuppeteerPage(browser: puppeteer.Browser): Promise<puppeteer.Page> {
-  return browser.newPage();
+async function getPuppeteerPage(browser: puppeteer.Browser): Promise<puppeteer.Page> {
+  const page = await browser.newPage();
+  page.setDefaultNavigationTimeout(0);
+  return page;
 }
 
 // TODO: consider parallel programming
