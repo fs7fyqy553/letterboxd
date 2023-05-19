@@ -8,7 +8,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "devstart": "PORT=3001 nodemon ./bin/www",
-    "serverstart": "DEBUG=backend:* npm run devstart"
+    "serverstart": "DEBUG=backend:* npm run devstart",
+    "scheduledatabaseupdates": "node ./database/databaseUpdater/populateDB.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
