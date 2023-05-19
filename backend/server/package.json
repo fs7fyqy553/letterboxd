@@ -6,7 +6,7 @@
   },
   "private": true,
   "scripts": {
-    "start": "concurrently \"node ./bin/www\" \"npm run scheduledatabaseupdates\"",
+    "start": "node ./bin/www",
     "devstart": "PORT=3001 nodemon ./bin/www",
     "serverstart": "DEBUG=backend:* npm run devstart",
     "scheduledatabaseupdates": "node ./database/databaseUpdater/populateDB.js"
