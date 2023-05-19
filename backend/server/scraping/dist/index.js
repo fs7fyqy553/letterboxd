@@ -135,6 +135,7 @@ async function processListPageAndGetNextURL(listPageURL, listPuppeteerPage, film
 }
 async function getPuppeteerPage(browser) {
     const page = await browser.newPage();
+    // NOTE: necessary for deployment
     page.setDefaultNavigationTimeout(0);
     return page;
 }

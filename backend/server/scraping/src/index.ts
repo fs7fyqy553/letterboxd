@@ -152,6 +152,7 @@ async function processListPageAndGetNextURL(
 
 async function getPuppeteerPage(browser: puppeteer.Browser): Promise<puppeteer.Page> {
   const page = await browser.newPage();
+  // NOTE: necessary for deployment
   page.setDefaultNavigationTimeout(0);
   return page;
 }
