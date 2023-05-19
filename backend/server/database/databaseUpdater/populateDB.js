@@ -46,8 +46,7 @@ async function scrapePopularFilmsList() {
 }
 
 const job = new CronJob({
-  // cronTime: '0 0 * * *',
-  cronTime: '*/10 * * * *',
+  cronTime: '0 0 * * *',
   onTick: scrapePopularFilmsList,
   timeZone: 'Europe/London',
 });
