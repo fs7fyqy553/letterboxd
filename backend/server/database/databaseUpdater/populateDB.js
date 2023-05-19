@@ -45,7 +45,7 @@ async function scrapePopularFilmsList() {
       'https://letterboxd.com/bucksalypse/list/letterboxd-500-most-watched-movies-of-all/',
       saveScrapedFilmDetailsObject
     );
-    await timeout(processPromise, 300);
+    await timeout(processPromise, 300000);
   } catch (err) {
     if (err instanceof TimeoutError) {
       console.log('Process timed out');
