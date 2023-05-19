@@ -12,6 +12,7 @@
     "scheduledatabaseupdates": "node ./database/databaseUpdater/populateDB.js"
   },
   "dependencies": {
+    "concurrently": "^8.0.1",
     "cors": "^2.8.5",
     "cron": "^2.3.0",
     "debug": "~2.6.9",
