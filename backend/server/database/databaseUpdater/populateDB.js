@@ -39,7 +39,7 @@ async function saveScrapedFilmDetailsObject(filmDetailsObject) {
 }
 
 const job = new CronJob({
-  cronTime: '*/10 * * * *',
+  cronTime: '0 0 * * *',
   onTick: async () => {
     await processFilmsInList(
       'https://letterboxd.com/bucksalypse/list/letterboxd-500-most-watched-movies-of-all/',
