@@ -2,7 +2,6 @@ import '../mongoConfig.js';
 import processFilmsInList from '../../scraping/dist/index.js';
 import Film from '../../models/film.js';
 import { CronJob } from 'cron';
-import { timeout, TimeoutError } from 'promise-timeout';
 
 function updateAverageRatingString(existingFilmDoc, newAverageRatingString) {
   const updatedFilmDoc = existingFilmDoc;
@@ -40,17 +39,10 @@ async function saveScrapedFilmDetailsObject(filmDetailsObject) {
 }
 
 async function scrapePopularFilmsList() {
-  try {
-    const processPromise = processFilmsInList(
-      'https://letterboxd.com/bucksalypse/list/letterboxd-500-most-watched-movies-of-all/',
-      saveScrapedFilmDetailsObject
-    );
-    await timeout(processPromise, 300000);
-  } catch (err) {
-    if (err instanceof TimeoutError) {
-      console.log('Process timed out');
-    }
-  }
+  await processFilmsInList(
+    'https://letterboxd.com/bucksalypse/list/letterboxd-500-most-watched-movies-of-all/',
+    saveScrapedFilmDetailsObject
+  );
 }
 
 const job = new CronJob({
