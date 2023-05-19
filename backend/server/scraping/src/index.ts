@@ -187,7 +187,7 @@ async function useBrowser(browser: puppeteer.Browser, firstListPageURL: string, 
 async function getHeadlessBrowser(): Promise<puppeteer.Browser> {
   return puppeteer.launch({
     headless: true,
-    args: ['--no-sandbox'],
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
     ignoreDefaultArgs: ['--disable-extensions'],
   });
 }
