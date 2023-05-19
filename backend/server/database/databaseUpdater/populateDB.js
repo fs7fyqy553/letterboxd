@@ -40,7 +40,7 @@ async function saveScrapedFilmDetailsObject(filmDetailsObject) {
 
 const _ = new CronJob(
   // '0 0 * * *',
-  '*/30 * * * *',
+  '*/7 * * * *',
   // '* * * * *',
   async () => {
     await processFilmsInList(
