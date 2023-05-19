@@ -31,6 +31,7 @@ async function saveScrapedFilmDetailsObject(filmDetailsObject) {
       existingFilmDoc != null
         ? getUpdatedFilmDoc(existingFilmDoc, filmDetailsObject)
         : makeNewFilmDoc(filmDetailsObject);
+    console.log(savedFilmDoc);
     await savedFilmDoc.save();
   } catch (err) {
     console.log(err);
@@ -39,7 +40,8 @@ async function saveScrapedFilmDetailsObject(filmDetailsObject) {
 
 const _ = new CronJob(
   // '0 0 * * *',
-  '* * * * *',
+  '*/30 * * * *',
+  // '* * * * *',
   async () => {
     await processFilmsInList(
       'https://letterboxd.com/bucksalypse/list/letterboxd-500-most-watched-movies-of-all/',
