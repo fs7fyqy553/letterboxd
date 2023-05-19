@@ -38,10 +38,8 @@ async function saveScrapedFilmDetailsObject(filmDetailsObject) {
   }
 }
 
-const _ = new CronJob(
-  // '0 0 * * *',
-  '*/10 * * * *',
-  // '* * * * *',
+const job = new CronJob(
+  '0 0 * * *',
   async () => {
     await processFilmsInList(
       'https://letterboxd.com/bucksalypse/list/letterboxd-500-most-watched-movies-of-all/',
@@ -49,6 +47,8 @@ const _ = new CronJob(
     );
   },
   null,
-  true,
+  false,
   'Europe/London'
 );
+
+job.start();
