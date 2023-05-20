@@ -107,7 +107,6 @@ function getLetterboxdURL(path: string | null) {
   return `https://letterboxd.com${path}`;
 }
 async function processFilmAnchorNodeList(nodeList: NodeListOf<Element>, filmPuppeteerPage: puppeteer.Page, processor: Function): Promise<void> {
-  // TODO: consider parallel programming;
   for (let i = 0; i < nodeList.length; i += 1) {
     const filmAnchorNode = nodeList[i];
     // eslint-disable-next-line no-await-in-loop
@@ -157,7 +156,6 @@ async function getPuppeteerPage(browser: puppeteer.Browser): Promise<puppeteer.P
   return page;
 }
 
-// TODO: consider parallel programming
 async function usePuppeteerPages(
   listPuppeteerPage: puppeteer.Page,
   filmPuppeteerPage: puppeteer.Page,
@@ -196,7 +194,7 @@ async function getHeadlessBrowser(): Promise<puppeteer.Browser> {
 }
 
 async function processFilmsInList(firstListPageURL: string, processor: Function): Promise<void> {
-  // NOTE: list page is the page of a Letterboxd list in grid view
+  // NOTE: list page must be the page of a Letterboxd list in grid view
   const browser = await getHeadlessBrowser();
   await useBrowser(browser, firstListPageURL, processor);
   await closeBrowser(browser);

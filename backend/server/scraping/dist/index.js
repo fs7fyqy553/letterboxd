@@ -98,7 +98,6 @@ function getLetterboxdURL(path) {
     return `https://letterboxd.com${path}`;
 }
 async function processFilmAnchorNodeList(nodeList, filmPuppeteerPage, processor) {
-    // TODO: consider parallel programming;
     for (let i = 0; i < nodeList.length; i += 1) {
         const filmAnchorNode = nodeList[i];
         // eslint-disable-next-line no-await-in-loop
@@ -139,7 +138,6 @@ async function getPuppeteerPage(browser) {
     page.setDefaultNavigationTimeout(0);
     return page;
 }
-// TODO: consider parallel programming
 async function usePuppeteerPages(listPuppeteerPage, filmPuppeteerPage, firstListPageURL, processor) {
     let listPageURL = firstListPageURL;
     while (listPageURL !== null) {
@@ -166,7 +164,7 @@ async function getHeadlessBrowser() {
     });
 }
 async function processFilmsInList(firstListPageURL, processor) {
-    // NOTE: list page is the page of a Letterboxd list in grid view
+    // NOTE: list page must be the page of a Letterboxd list in grid view
     const browser = await getHeadlessBrowser();
     await useBrowser(browser, firstListPageURL, processor);
     await closeBrowser(browser);
