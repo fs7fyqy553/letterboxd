@@ -4,8 +4,11 @@ import Game from './components/Game/Game';
 export default async function App() {
   return (
     <div className="App">
+
       <Game />
+
       <footer aria-label="Miscellaneous links">
+
         <a
           aria-label="Link to GitHub repository"
           href="https://github.com/JamesGJ5/letterxbod-higher-or-lower"
@@ -18,6 +21,7 @@ export default async function App() {
             priority
           />
         </a>
+
         <a
           aria-label="Link to LinkedIn profile"
           href="https://www.linkedin.com/in/james-graca-jones/"
@@ -30,7 +34,9 @@ export default async function App() {
             priority
           />
         </a>
+        
       </footer>
+
     </div>
   );
 }
