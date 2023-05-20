@@ -1,8 +1,8 @@
 import useMediaQuery from "@mui/material/useMediaQuery";
 
-function FilmPoster({ filmPosterURL, filmBackdropImageURL }) {
+function FilmPoster({ portraitModeURL, landscapeModeURL }) {
   const useLandscapeImage = useMediaQuery("(max-height: 400px)");
-  const backgroundImageURL = (useLandscapeImage) ? filmBackdropImageURL : filmPosterURL;
+  const backgroundImageURL = (useLandscapeImage) ? landscapeModeURL : portraitModeURL;
   return (
     <div className="img" style={{ backgroundImage: `url(${backgroundImageURL})` }} />
   );

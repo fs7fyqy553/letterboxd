@@ -18,8 +18,8 @@ function Film({
 
   const filmPoster = (
     <FilmPoster
-      filmPosterURL={filmPosterURL}
-      filmBackdropImageURL={filmBackdropImageURL}
+      portraitModeURL={filmPosterURL}
+      landscapeModeURL={filmBackdropImageURL}
     />
   )
 
