@@ -1,3 +1,4 @@
+/* eslint-disable */
 import puppeteer from "puppeteer";
 import { parse } from "node-html-parser";
 import { scrollPageToBottom } from "puppeteer-autoscroll-down";
