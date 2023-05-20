@@ -1,7 +1,6 @@
 import getAPIRequestURL from "./getAPIRequestURL";
 
 async function getFilmPair() {
-  // NOTE: the two selected films should have different ratings
   const requestURL = getAPIRequestURL("/films?twoFilmsWithDifferentRatings=true");
   try {
     const responseJSON = await fetch(
