@@ -1,5 +1,5 @@
 {
-  "name": "Scraper Letterboxd API",
+  "name": "scraped-letterboxd-api",
   "version": "1.0.0",
   "engines": {
     "node": ">=16.17.1"
