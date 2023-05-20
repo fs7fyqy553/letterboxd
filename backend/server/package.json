@@ -7,9 +7,9 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "devstart": "PORT=3001 nodemon ./bin/www",
-    "serverstart": "DEBUG=backend:* npm run devstart",
-    "scheduledatabaseupdates": "node ./database/databaseUpdater/populateDB.js"
+    "dev": "PORT=3001 nodemon ./bin/www",
+    "debug": "DEBUG=backend:* npm run dev",
+    "scheduleDatabaseUpdates": "node ./database/databaseUpdater/populateDB.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
