@@ -22,8 +22,6 @@ body {
 
 .App {
   flex: 1;
-  /* NOTE: color selected for contrast ratio with GitHub and LinkedIn logos in footer 
-    that is better than 3.1:1 */
   display: flex;
   flex-direction: column;
 }
@@ -32,6 +30,8 @@ body {
 .LoadingFilmDetails,
 .FilmPosterCell,
 .FilmTextButton {
+  /* NOTE: color selected for contrast ratio with GitHub and LinkedIn logos in footer 
+    that is better than 3.1:1 */
   background-color: #dedede;
 }
 
@@ -47,7 +47,6 @@ footer {
   display: flex;
   gap: 20px;
 }
-
 
 .Game {
   flex: 1;
@@ -94,7 +93,6 @@ main,
   column-gap: 5px;
 }
 
-
 .FilmPosterCell {
   --blur-radius: 15px;
 
@@ -106,8 +104,6 @@ main,
   cursor: pointer;
 }
 
-/* TODO: consider implementing a media query for mobile landscape mode, e.g. one that uses film 
-"cover photo" from Letterboxd */
 .img {
   flex: 1;
   height: 100%;
@@ -134,7 +130,6 @@ main,
   height: 100%;
   overflow-wrap: anywhere;
 }
-
 
 .LoadingFilmDetails {
     flex: 1;
