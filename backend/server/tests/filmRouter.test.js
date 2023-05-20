@@ -7,7 +7,9 @@ const initializeMongoServer = require('./mongoConfigTesting');
 beforeAll(initializeMongoServer);
 
 describe('GET /films', () => {
+
   it('should return an array of all films', async () => {
+
     const testFilmObjArray = [
       {
         _id: '64384cdf791d61235a7a52ed',
@@ -28,24 +30,31 @@ describe('GET /films', () => {
     ];
     const testFilmDocArray = testFilmObjArray.map((testFilmObj) => new Film(testFilmObj));
     await Promise.all(testFilmDocArray.map((testFilmDoc) => testFilmDoc.save()));
-
     const res = await request(app).get('/films').set('Accept', 'application/json');
+
     expect(res.statusCode).toEqual(200);
     expect(res.header['content-type']).toEqual(expect.stringMatching(/json/));
     expect(res.body).toHaveProperty('films');
     expect(res.body.films).toHaveLength(testFilmObjArray.length);
+
   });
+
 });
 
 describe('GET /films?twoFilmsWithDifferentRatings=true', () => {
+
   it('should return 404 error', async () => {
+
     const res = await request(app)
       .get('/films?twoFilmsWithDifferentRatings=true')
       .set('Accept', 'application/json');
+
     expect(res.statusCode).toEqual(404);
+
   });
 
   it('should return two films with different ratings', async () => {
+
     const testFilmObj = {
       _id: '64384cdf791d61235a7a52ef',
       filmTitle: 'Film 2',
@@ -56,13 +65,14 @@ describe('GET /films?twoFilmsWithDifferentRatings=true', () => {
     };
     const testFilmDoc = new Film(testFilmObj);
     await testFilmDoc.save();
-
     const res = await request(app)
       .get('/films?twoFilmsWithDifferentRatings=true')
       .set('Accept', 'application/json');
+
     expect(res.statusCode).toEqual(200);
     expect(res.header['content-type']).toEqual(expect.stringMatching(/json/));
     expect(res.body).toHaveProperty('films');
     expect(res.body.films).toHaveLength(2);
+
   });
 });
