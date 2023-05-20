@@ -1,7 +1,7 @@
 // import React from "react";
 // import { render, screen, within } from "@testing-library/react";
 // import "@testing-library/jest-dom";
-// import FilmDetails from "./FilmDetails";
+// import Film from "./Film";
 // import userEvent from "@testing-library/user-event";
 
 // jest.mock("./FilmPoster", () => ({filmPosterURL}) => 
@@ -42,38 +42,38 @@
 // const testShowAverageRating = true;
 // const testOnFilmClick = jest.fn();
 
-// describe("FilmDetails component", () => {
-//     const testFilmDetails = <FilmDetails
+// describe("Film component", () => {
+//     const testFilm = <Film
 //         filmObject={testFilmObject}
 //         showAverageRating={testShowAverageRating}
 //         onFilmClick={testOnFilmClick}
 //     />
 //     describe("renders button", () => {
 //         it("with correct onClick callback", () => {
-//             render(testFilmDetails);
+//             render(testFilm);
 //             const button = screen.getByRole("button");
 //             userEvent.click(button);
 //             expect(testOnFilmClick).toHaveBeenCalledTimes(1);
 //         });
 //         it("with FilmPoster inside it", () => {
-//             render(testFilmDetails);
+//             render(testFilm);
 //             const button = screen.getByRole("button");
 //             expect(within(button).getByTestId("FilmPoster")).not.toBeNull();
 //         });
 //         it("with FilmDetailsText inside it", () => {
-//             render(testFilmDetails);
+//             render(testFilm);
 //             const button = screen.getByRole("button");
 //             expect(within(button).getByTestId("FilmDetailsText")).not.toBeNull();
 //         });
 //     });
 //     it("renders FilmPoster with correct props", () => {
-//         render(testFilmDetails);
+//         render(testFilm);
 //         expect(screen.getByTestId("FilmPoster's filmPosterURL prop").textContent).toBe(
 //             testFilmPosterURL
 //         );
 //     });
 //     it("renders FilmDetailsText with correct props", () => {
-//         render(testFilmDetails);
+//         render(testFilm);
 //         expect(screen.getByTestId("FilmDetailsText's filmTitle prop").textContent).toBe(
 //             testFilmTitle
 //         );

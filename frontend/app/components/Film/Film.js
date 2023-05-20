@@ -1,7 +1,7 @@
 import FilmPoster from "../FilmPoster/FilmPoster";
 import FilmDetailsText from "../FilmDetailsText/FilmDetailsText";
 
-function FilmDetails({
+function Film({
   filmObject,
   showAverageRating,
   onFilmClick,
@@ -46,4 +46,4 @@ function FilmDetails({
   );
 }
 
-export default FilmDetails;
+export default Film;

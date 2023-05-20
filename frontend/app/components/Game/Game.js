@@ -4,7 +4,7 @@ import "../../globals.css";
 import { useState, useEffect, useRef } from "react";
 import HighScore from "../HighScore/HighScore";
 import CurrentScore from "../CurrentScore/CurrentScore";
-import FilmDetails from "../FilmDetails/FilmDetails";
+import Film from "../Film/Film";
 import FilmLoadingScreen from "../FilmLoadingScreen/FilmLoadingScreen";
 
 async function getFilmPairArray(numberOfPairs) {
@@ -144,13 +144,13 @@ function Game() {
         ?
           (<div className="FilmGrid">
 
-            <FilmDetails
+            <Film
               filmObject={currentFilmPair[0]}
               onFilmClick={selectFilm}
               showAverageRating={true}
             />
 
-            <FilmDetails
+            <Film
               filmObject={currentFilmPair[1]}
               onFilmClick={selectFilm}
               showAverageRating={false}
