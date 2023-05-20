@@ -1,0 +1,187 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: darkgray;
+  align-items: center;
+}
+
+#root {
+  max-width: 1800px;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.App {
+  flex: 1;
+  /* NOTE: color selected for contrast ratio with GitHub and LinkedIn logos in footer 
+    that is better than 3.1:1 */
+  display: flex;
+  flex-direction: column;
+}
+
+.App,
+.App .LoadingFilmDetails,
+.App .FilmPosterCell,
+.App button {
+  background-color: #dedede;
+}
+
+.Game > header,
+footer {
+  padding: 10px;
+}
+
+/* NOTE: For integrity, https://brand.linkedin.com/downloads asks that LinkedIn's "in" logo 
+be a certain distance from other elements: at least two times the width of the 'i' in the 
+logo. 20px is approximately the required separation. */
+footer {
+  display: flex;
+  gap: 20px;
+}
+
+
+.Game {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+header > h1 {
+  margin-top: 0;
+  margin-bottom: 5px;
+  font-size: clamp(1em, min(7vw, 7vh), 2em);
+}
+
+header > div {
+  display: flex;
+  gap: 10px;
+}
+
+main {
+  flex: 1;
+  display: flex;
+}
+
+main,
+main .img {
+  background-color: #36454f;
+}
+
+.FilmGrid {
+  --film-poster-max-height: 400px;
+  --outer-padding: 5px;
+
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: minmax(0, calc(45% + var(--film-poster-max-height) / 2));
+  column-gap: 5px;
+}
+
+
+.FilmPosterCell {
+  --blur-radius: 15px;
+
+  padding: var(--outer-padding);
+  padding-bottom: var(--blur-radius);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  cursor: pointer;
+}
+
+/* TODO: consider implementing a media query for mobile landscape mode, e.g. one that uses film 
+"cover photo" from Letterboxd */
+.FilmPosterCell > .img {
+  flex: 1;
+  height: 100%;
+  max-width: 250px;
+  max-height: var(--film-poster-max-height);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+  box-shadow: 0 0 var(--blur-radius);
+}
+
+.FilmTextButton {
+  order: 1;
+  border: none;
+  padding: var(--outer-padding);
+  padding-top: 0;
+  display: flex;
+  cursor: pointer;
+}
+
+.text {
+  flex: 1;
+  height: 100%;
+  overflow-wrap: anywhere;
+}
+
+
+.LoadingFilmDetails {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    --spinner-diameter: 50px;
+}
+
+.Spinner {
+    background-color: transparent;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: blue;
+    border-radius: 50%;
+    width: var(--spinner-diameter);
+    height: var(--spinner-diameter);
+    animation: spin 1s linear infinite;
+    cursor: pointer;
+}
+
+.Spinner[data-enabled="false"] {
+    display: none;
+}
+
+.TooltipText {
+    width: 120px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 5px 5px;
+    border-radius: 6px;
+    position: absolute;
+    top: calc(50% + var(--spinner-diameter));
+    z-index: 1;
+    opacity: 0.25;
+}
+
+.Spinner[data-enabled="false"] + .TooltipText {
+    visibility: hidden;
+}
+ 
+.LoadingText[data-shown="false"] {
+    font-size: 0;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

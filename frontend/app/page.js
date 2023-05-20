@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import "./styles/App.css";
+// import "./styles/App.css";
 import Game from './components/Game';
 
 export default async function App() {

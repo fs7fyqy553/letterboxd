@@ -1,6 +1,5 @@
 "use client";
 
-import "../styles/Game.css";
 import { useState, useEffect, useRef } from "react";
 import HighScore from "./HighScore";
 import CurrentScore from "./CurrentScore";

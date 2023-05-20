@@ -1,5 +1,3 @@
-import "../styles/LoadingFilmDetails.css";
-
 function LoadingFilmDetails({ areLoadingAnimationsEnabled, setAreLoadingAnimationsEnabled }) {
 
     return (
