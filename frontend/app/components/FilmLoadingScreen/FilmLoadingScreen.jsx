@@ -1,7 +1,7 @@
-function LoadingFilmDetails({ areLoadingAnimationsEnabled, setAreLoadingAnimationsEnabled }) {
+function FilmLoadingScreen({ areLoadingAnimationsEnabled, setAreLoadingAnimationsEnabled }) {
 
     return (
-        <div className="LoadingFilmDetails">
+        <div className="FilmLoadingScreen">
 
             {areLoadingAnimationsEnabled
             &&
@@ -32,4 +32,4 @@ function LoadingFilmDetails({ areLoadingAnimationsEnabled, setAreLoadingAnimatio
     );
 }
 
-export default LoadingFilmDetails;
+export default FilmLoadingScreen;

@@ -26,7 +26,7 @@ body {
 }
 
 .App,
-.LoadingFilmDetails,
+.FilmLoadingScreen,
 .FilmPosterCell,
 .FilmTextButton {
   /* NOTE: color selected for contrast ratio with GitHub and LinkedIn logos in footer 
@@ -130,7 +130,7 @@ main {
   overflow-wrap: anywhere;
 }
 
-.LoadingFilmDetails {
+.FilmLoadingScreen {
   --spinner-diameter: 50px;
 
   flex: 1;

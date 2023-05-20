@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import HighScore from "../HighScore/HighScore";
 import CurrentScore from "../CurrentScore/CurrentScore";
 import FilmDetails from "../FilmDetails/FilmDetails";
-import LoadingFilmDetails from "../LoadingFilmDetails/LoadingFilmDetails";
+import FilmLoadingScreen from "../FilmLoadingScreen/FilmLoadingScreen";
 
 async function getFilmPairArray(numberOfPairs) {
   const filmPairArray = await fetch(`/api/filmPairs?numberOfPairs=${numberOfPairs}`);
@@ -158,7 +158,7 @@ function Game() {
 
           </div>)
         :
-          <LoadingFilmDetails
+          <FilmLoadingScreen
             areLoadingAnimationsEnabled={areLoadingAnimationsEnabled}
             setAreLoadingAnimationsEnabled={setAreLoadingAnimationsEnabled}
           />
