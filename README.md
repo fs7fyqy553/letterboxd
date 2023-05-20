@@ -18,9 +18,8 @@ Tools:
 
 - Backend:
 
-    - Server:
-        - Written in NodeJS within Express
-        - Accessible using a REST API with Authentication
-        - Uses a MongoDB Database
-        - Tested using MongoDB In-Memory Server and Supertest in Jest
-        - Contains a web Scraper written in TypeScript and using Puppeteer
+    - Written in NodeJS within Express
+    - Accessible using a REST API with Authentication
+    - Uses a MongoDB Database
+    - Tested using MongoDB In-Memory Server and Supertest in Jest
+    - Contains a Web Scraper written in TypeScript and using Puppeteer (see database-updater/)
