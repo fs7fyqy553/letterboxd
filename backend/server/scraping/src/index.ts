@@ -150,8 +150,11 @@ async function processListPageAndGetNextURL(
   return getNextFilmListPageURL(listPageDoc);
 }
 
-function getPuppeteerPage(browser: puppeteer.Browser): Promise<puppeteer.Page> {
-  return browser.newPage();
+async function getPuppeteerPage(browser: puppeteer.Browser): Promise<puppeteer.Page> {
+  const page = await browser.newPage();
+  // NOTE: necessary for deployment
+  page.setDefaultNavigationTimeout(0);
+  return page;
 }
 
 // TODO: consider parallel programming
@@ -185,7 +188,11 @@ async function useBrowser(browser: puppeteer.Browser, firstListPageURL: string, 
   await usePuppeteerPages(listPuppeteerPage, filmPuppeteerPage, firstListPageURL, processor);
 }
 async function getHeadlessBrowser(): Promise<puppeteer.Browser> {
-  return puppeteer.launch({ headless: true });
+  return puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    ignoreDefaultArgs: ['--disable-extensions'],
+  });
 }
 
 async function processFilmsInList(firstListPageURL: string, processor: Function): Promise<void> {
