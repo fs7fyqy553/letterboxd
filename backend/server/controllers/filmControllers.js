@@ -26,7 +26,6 @@ async function getTwoFilmsWithDifferentRatings() {
   return [film1, film2];
 }
 
-// TODO: improve performance
 function getFilmPairs(numberOfPairs) {
   const promiseArray = [];
   for (let i = 0; i < numberOfPairs; i += 1) {
