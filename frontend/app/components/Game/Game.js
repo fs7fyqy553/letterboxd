@@ -25,6 +25,7 @@ function Game() {
   const filmPairArray = useRef([]);
 
   useEffect(loadScoreObject, []);
+
   useEffect(() => {
     storeInSession("scoreObject", scoreObject);
   }, [scoreObject]);
@@ -32,6 +33,7 @@ function Game() {
   useEffect(() => {
     initialiseFilmPairs();
   }, []);
+  
   useEffect(() => {
     if (currentFilmPair.length === 2) {
       storeInSession("currentFilmPair", currentFilmPair);
