@@ -137,7 +137,7 @@ function Game() {
       >
 
         {isLoading === false
-          ?
+        ?
           (<div className="FilmGrid">
             <FilmDetails
               filmObject={currentFilmPair[0]}
@@ -150,7 +150,7 @@ function Game() {
               showAverageRating={false}
             />
           </div>)
-          :
+        :
           <LoadingFilmDetails
             areLoadingAnimationsEnabled={areLoadingAnimationsEnabled}
             setAreLoadingAnimationsEnabled={setAreLoadingAnimationsEnabled}

@@ -139,6 +139,13 @@ main {
   align-items: center;
 }
 
+.LoadingAnimationContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
 .Spinner {
   width: var(--spinner-diameter);
   height: var(--spinner-diameter);
@@ -150,14 +157,7 @@ main {
   cursor: pointer;
 }
 
-.Spinner[data-enabled="false"] {
-    display: none;
-}
-
 .TooltipText {
-  z-index: 1;
-  position: absolute;
-  top: calc(50% + var(--spinner-diameter));
   border-radius: 6px;
   width: 120px;
   padding: 5px 5px;
@@ -166,12 +166,8 @@ main {
   color: white;
   text-align: center;
 }
-
-.Spinner[data-enabled="false"] + .TooltipText {
-  visibility: hidden;
-}
  
-.LoadingText[data-shown="false"] {
+.LoadingText[data-displayed="false"] {
   font-size: 0;
 }
 

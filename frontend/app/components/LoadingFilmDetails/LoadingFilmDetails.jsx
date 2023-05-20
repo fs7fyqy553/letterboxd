@@ -2,24 +2,32 @@ function LoadingFilmDetails({ areLoadingAnimationsEnabled, setAreLoadingAnimatio
 
     return (
         <div className="LoadingFilmDetails">
-            <button
-                className="Spinner"
-                data-enabled={areLoadingAnimationsEnabled}
-                onClick={() => setAreLoadingAnimationsEnabled((false))}
-                aria-label="Loading animation, clicking simply removes it"
-            >
-            </button>
-            <span
-                className="TooltipText"
-                aria-hidden="true"
-            >
-                Click Animation to Disable
-            </span>
+
+            {areLoadingAnimationsEnabled
+            &&
+                <div className="LoadingAnimationContainer">
+                    <button
+                        className="Spinner"
+                        data-enabled={areLoadingAnimationsEnabled}
+                        onClick={() => setAreLoadingAnimationsEnabled((false))}
+                        aria-label="Loading animation, clicking simply removes it"
+                    >
+                    </button>
+                    <span
+                        className="TooltipText"
+                        aria-hidden="true"
+                    >
+                        Click Animation to Disable
+                    </span>
+                </div>
+            }
+
             <div className="LoadingText"
-                data-shown={!areLoadingAnimationsEnabled}
+                data-displayed={!areLoadingAnimationsEnabled}
             >
                 Loading...
             </div>
+
         </div>
     );
 }
