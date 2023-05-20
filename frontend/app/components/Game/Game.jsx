@@ -1,11 +1,11 @@
 "use client";
 
-import "../globals.css";
+import "../../globals.css";
 import { useState, useEffect, useRef } from "react";
-import HighScore from "./HighScore";
-import CurrentScore from "./CurrentScore";
-import FilmDetails from "./FilmDetails";
-import LoadingFilmDetails from "./LoadingFilmDetails";
+import HighScore from "../HighScore/HighScore";
+import CurrentScore from "../CurrentScore/CurrentScore";
+import FilmDetails from "../FilmDetails/FilmDetails";
+import LoadingFilmDetails from "../LoadingFilmDetails/LoadingFilmDetails";
 
 async function getFilmPairArray(numberOfPairs) {
   const filmPairArray = await fetch(`/api/filmPairs?numberOfPairs=${numberOfPairs}`);

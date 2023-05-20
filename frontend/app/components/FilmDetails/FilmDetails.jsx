@@ -1,5 +1,5 @@
-import FilmPoster from "./FilmPoster";
-import FilmDetailsText from "./FilmDetailsText";
+import FilmPoster from "../FilmPoster/FilmPoster";
+import FilmDetailsText from "../FilmDetailsText/FilmDetailsText";
 
 function FilmDetails({
   filmObject,
