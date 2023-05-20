@@ -28,7 +28,7 @@ body {
 .App,
 .FilmLoadingScreen,
 .FilmPosterCell,
-.FilmTextButton {
+.FilmDescriptionButton {
   /* NOTE: color selected for contrast ratio with GitHub and LinkedIn logos in footer 
     that is better than 3.1:1 */
   background-color: #dedede;
@@ -115,7 +115,7 @@ main {
   background-repeat: no-repeat;
 }
 
-.FilmTextButton {
+.FilmDescriptionButton {
   order: 1;
   border: none;
   cursor: pointer;
@@ -124,7 +124,7 @@ main {
   display: flex;
 }
 
-.text {
+.FilmDescription {
   flex: 1;
   height: 100%;
   overflow-wrap: anywhere;

@@ -1,4 +1,4 @@
-function FilmDetailsText({
+function FilmDescription({
   filmTitle,
   releaseYearString,
   directorNameArray,
@@ -6,7 +6,7 @@ function FilmDetailsText({
   showAverageRating,
 }) {
   return (
-    <div className="text">
+    <div className="FilmDescription">
       <div>
         <strong>{filmTitle}</strong> ({releaseYearString})
       </div>
@@ -22,4 +22,4 @@ function FilmDetailsText({
   );
 }
 
-export default FilmDetailsText;
+export default FilmDescription;

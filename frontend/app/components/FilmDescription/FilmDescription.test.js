@@ -1,21 +1,21 @@
 // import React from "react";
 // import { render, screen } from "@testing-library/react";
 // import "@testing-library/jest-dom";
-// import FilmDetailsText from "./FilmDetailsText";
+// import FilmDescription from "./FilmDescription";
 
-// function checkDirectorNames(testFilmDetailsText, testDirectorNameArray) {
-//     render(testFilmDetailsText);
+// function checkDirectorNames(testFilmDescription, testDirectorNameArray) {
+//     render(testFilmDescription);
 //     const testDirectorNamesString = testDirectorNameArray.join(", ");
 //     expect(screen.getByText(testDirectorNamesString, {exact: false})).toBeInTheDocument();
 // }
 
-// function checkReleaseYear(testFilmDetailsText, testReleaseYearString) {
-//     render(testFilmDetailsText);
+// function checkReleaseYear(testFilmDescription, testReleaseYearString) {
+//     render(testFilmDescription);
 //     expect(screen.getByText(testReleaseYearString, {exact: false})).toBeInTheDocument();
 // }
 
-// function checkFilmTitle(testFilmDetailsText, testFilmTitle) {
-//     render(testFilmDetailsText);
+// function checkFilmTitle(testFilmDescription, testFilmTitle) {
+//     render(testFilmDescription);
 //     expect(screen.getByText(testFilmTitle, {exact: false})).toBeInTheDocument();
 // }
 
@@ -23,9 +23,9 @@
 // const testReleaseYearString = "1989";
 // const testDirectorNameArray = ["Director 1", "Director 2"];
 // const testAverageRatingString = "3.7";
-// describe("FilmDetailsText component", () => {
+// describe("FilmDescription component", () => {
 //     describe("chosen to show average rating", () => {
-//         const testFilmDetailsText = <FilmDetailsText
+//         const testFilmDescription = <FilmDescription
 //             filmTitle={testFilmTitle}
 //             releaseYearString={testReleaseYearString}
 //             directorNameArray={testDirectorNameArray}
@@ -33,21 +33,21 @@
 //             showAverageRating={true}
 //         />
 //         it("mentions correct film", () => {
-//             checkFilmTitle(testFilmDetailsText, testFilmTitle);
+//             checkFilmTitle(testFilmDescription, testFilmTitle);
 //         });
 //         it("mentions correct release year", () => {
-//             checkReleaseYear(testFilmDetailsText, testReleaseYearString);
+//             checkReleaseYear(testFilmDescription, testReleaseYearString);
 //         });
 //         it("mentions correct director names", () => {
-//             checkDirectorNames(testFilmDetailsText, testDirectorNameArray);
+//             checkDirectorNames(testFilmDescription, testDirectorNameArray);
 //         });
 //         it("shows average rating", () => {
-//             render(testFilmDetailsText);
+//             render(testFilmDescription);
 //             expect(screen.getByText(testAverageRatingString, {exact: false})).toBeInTheDocument();
 //         });
 //     });
 //     describe("chosen to hide average rating", () => {
-//         const testFilmDetailsText = <FilmDetailsText
+//         const testFilmDescription = <FilmDescription
 //             filmTitle={testFilmTitle}
 //             releaseYearString={testReleaseYearString}
 //             directorNameArray={testDirectorNameArray}
@@ -55,16 +55,16 @@
 //             showAverageRating={false}
 //         />
 //         it("mentions correct film", () => {
-//             checkFilmTitle(testFilmDetailsText, testFilmTitle);
+//             checkFilmTitle(testFilmDescription, testFilmTitle);
 //         });
 //         it("mentions correct release year", () => {
-//             checkReleaseYear(testFilmDetailsText, testReleaseYearString);
+//             checkReleaseYear(testFilmDescription, testReleaseYearString);
 //         });
 //         it("mentions correct director names", () => {
-//             checkDirectorNames(testFilmDetailsText, testDirectorNameArray);
+//             checkDirectorNames(testFilmDescription, testDirectorNameArray);
 //         });
 //         it("hides average rating", () => {
-//             render(testFilmDetailsText);
+//             render(testFilmDescription);
 //             expect(screen.queryByText(testAverageRatingString, {exact: false})).toBeNull();
 //         })
 //     });

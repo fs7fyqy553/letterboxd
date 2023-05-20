@@ -1,5 +1,5 @@
 import FilmPoster from "../FilmPoster/FilmPoster";
-import FilmDetailsText from "../FilmDetailsText/FilmDetailsText";
+import FilmDescription from "../FilmDescription/FilmDescription";
 
 function Film({
   filmObject,
@@ -23,8 +23,8 @@ function Film({
     />
   )
 
-  const filmDetailsText = (
-    <FilmDetailsText
+  const filmDescription = (
+    <FilmDescription
       filmTitle={filmTitle}
       releaseYearString={releaseYearString}
       directorNameArray={directorNameArray}
@@ -44,10 +44,10 @@ function Film({
         {filmPoster}
       </div>
 
-      <button className="FilmTextButton" onClick={handleClick}>
-        {filmDetailsText}
+      <button className="FilmDescriptionButton" onClick={handleClick}>
+        {filmDescription}
       </button>
-      
+
     </>
   );
 }
