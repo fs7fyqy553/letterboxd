@@ -5,7 +5,6 @@ Game in each round of which the player must guess which of two films is more hig
 Ongoing:
 
 - Finishing Frontend Tests
-- Implementing Rate Limiting in API
 
 Tools:
 
