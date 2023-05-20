@@ -108,7 +108,6 @@ async function getDynamicFilmListPageBody(listPageURL, puppeteerPage) {
     await puppeteerPage.goto(listPageURL);
     // @ts-ignore
     await scrollPageToBottom(puppeteerPage, {});
-    await new Promise((res) => setTimeout(res, 1000));
     return getInnerHTMLFromPuppeteerPage(puppeteerPage);
 }
 async function getNextFilmListPageURL(filmListPageDoc) {
