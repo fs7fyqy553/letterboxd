@@ -29,13 +29,13 @@ body {
 }
 
 .App,
-.App .LoadingFilmDetails,
-.App .FilmPosterCell,
-.App button {
+.LoadingFilmDetails,
+.FilmPosterCell,
+.FilmTextButton {
   background-color: #dedede;
 }
 
-.Game > header,
+header,
 footer {
   padding: 10px;
 }
@@ -79,7 +79,7 @@ main {
 }
 
 main,
-main .img {
+.img {
   background-color: #36454f;
 }
 
@@ -108,7 +108,7 @@ main .img {
 
 /* TODO: consider implementing a media query for mobile landscape mode, e.g. one that uses film 
 "cover photo" from Letterboxd */
-.FilmPosterCell > .img {
+.img {
   flex: 1;
   height: 100%;
   max-width: 250px;
