@@ -6,6 +6,7 @@ function Film({
   showAverageRating,
   onFilmClick,
 }) {
+
   const {
     filmTitle,
     releaseYearString,
@@ -14,12 +15,14 @@ function Film({
     filmPosterURL,
     filmBackdropImageURL,
   } = filmObject;
+
   const filmPoster = (
     <FilmPoster
       filmPosterURL={filmPosterURL}
       filmBackdropImageURL={filmBackdropImageURL}
     />
   )
+
   const filmDetailsText = (
     <FilmDetailsText
       filmTitle={filmTitle}
@@ -36,12 +39,15 @@ function Film({
 
   return (
     <>
+
       <div className="FilmPosterCell" onClick={handleClick}>
         {filmPoster}
       </div>
+
       <button className="FilmTextButton" onClick={handleClick}>
         {filmDetailsText}
       </button>
+      
     </>
   );
 }
