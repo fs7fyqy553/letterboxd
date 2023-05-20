@@ -1,5 +1,5 @@
-import '../mongoConfig.js';
-import processFilmsInList from '../../scraping/dist/index.js';
+import '../mongo-config.js';
+import processFilmsInList from '../../letterboxd-scraper/dist/index.js';
 import Film from '../../models/film.js';
 import { CronJob } from 'cron';
 

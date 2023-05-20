@@ -1,7 +1,7 @@
 const request = require('supertest');
 const Film = require('../models/film');
 const app = require('./app');
-const initializeMongoServer = require('./mongoConfigTesting');
+const initializeMongoServer = require('./mongo-config-testing');
 
 beforeAll(initializeMongoServer);
 

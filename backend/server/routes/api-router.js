@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const cors = require('cors');
-const authControllers = require('../controllers/authControllers');
-const filmRouter = require('./filmRouter');
+const authControllers = require('../controllers/auth-controllers');
+const filmRouter = require('./film-router');
 
 const APIRouter = Router();
 

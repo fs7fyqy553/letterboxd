@@ -1,7 +1,7 @@
 const express = require('express');
 const logger = require('morgan');
-require('./database/mongoConfig');
-const APIRouter = require('./routes/APIRouter');
+require('./database/mongo-config');
+const APIRouter = require('./routes/api-router');
 
 const app = express();
 

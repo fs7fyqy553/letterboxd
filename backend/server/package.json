@@ -9,7 +9,7 @@
     "start": "node ./bin/www",
     "dev": "PORT=3001 nodemon ./bin/www",
     "debug": "DEBUG=backend:* npm run dev",
-    "scheduleDatabaseUpdates": "node ./database/databaseUpdater/populateDB.js"
+    "scheduleDatabaseUpdates": "node ./database/database-updater/populate-database.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
