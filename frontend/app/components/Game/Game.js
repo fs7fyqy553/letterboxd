@@ -122,33 +122,40 @@ function Game() {
     <div className="Game">
 
       <header aria-label="Instruction and scores">
+
+        {/* NOTE: ID used to create accessible label */}
         <h1 id="instruction">
           Guess the Film with the Higher Letterboxd Rating...
         </h1>
+
         <div aria-label="Scores">
           <CurrentScore score={scoreObject.currentScore} />
           <HighScore score={scoreObject.highScore} />
         </div>
+
       </header>
 
       <main
         aria-labelledby="instruction"
-        aria-busy={isLoading === true}
+        aria-busy={isLoading}
       >
 
-        {isLoading === false
+        {!isLoading
         ?
           (<div className="FilmGrid">
+
             <FilmDetails
               filmObject={currentFilmPair[0]}
               onFilmClick={selectFilm}
               showAverageRating={true}
             />
+
             <FilmDetails
               filmObject={currentFilmPair[1]}
               onFilmClick={selectFilm}
               showAverageRating={false}
             />
+
           </div>)
         :
           <LoadingFilmDetails
