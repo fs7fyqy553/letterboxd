@@ -25,17 +25,12 @@ async function getExistingFilmDoc(filmDetailsObject) {
 }
 
 async function saveScrapedFilmDetailsObject(filmDetailsObject) {
-  try {
-    const existingFilmDoc = await getExistingFilmDoc(filmDetailsObject);
-    const savedFilmDoc =
-      existingFilmDoc != null
-        ? getUpdatedFilmDoc(existingFilmDoc, filmDetailsObject)
-        : makeNewFilmDoc(filmDetailsObject);
-    console.log(savedFilmDoc);
-    await savedFilmDoc.save();
-  } catch (err) {
-    console.log(err);
-  }
+  const existingFilmDoc = await getExistingFilmDoc(filmDetailsObject);
+  const savedFilmDoc =
+    existingFilmDoc != null
+      ? getUpdatedFilmDoc(existingFilmDoc, filmDetailsObject)
+      : makeNewFilmDoc(filmDetailsObject);
+  await savedFilmDoc.save();
 }
 
 async function scrapePopularFilmsList() {
