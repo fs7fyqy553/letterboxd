@@ -4,25 +4,25 @@
 // import Film from "./Film";
 // import userEvent from "@testing-library/user-event";
 
-// jest.mock("./FilmPoster", () => ({filmPosterURL}) => 
+// jest.mock("./FilmPoster/FilmPoster", () => ({filmPosterURL}) => 
 //     <div data-testid="FilmPoster">
 //         <div data-testid="FilmPoster's filmPosterURL prop">{filmPosterURL}</div>
 //     </div>
 // );
 
-// jest.mock("./FilmDetailsText", () => ({
+// jest.mock("./FilmDescription/FilmDescription", () => ({
 //     filmTitle,
 //     releaseYearString,
 //     directorNameArray,
 //     averageRatingString,
 //     showAverageRating
 // }) => 
-//     <div data-testid="FilmDetailsText">
-//         <div data-testid="FilmDetailsText's filmTitle prop">{filmTitle}</div>
-//         <div data-testid="FilmDetailsText's releaseYearString prop">{releaseYearString}</div>
-//         <div data-testid="FilmDetailsText's directorNameArray prop">{directorNameArray}</div>
-//         <div data-testid="FilmDetailsText's averageRatingString prop">{averageRatingString}</div>
-//         {showAverageRating && <div data-testid="FilmDetailsText's showAverageRating prop"></div>}
+//     <div data-testid="FilmDescription">
+//         <div data-testid="FilmDescription's filmTitle prop">{filmTitle}</div>
+//         <div data-testid="FilmDescription's releaseYearString prop">{releaseYearString}</div>
+//         <div data-testid="FilmDescription's directorNameArray prop">{directorNameArray}</div>
+//         <div data-testid="FilmDescription's averageRatingString prop">{averageRatingString}</div>
+//         {showAverageRating && <div data-testid="FilmDescription's showAverageRating prop"></div>}
 //     </div>
 // );
 
@@ -60,10 +60,10 @@
 //             const button = screen.getByRole("button");
 //             expect(within(button).getByTestId("FilmPoster")).not.toBeNull();
 //         });
-//         it("with FilmDetailsText inside it", () => {
+//         it("with FilmDescription inside it", () => {
 //             render(testFilm);
 //             const button = screen.getByRole("button");
-//             expect(within(button).getByTestId("FilmDetailsText")).not.toBeNull();
+//             expect(within(button).getByTestId("FilmDescription")).not.toBeNull();
 //         });
 //     });
 //     it("renders FilmPoster with correct props", () => {
@@ -72,20 +72,20 @@
 //             testFilmPosterURL
 //         );
 //     });
-//     it("renders FilmDetailsText with correct props", () => {
+//     it("renders FilmDescription with correct props", () => {
 //         render(testFilm);
-//         expect(screen.getByTestId("FilmDetailsText's filmTitle prop").textContent).toBe(
+//         expect(screen.getByTestId("FilmDescription's filmTitle prop").textContent).toBe(
 //             testFilmTitle
 //         );
-//         expect(screen.getByTestId("FilmDetailsText's releaseYearString prop").textContent).toBe(
+//         expect(screen.getByTestId("FilmDescription's releaseYearString prop").textContent).toBe(
 //             testReleaseYearString
 //         );
-//         expect(screen.getByTestId("FilmDetailsText's directorNameArray prop").textContent).toBe(
+//         expect(screen.getByTestId("FilmDescription's directorNameArray prop").textContent).toBe(
 //             testDirectorNameArray.join("")
 //         );
-//         expect(screen.getByTestId("FilmDetailsText's averageRatingString prop").textContent).toBe(
+//         expect(screen.getByTestId("FilmDescription's averageRatingString prop").textContent).toBe(
 //             testAverageRatingString
 //         );
-//         expect(screen.getByTestId("FilmDetailsText's showAverageRating prop")).toBeInTheDocument();
+//         expect(screen.getByTestId("FilmDescription's showAverageRating prop")).toBeInTheDocument();
 //     });
 // });
