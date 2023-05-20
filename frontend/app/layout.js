@@ -1,5 +1,4 @@
 import "normalize.css";
-import "./globals.css";
 import { Roboto } from "next/font/google";
 
 const roboto = Roboto({
