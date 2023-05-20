@@ -1,17 +1,21 @@
 import getAPIRequestURL from "./getAPIRequestURL";
 
-async function getFilmPair() {
+function fetchFilmPair() {
   const requestURL = getAPIRequestURL("/films?twoFilmsWithDifferentRatings=true");
-  try {
-    const responseJSON = await fetch(
-      requestURL,
-      {
-        headers: {
-          "API-Key": process.env.API_KEY,
-        }
+  return fetch(
+    requestURL,
+    {
+      headers: {
+        "API-Key": process.env.API_KEY,
       }
-    );
-    const responseObject = await responseJSON.json();
+    }
+  );
+}
+
+async function getFilmPair() {
+  try {
+    const filmPairFetchResponse = await fetchFilmPair();
+    const responseObject = await filmPairFetchResponse.json();
     const filmArray = responseObject.films;
     return filmArray;
   } catch (err) {
