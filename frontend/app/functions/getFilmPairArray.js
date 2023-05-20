@@ -1,19 +1,22 @@
 import getAPIRequestURL from "./getAPIRequestURL";
 
-async function getFilmPairArray(numberOfPairs) {
-  // NOTE: the two selected films should have different ratings
+function fetchFilmPairArray(numberOfPairs) {
   const requestURL = getAPIRequestURL(`/films?twoFilmsWithDifferentRatings=true&numberOfPairs=${numberOfPairs}`);
-  try {
-    const responseJSON = await fetch(
-      requestURL,
-      {
-        cache: "no-store",
-        headers: {
-          "API-Key": process.env.API_KEY,
-        }
+  return fetch(
+    requestURL,
+    {
+      cache: "no-store",
+      headers: {
+        "API-Key": process.env.API_KEY,
       }
-    );
-    const responseObject = await responseJSON.json();
+    }
+  );
+}
+
+async function getFilmPairArray(numberOfPairs) {
+  try {
+    const filmPairArrayFetchResponse = await fetchFilmPairArray(numberOfPairs);
+    const responseObject = await filmPairArrayFetchResponse.json();
     const filmPairArray = responseObject.films;
     return filmPairArray;
   } catch (err) {
