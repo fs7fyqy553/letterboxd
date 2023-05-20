@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const request = require('supertest');
 const Film = require('../models/film');
 const app = require('./app');
