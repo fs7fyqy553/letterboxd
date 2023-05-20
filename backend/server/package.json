@@ -1,6 +1,7 @@
 {
   "name": "scraped-letterboxd-api",
   "version": "1.0.0",
+  "type": "module",
   "engines": {
     "node": ">=16.17.1"
   },

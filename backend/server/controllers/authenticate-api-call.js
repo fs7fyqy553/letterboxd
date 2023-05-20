@@ -1,4 +1,6 @@
-require('dotenv').config({ path: `${__dirname}/../.env` });
+import * as dotenv from 'dotenv';
+
+dotenv.config({ path: '.env' });
 
 function rejectAPICall(res) {
   res.status(401).json({ error: 'unauthorised' });
@@ -12,7 +14,7 @@ function checkAPIKey(key, res, next) {
   }
 }
 
-exports.authenticateAPICall = (req, res, next) => {
+export default function authenticateAPICall(req, res, next) {
   const submittedAPIKey = req.get('API-Key');
   checkAPIKey(submittedAPIKey, res, next);
-};
+}

@@ -1,4 +1,4 @@
-const Film = require('../models/film');
+import Film from '../models/film.js';
 
 function get404Message() {
   return 'Two films with different average ratings not found';
@@ -34,7 +34,7 @@ function getFilmPairs(numberOfPairs) {
   return Promise.all(promiseArray);
 }
 
-async function getFilms(twoFilmsWithDifferentRatings, numberOfPairs) {
+async function getFilmsFromDatabase(twoFilmsWithDifferentRatings, numberOfPairs) {
   if (twoFilmsWithDifferentRatings !== 'true') {
     return Film.find();
   }
@@ -51,13 +51,13 @@ function handleError(res, err) {
   return res.status(503).json({ error: err.message });
 }
 
-exports.getFilms = async (req, res) => {
+export default async function getFilms(req, res) {
   const { twoFilmsWithDifferentRatings } = req.query;
   const numberOfPairs = parseInt(req.query.numberOfPairs, 10);
   try {
-    const films = await getFilms(twoFilmsWithDifferentRatings, numberOfPairs);
+    const films = await getFilmsFromDatabase(twoFilmsWithDifferentRatings, numberOfPairs);
     return res.json({ films });
   } catch (err) {
     return handleError(res, err);
   }
-};
+}

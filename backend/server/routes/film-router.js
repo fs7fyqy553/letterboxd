@@ -1,8 +1,8 @@
-const { Router } = require('express');
-const filmControllers = require('../controllers/film-controllers');
+import { Router } from 'express';
+import getFilms from '../controllers/get-films.js';
 
 const filmRouter = Router();
 
-filmRouter.get('/', filmControllers.getFilms);
+filmRouter.get('/', getFilms);
 
-module.exports = filmRouter;
+export default filmRouter;

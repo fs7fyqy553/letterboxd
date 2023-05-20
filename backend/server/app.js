@@ -1,7 +1,7 @@
-const express = require('express');
-const logger = require('morgan');
-require('./database/mongo-config');
-const APIRouter = require('./routes/api-router');
+import express from 'express';
+import logger from 'morgan';
+import './database/mongo-config.js';
+import APIRouter from './routes/api-router.js';
 
 const app = express();
 
@@ -11,4 +11,4 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/api', APIRouter);
 
-module.exports = app;
+export default app;

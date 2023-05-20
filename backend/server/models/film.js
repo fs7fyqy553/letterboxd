@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+import { Schema, model } from 'mongoose';
 
 const FilmSchema = new Schema(
   {
@@ -14,4 +14,4 @@ const FilmSchema = new Schema(
   }
 );
 
-module.exports = model('Film', FilmSchema);
+export default model('Film', FilmSchema);
