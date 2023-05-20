@@ -19,6 +19,9 @@ function Game() {
   const [areLoadingAnimationsEnabled, setAreLoadingAnimationsEnabled] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
 
+  // NOTE: popping new film pair of this each time instead of saving all loaded film pairs 
+  // in state, so that high-complexity copying of many film pairs needs not be done each 
+  // time state is updated
   const filmPairArray = useRef([]);
 
   useEffect(loadScoreObject, []);
@@ -49,7 +52,10 @@ function Game() {
   }
 
   function updateScoreObject(selectionWasCorrect) {
-    setScoreObject(({currentScore, highScore}) => getUpdatedScoreObject(selectionWasCorrect, currentScore, highScore));
+    setScoreObject(
+      ({currentScore, highScore}) =>
+        getUpdatedScoreObject(selectionWasCorrect, currentScore, highScore)
+    );
   }
   async function loadFilmPairArray() {
     const newFilmPairArray = await getFilmPairArray(100);
@@ -62,14 +68,17 @@ function Game() {
   async function changeFilms() {
     const newCurrentFilmPair = getNextFilmPair();
     setCurrentFilmPair(newCurrentFilmPair);
-    if (filmPairArray.current.length === 0) {
-      setIsLoading(true);
-      await loadFilmPairArray();
-      setIsLoading(false);
+    if (filmPairArray.current.length !== 0) {
+      return;
     }
+    setIsLoading(true);
+    await loadFilmPairArray();
+    setIsLoading(false);
   }
   function updateScore(selectedFilmObject, otherFilmObject) {
-    const selectionWasCorrect = selectedFilmObject.averageRatingString > otherFilmObject.averageRatingString;
+    const selectionWasCorrect = (
+      selectedFilmObject.averageRatingString > otherFilmObject.averageRatingString
+    );
     updateScoreObject(selectionWasCorrect);
   }
 
@@ -78,7 +87,8 @@ function Game() {
     changeFilms();
   }
   function getOtherFilmObject(selectedFilmObject) {
-    return (selectedFilmObject === currentFilmPair[0]) ? currentFilmPair[1] : currentFilmPair[0];
+    return (selectedFilmObject === currentFilmPair[0]) ?
+      currentFilmPair[1] : currentFilmPair[0];
   }
   function getFromSessionStorage(key) {
     return JSON.parse(sessionStorage.getItem(key));
@@ -89,12 +99,9 @@ function Game() {
     endRound(selectedFilmObject, otherFilmObject);
   }
   async function loadInitialCurrentFilmPair() {
-    const sessionStoredCurrentFilmPair = getFromSessionStorage("currentFilmPair");
-    if (sessionStoredCurrentFilmPair !== null) {
-      setCurrentFilmPair(sessionStoredCurrentFilmPair);
-    } else {
-      await changeFilms();
-    }
+    const sessionCurrentFilmPair = getFromSessionStorage("currentFilmPair");
+    (sessionCurrentFilmPair !== null) ?
+      setCurrentFilmPair(sessionCurrentFilmPair) : await changeFilms();
   }
   async function initialiseFilmPairs() {
     await loadFilmPairArray();
@@ -105,14 +112,13 @@ function Game() {
     sessionStorage.setItem(key, JSON.stringify(value));
   }
   function loadScoreObject() {
-    const sessionStoredScoreObject = getFromSessionStorage("scoreObject");
-    if (sessionStoredScoreObject !== null) {
-      setScoreObject(sessionStoredScoreObject);
-    }
+    const sessionScoreObject = getFromSessionStorage("scoreObject");
+    sessionScoreObject !== null && setScoreObject(sessionScoreObject);
   }
 
   return (
     <div className="Game">
+
       <header aria-label="Instruction and scores">
         <h1 id="instruction">
           Guess the Film with the Higher Letterboxd Rating...
@@ -122,10 +128,12 @@ function Game() {
           <HighScore score={scoreObject.highScore} />
         </div>
       </header>
+
       <main
         aria-labelledby="instruction"
         aria-busy={isLoading === true}
       >
+
         {isLoading === false
           ?
           (<div className="FilmGrid">
@@ -146,7 +154,9 @@ function Game() {
             setAreLoadingAnimationsEnabled={setAreLoadingAnimationsEnabled}
           />
         }
+        
       </main>
+
     </div>
   );
 }
