@@ -5,7 +5,7 @@ function FilmPoster({ portraitModeURL, landscapeModeURL }) {
   const backgroundImageURL = (useLandscapeImage) ? landscapeModeURL : portraitModeURL;
 
   return (
-    <div className="img" style={{ backgroundImage: `url(${backgroundImageURL})` }} />
+    <div className="FilmPoster" style={{ backgroundImage: `url(${backgroundImageURL})` }} />
   );
 }
 
