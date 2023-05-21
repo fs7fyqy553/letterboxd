@@ -34,17 +34,21 @@ jest.mock("./FilmDescription/FilmDescription", () => ({filmObject, onFilmClick, 
 );
 
 describe("Game component", () => {
+
     const testGame = <Game />;
+
     it("renders CurrentScore with correct initial score prop", async () => {
         render(testGame);
         const currentScorePropDiv = await screen.findByTestId("CurrentScore's score prop");
         expect(currentScorePropDiv.textContent).toBe("0");
     });
+
     it("renders HighScore with correct props", async () => {
         render(testGame);
         const highScorePropDiv = await screen.findByTestId("HighScore's score prop");
         expect(highScorePropDiv.textContent).toBe("0");
     });
+
     it("renders FilmDescription components with the correct film object props", async () => {
         const lowerRatingTestFilmString = JSON.stringify(lowerRatingTestFilm);
         const higherRatingTestFilmString = JSON.stringify(higherRatingTestFilm);
@@ -53,11 +57,13 @@ describe("Game component", () => {
         const filmObjectStringArray = filmObjectElementArray.map((element) => element.textContent);
         expect(filmObjectStringArray).toContain(lowerRatingTestFilmString, higherRatingTestFilmString);
     });
+
     it("renders at least one FilmDescription with falsy showAverageRating prop", async () => {
         render(testGame);
         const falsyShowAverageRatingElementArray = await screen.findAllByTestId("FilmDescription' showAverageRating prop falsy");
         expect(falsyShowAverageRatingElementArray.length).toBeGreaterThanOrEqual(1);
     });
+    
     it("film selections alter scores correctly", async () => {
         render(testGame);
         const lowerRatingFilmDescriptionElement = await screen.findByTestId(lowerRatingTestFilm.averageRatingString);
@@ -70,4 +76,5 @@ describe("Game component", () => {
         const highScorePropDiv = await screen.findByTestId("HighScore's score prop");
         expect(highScorePropDiv.textContent).toBe("2");
     });
+
 });
