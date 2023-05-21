@@ -4,21 +4,21 @@ Game in each round of which the player must guess which of two films is more hig
 
 Ongoing:
 
-- Updating Frontend Tests since Migrating to NextJS
+- Updating frontend tests since migrating to NextJS
 
 Tools:
 
 - Frontend:
 
     - Written in React within NextJS
-    - WCAG Level A Accessibility
-    - Responsive Design using Vanilla CSS and Material UI
+    - WCAG Level A accessibility
+    - Responsive design using Vanilla CSS and Material UI
     - Tested (unfinished) using the React Testing Library in Jest
 
 - Backend:
 
     - Written in NodeJS within Express
-    - Accessible using a REST API with Authentication
-    - Uses a MongoDB Database
+    - Accessible using a REST API with authentication
+    - Uses a MongoDB database
     - Tested using MongoDB In-Memory Server and Supertest in Jest
-    - Contains a Web Scraper written in TypeScript and using Puppeteer (see database-updater/)
+    - Contains a web scraper written in TypeScript and using Puppeteer (see database-updater/)
