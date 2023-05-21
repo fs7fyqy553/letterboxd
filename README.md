@@ -4,7 +4,7 @@ Game in each round of which the player must guess which of two films is more hig
 
 Ongoing:
 
-- Finishing Frontend Tests
+- Updating Frontend Tests since Migrating to NextJS
 
 Tools:
 
