@@ -3,22 +3,6 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import FilmDescription from "./FilmDescription";
 
-function checkDirectorNames(testFilmDescription, testDirectorNameArray) {
-    render(testFilmDescription);
-    const testDirectorNamesString = testDirectorNameArray.join(", ");
-    expect(screen.getByText(testDirectorNamesString, {exact: false})).toBeInTheDocument();
-}
-
-function checkReleaseYear(testFilmDescription, testReleaseYearString) {
-    render(testFilmDescription);
-    expect(screen.getByText(testReleaseYearString, {exact: false})).toBeInTheDocument();
-}
-
-function checkFilmTitle(testFilmDescription, testFilmTitle) {
-    render(testFilmDescription);
-    expect(screen.getByText(testFilmTitle, {exact: false})).toBeInTheDocument();
-}
-
 const testFilmTitle = "Film 1";
 const testReleaseYearString = "1989";
 const testDirectorNameArray = ["Director 1", "Director 2"];
@@ -33,13 +17,17 @@ describe("FilmDescription component", () => {
             showAverageRating={true}
         />
         it("mentions correct film", () => {
-            checkFilmTitle(testFilmDescription, testFilmTitle);
+            render(testFilmDescription);
+            expect(screen.getByText(testFilmTitle, {exact: false})).toBeInTheDocument();
         });
         it("mentions correct release year", () => {
-            checkReleaseYear(testFilmDescription, testReleaseYearString);
+            render(testFilmDescription);
+            expect(screen.getByText(testReleaseYearString, {exact: false})).toBeInTheDocument();
         });
         it("mentions correct director names", () => {
-            checkDirectorNames(testFilmDescription, testDirectorNameArray);
+            render(testFilmDescription);
+            const testDirectorNamesString = testDirectorNameArray.join(", ");
+            expect(screen.getByText(testDirectorNamesString, {exact: false})).toBeInTheDocument();
         });
         it("shows average rating", () => {
             render(testFilmDescription);
@@ -55,13 +43,17 @@ describe("FilmDescription component", () => {
             showAverageRating={false}
         />
         it("mentions correct film", () => {
-            checkFilmTitle(testFilmDescription, testFilmTitle);
+            render(testFilmDescription);
+            expect(screen.getByText(testFilmTitle, {exact: false})).toBeInTheDocument();
         });
         it("mentions correct release year", () => {
-            checkReleaseYear(testFilmDescription, testReleaseYearString);
+            render(testFilmDescription);
+            expect(screen.getByText(testReleaseYearString, {exact: false})).toBeInTheDocument();
         });
         it("mentions correct director names", () => {
-            checkDirectorNames(testFilmDescription, testDirectorNameArray);
+            render(testFilmDescription);
+            const testDirectorNamesString = testDirectorNameArray.join(", ");
+            expect(screen.getByText(testDirectorNamesString, {exact: false})).toBeInTheDocument();
         });
         it("hides average rating", () => {
             render(testFilmDescription);
