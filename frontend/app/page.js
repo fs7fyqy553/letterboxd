@@ -10,8 +10,9 @@ export default async function App() {
       <footer aria-label="Miscellaneous links">
 
         <a
-          aria-label="Link to GitHub repository"
+          aria-label="Link to GitHub repository (opens in new tab)"
           href="https://github.com/JamesGJ5/letterxbod-higher-or-lower"
+          target="_blank"
         >
           <Image
             src="/logos/github-mark.svg"
@@ -23,8 +24,9 @@ export default async function App() {
         </a>
 
         <a
-          aria-label="Link to LinkedIn profile"
+          aria-label="Link to LinkedIn profile (opens in new tab)"
           href="https://www.linkedin.com/in/james-graca-jones/"
+          target="_blank"
         >
           <Image
             src="/logos/LI-In-Bug.png"
