@@ -4,7 +4,7 @@ Game in each round of which the player must guess which of two films is more hig
 
 The Letterboxd API is not publicly accessible (see letterboxd.com/api-beta/), so a web scraper scrapes Letterboxd pages for film data and stores them in a database:
 
-- The scraper is written in TypeScript and can be found at github.com/JamesGJ5/letterboxd-list-scraper
+- The scraper is written in TypeScript and can be found at https://github.com/JamesGJ5/letterboxd-list-scraper
 - Backend is set up to regularly update the database but the updater isn't deployed yet for cost reasons
 - The backend contains an API which is currently used to serve film data to the frontend web game.
 
