@@ -1,6 +1,6 @@
 import '../mongo-config.js';
 import { CronJob } from 'cron';
-import processFilmsInList from './letterboxd-scraper/dist/index.js';
+import processFilmsInList from 'letterboxd-list-scraper';
 import Film from '../../models/film.js';
 
 function updateAverageRatingString(existingFilmDoc, newAverageRatingString) {
