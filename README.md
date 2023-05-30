@@ -27,4 +27,4 @@ Tools:
     - Accessible using a REST API with authentication
     - Uses a MongoDB database
     - Tested using MongoDB In-Memory Server and Supertest in Jest
-    - Contains a web scraper written in TypeScript and using Puppeteer (see database-updater/)
+    - Uses a published web scraper written using TypeScript and Puppeteer to automatically update the database (see github.com/JamesGJ5/letterboxd-list-scraper)
