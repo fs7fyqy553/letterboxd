@@ -6,7 +6,7 @@ The Letterboxd API is not publicly accessible (see letterboxd.com/api-beta/), so
 
 - The scraper is written in TypeScript and can be found at https://github.com/JamesGJ5/letterboxd-list-scraper
 - Backend is set up to regularly update the database but the updater isn't deployed yet for cost reasons
-- The backend contains an API which is currently used to serve film data to the frontend web game.
+- The backend contains an API which is currently used to serve film data to the frontend web game
 
 Ongoing:
 
