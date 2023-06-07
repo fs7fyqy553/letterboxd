@@ -12,6 +12,7 @@ Tools:
     - WCAG Level A accessibility
     - Responsive design using Vanilla CSS and Material UI
     - Tested using the React Testing Library in Jest
+    - Has a Dockerfile written for manual configuration and specified for deployment to Railway
 
 - Backend:
 
