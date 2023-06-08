@@ -1,3 +1,5 @@
+NOTE: currently migrating to TypeScript.
+
 Play at https://letterboxd-guessing-game.up.railway.app/
 
 Game in each round of which the player must guess which of two films is more highly rated on the review site letterboxd.com.
