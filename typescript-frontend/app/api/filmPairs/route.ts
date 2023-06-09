@@ -24,7 +24,6 @@ async function getFilmPairArray(numberOfPairs: string): Promise<Array<Array<obje
     const filmPairArrayFetchResponse = await fetchFilmPairArray(numberOfPairs);
     const responseObject = await filmPairArrayFetchResponse.json();
     const filmPairArray = responseObject.films;
-    console.log(filmPairArray);
     return filmPairArray;
   } catch (err) {
     console.log(err);
