@@ -1,4 +1,13 @@
-function FilmLoadingScreen({ areLoadingAnimationsEnabled, setAreLoadingAnimationsEnabled }) {
+import { Dispatch, SetStateAction, ReactElement } from "react";
+
+type FilmLoadingScreenProps = {
+    areLoadingAnimationsEnabled: boolean,
+    setAreLoadingAnimationsEnabled: Dispatch<SetStateAction<boolean>>,
+}
+
+function FilmLoadingScreen(
+    { areLoadingAnimationsEnabled, setAreLoadingAnimationsEnabled }: FilmLoadingScreenProps
+): ReactElement {
 
     return (
         <div className="FilmLoadingScreen">
