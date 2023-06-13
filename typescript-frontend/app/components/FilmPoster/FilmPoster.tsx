@@ -1,6 +1,12 @@
+import { ReactElement } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
-function FilmPoster({ portraitModeURL, landscapeModeURL }) {
+type FilmPosterProps = {
+  portraitModeURL: string,
+  landscapeModeURL: string,
+}
+
+function FilmPoster({ portraitModeURL, landscapeModeURL }: FilmPosterProps): ReactElement {
   const useLandscapeImage = useMediaQuery("(max-height: 400px)");
   const backgroundImageURL = (useLandscapeImage) ? landscapeModeURL : portraitModeURL;
 
