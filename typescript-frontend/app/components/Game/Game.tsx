@@ -13,7 +13,7 @@ type ScoreObject = {
   highScore: number,
 }
 
-async function getFilmPairArray(numberOfPairs) {
+async function getFilmPairArray(numberOfPairs: number) {
   const filmPairArray = await fetch(`/api/filmPairs?numberOfPairs=${numberOfPairs}`);
   return await filmPairArray.json();
 } 
