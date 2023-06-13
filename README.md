@@ -23,3 +23,7 @@ Tools:
     - Uses a MongoDB database
     - Tested using MongoDB In-Memory Server and Supertest in Jest
     - Uses web scraper to automatically update the database daily (see database/database-updater/populate-database.js)
+
+- Web scraper:
+
+    - Written in TypeScript and utilises Puppeteer.
