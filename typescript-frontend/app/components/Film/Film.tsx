@@ -1,11 +1,25 @@
+import { ReactElement } from "react";
 import FilmPoster from "../FilmPoster/FilmPoster";
 import FilmDescription from "../FilmDescription/FilmDescription";
+
+type FilmProps = {
+  filmObject: {
+    filmTitle: string,
+    releaseYearString: string,
+    directorNameArray: string[],
+    averageRatingString: string,
+    filmPosterURL: string,
+    filmBackdropImageURL: string,
+  },
+  showAverageRating: boolean,
+  onFilmClick: Function,
+}
 
 function Film({
   filmObject,
   showAverageRating,
   onFilmClick,
-}) {
+}: FilmProps): ReactElement {
 
   const {
     filmTitle,
