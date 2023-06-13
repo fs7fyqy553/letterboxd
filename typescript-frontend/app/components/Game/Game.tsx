@@ -1,6 +1,7 @@
 "use client";
 
 import "../../globals.css";
+import { ReactElement } from "react";
 import { useState, useEffect, useRef } from "react";
 import { FilmObject } from "../../types";
 import HighScore from "../HighScore/HighScore";
@@ -18,7 +19,7 @@ async function getFilmPairArray(numberOfPairs: number) {
   return await filmPairArray.json();
 } 
 
-function Game() {
+function Game(): ReactElement {
   const [scoreObject, setScoreObject] = useState<ScoreObject>({ currentScore: 0, highScore: 0 });
   const [currentFilmPair, setCurrentFilmPair] = useState<FilmObject[]>([]);
   // NOTE: giving animations ability to be disabled helps satisfy WCAG Level A
