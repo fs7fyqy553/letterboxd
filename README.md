@@ -26,4 +26,4 @@ Tools:
 
 - Web scraper:
 
-    - Written in TypeScript and utilises Puppeteer.
+    - Written in TypeScript and utilises Puppeteer
