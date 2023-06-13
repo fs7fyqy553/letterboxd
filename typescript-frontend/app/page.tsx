@@ -1,7 +1,8 @@
+import { ReactElement } from 'react';
 import Image from 'next/image';
 import Game from './components/Game/Game';
 
-export default async function App() {
+export default async function App(): Promise<ReactElement> {
   return (
     <div className="App">
 
