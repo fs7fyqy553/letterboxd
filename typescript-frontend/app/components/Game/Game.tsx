@@ -2,10 +2,16 @@
 
 import "../../globals.css";
 import { useState, useEffect, useRef } from "react";
+import { FilmObject } from "../../types";
 import HighScore from "../HighScore/HighScore";
 import CurrentScore from "../CurrentScore/CurrentScore";
 import Film from "../Film/Film";
 import FilmLoadingScreen from "../FilmLoadingScreen/FilmLoadingScreen";
+
+type ScoreObject = {
+  currentScore: number,
+  highScore: number,
+}
 
 async function getFilmPairArray(numberOfPairs) {
   const filmPairArray = await fetch(`/api/filmPairs?numberOfPairs=${numberOfPairs}`);
@@ -13,8 +19,8 @@ async function getFilmPairArray(numberOfPairs) {
 } 
 
 function Game() {
-  const [scoreObject, setScoreObject] = useState({ currentScore: 0, highScore: 0 });
-  const [currentFilmPair, setCurrentFilmPair] = useState([]);
+  const [scoreObject, setScoreObject] = useState<ScoreObject>({ currentScore: 0, highScore: 0 });
+  const [currentFilmPair, setCurrentFilmPair] = useState<FilmObject[]>([]);
   // NOTE: giving animations ability to be disabled helps satisfy WCAG Level A
   const [areLoadingAnimationsEnabled, setAreLoadingAnimationsEnabled] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -40,34 +46,38 @@ function Game() {
     }
   }, [currentFilmPair]);
 
-  function getNewHighScore(newCurrentScore, prevHighScore) {
+  function getNewHighScore(newCurrentScore: number, prevHighScore: number): number {
     return Math.max(newCurrentScore, prevHighScore);
   }
-  function getNewCurrentScore(selectionWasCorrect, prevCurrentScore) {
+  function getNewCurrentScore(selectionWasCorrect: boolean, prevCurrentScore: number): number {
     return (selectionWasCorrect) ? prevCurrentScore + 1 : 0;
   }
 
-  function getUpdatedScoreObject(selectionWasCorrect, prevCurrentScore, prevHighScore) {
+  function getUpdatedScoreObject(
+    selectionWasCorrect: boolean,
+    prevCurrentScore: number,
+    prevHighScore: number,
+  ): ScoreObject {
     const newCurrentScore = getNewCurrentScore(selectionWasCorrect, prevCurrentScore);
     const newHighScore = getNewHighScore(newCurrentScore, prevHighScore);
     return { currentScore: newCurrentScore, highScore: newHighScore };
   }
 
-  function updateScoreObject(selectionWasCorrect) {
+  function updateScoreObject(selectionWasCorrect: boolean): void {
     setScoreObject(
       ({currentScore, highScore}) =>
         getUpdatedScoreObject(selectionWasCorrect, currentScore, highScore)
     );
   }
-  async function loadFilmPairArray() {
+  async function loadFilmPairArray(): Promise<void> {
     const newFilmPairArray = await getFilmPairArray(100);
     filmPairArray.current = newFilmPairArray;
   }
-  function getNextFilmPair() {
+  function getNextFilmPair(): FilmObject[] {
     return filmPairArray.current.pop();
   }
 
-  async function changeFilms() {
+  async function changeFilms(): Promise<void> {
     const newCurrentFilmPair = getNextFilmPair();
     setCurrentFilmPair(newCurrentFilmPair);
     if (filmPairArray.current.length !== 0) {
@@ -77,45 +87,47 @@ function Game() {
     await loadFilmPairArray();
     setIsLoading(false);
   }
-  function updateScore(selectedFilmObject, otherFilmObject) {
+  function updateScore(selectedFilmObject: FilmObject, otherFilmObject: FilmObject): void {
     const selectionWasCorrect = (
       selectedFilmObject.averageRatingString > otherFilmObject.averageRatingString
     );
     updateScoreObject(selectionWasCorrect);
   }
 
-  async function endRound(selectedFilmObject, otherFilmObject) {
+  async function endRound(
+    selectedFilmObject: FilmObject, otherFilmObject: FilmObject
+  ): Promise<void> {
     updateScore(selectedFilmObject, otherFilmObject);
     changeFilms();
   }
-  function getOtherFilmObject(selectedFilmObject) {
+  function getOtherFilmObject(selectedFilmObject: FilmObject): FilmObject {
     return (selectedFilmObject === currentFilmPair[0]) ?
       currentFilmPair[1] : currentFilmPair[0];
   }
-  function getFromSessionStorage(key) {
+  function getFromSessionStorage(key: string): ScoreObject | FilmObject[] {
     return JSON.parse(sessionStorage.getItem(key));
   }
 
-  function selectFilm(selectedFilmObject) {
+  function selectFilm(selectedFilmObject: FilmObject): void {
     const otherFilmObject = getOtherFilmObject(selectedFilmObject);
     endRound(selectedFilmObject, otherFilmObject);
   }
-  async function loadInitialCurrentFilmPair() {
+  async function loadInitialCurrentFilmPair(): Promise<void> {
     const sessionCurrentFilmPair = getFromSessionStorage("currentFilmPair");
     (sessionCurrentFilmPair !== null) ?
-      setCurrentFilmPair(sessionCurrentFilmPair) : await changeFilms();
+      setCurrentFilmPair(sessionCurrentFilmPair as FilmObject[]) : await changeFilms();
   }
-  async function initialiseFilmPairs() {
+  async function initialiseFilmPairs(): Promise<void> {
     await loadFilmPairArray();
     await loadInitialCurrentFilmPair();
     setIsLoading(false);
   }
-  function storeInSession(key, value) {
+  function storeInSession(key: string, value): void {
     sessionStorage.setItem(key, JSON.stringify(value));
   }
-  function loadScoreObject() {
+  function loadScoreObject(): void {
     const sessionScoreObject = getFromSessionStorage("scoreObject");
-    sessionScoreObject !== null && setScoreObject(sessionScoreObject);
+    sessionScoreObject !== null && setScoreObject(sessionScoreObject as ScoreObject);
   }
 
   return (
