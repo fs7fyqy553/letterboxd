@@ -10,7 +10,7 @@ Tools:
 
 - Frontend:
 
-    - Written in React within NextJS
+    - Written in TypeScript within React and NextJS
     - WCAG Level A accessibility
     - Responsive design using Vanilla CSS and Material UI
     - Tested using the React Testing Library in Jest
@@ -18,7 +18,7 @@ Tools:
 
 - Backend:
 
-    - Written in NodeJS within Express
+    - Written in TypeScript withing NodeJS and Express
     - Accessible using a REST API with authentication
     - Uses a MongoDB database
     - Tested using MongoDB In-Memory Server and Supertest in Jest
@@ -26,4 +26,4 @@ Tools:
 
 - Web scraper:
 
-    - Written in TypeScript and utilises Puppeteer
+    - Written in TypeScript and utilising Puppeteer
