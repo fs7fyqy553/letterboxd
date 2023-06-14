@@ -1,10 +1,19 @@
 import { Schema, model } from 'mongoose';
 
-const FilmSchema = new Schema(
+interface IFilm {
+  filmTitle: string,
+  releaseYearString: string,
+  directorNameArray: string[],
+  averageRatingString: string,
+  filmPosterURL: string,
+  filmBackdropImageURL: string,
+}
+
+const FilmSchema = new Schema<IFilm>(
   {
     filmTitle: { type: String, required: true },
     releaseYearString: { type: String, required: true },
-    directorNameArray: { type: Array, required: true },
+    directorNameArray: { type: [String], required: true },
     averageRatingString: { type: String, required: true },
     filmPosterURL: { type: String, required: true },
     filmBackdropImageURL: { type: String, required: true },
