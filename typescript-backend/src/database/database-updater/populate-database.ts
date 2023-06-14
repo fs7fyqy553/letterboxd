@@ -1,30 +1,40 @@
 import '../mongo-config.js';
+import { Document } from 'mongoose';
 import { CronJob } from 'cron';
 import processFilmsInList from 'letterboxd-list-scraper';
 import Film from '../../models/film.js';
 
-function updateAverageRatingString(existingFilmDoc, newAverageRatingString) {
+type FilmObject = {
+    filmTitle: string,
+    releaseYearString: string,
+    directorNameArray: string[],
+    averageRatingString: string,
+    filmPosterURL: string,
+    filmBackdropImageURL: string,
+}
+
+function updateAverageRatingString(existingFilmDoc, newAverageRatingString: string): Document {
   const updatedFilmDoc = existingFilmDoc;
   updatedFilmDoc.averageRatingString = newAverageRatingString;
   return updatedFilmDoc;
 }
 
-function getUpdatedFilmDoc(existingFilmDoc, filmDetailsObject) {
+function getUpdatedFilmDoc(existingFilmDoc: Document, filmDetailsObject: FilmObject): Document {
   const updatedFilmDoc = updateAverageRatingString(
     existingFilmDoc,
     filmDetailsObject.averageRatingString
   );
   return updatedFilmDoc;
 }
-function makeNewFilmDoc(filmDetailsObject) {
+function makeNewFilmDoc(filmDetailsObject: FilmObject): Document {
   return new Film(filmDetailsObject);
 }
-async function getExistingFilmDoc(filmDetailsObject) {
+async function getExistingFilmDoc(filmDetailsObject: FilmObject): Promise<Document> {
   const { filmTitle, releaseYearString, directorNameArray } = filmDetailsObject;
   return Film.findOne({ filmTitle, releaseYearString, directorNameArray });
 }
 
-async function saveScrapedFilmDetailsObject(filmDetailsObject) {
+async function saveScrapedFilmDetailsObject(filmDetailsObject: FilmObject) {
   const existingFilmDoc = await getExistingFilmDoc(filmDetailsObject);
   const savedFilmDoc =
     existingFilmDoc != null
@@ -40,7 +50,7 @@ async function scrapePopularFilmsList() {
   );
 }
 
-const job = new CronJob({
+const job: CronJob = new CronJob({
   cronTime: '0 0 * * *',
   onTick: scrapePopularFilmsList,
   timeZone: 'Europe/London',
