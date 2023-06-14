@@ -3,7 +3,7 @@ function get404Message() {
     return 'Two films with different average ratings not found';
 }
 function getFilmAggregate(avoidedAverageRatingString) {
-    if (avoidedAverageRatingString === null) {
+    if (avoidedAverageRatingString === undefined) {
         return Film.aggregate();
     }
     return Film.aggregate([{ $match: { averageRatingString: { $ne: avoidedAverageRatingString } } }]);
@@ -14,7 +14,7 @@ async function getRandomFilm(avoidedAverageRatingString) {
     return randomFilm;
 }
 async function getTwoFilmsWithDifferentRatings() {
-    const film1 = await getRandomFilm();
+    const film1 = await getRandomFilm(undefined);
     const film2 = await getRandomFilm(film1.averageRatingString);
     if (!film1 || !film2) {
         throw new Error(get404Message());
