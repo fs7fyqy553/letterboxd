@@ -1,4 +1,4 @@
-NOTE: currently migrating the backend to TypeScript and updating unit tests to accommodate significant changes.
+NOTE: currently updating unit tests to accommodate significant changes.
 
 Play at https://letterboxd-guessing-game.up.railway.app/
 
