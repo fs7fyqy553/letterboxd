@@ -1,12 +1,13 @@
 import * as dotenv from 'dotenv';
+import { Request, Response, NextFunction } from 'express';
 
 dotenv.config({ path: '.env' });
 
-function rejectAPICall(res) {
+function rejectAPICall(res: Response): void | Promise<Response> {
   res.status(401).json({ error: 'unauthorised' });
 }
 
-function checkAPIKey(key, res, next) {
+function checkAPIKey(key: string, res: Response, next: NextFunction): void | Promise<Response> {
   if (!key || key !== process.env.API_KEY) {
     rejectAPICall(res);
   } else {
@@ -14,7 +15,7 @@ function checkAPIKey(key, res, next) {
   }
 }
 
-export default function authenticateAPICall(req, res, next) {
+export default function authenticateAPICall(req: Request, res: Response, next: NextFunction) {
   const submittedAPIKey = req.get('API-Key');
   checkAPIKey(submittedAPIKey, res, next);
 }
