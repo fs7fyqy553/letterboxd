@@ -2,7 +2,7 @@
 
 - Currently updating unit tests to accommodate significant changes.
 - The Letterboxd API is not publicly accessible (see letterboxd.com/api-beta/), so a web scraper scrapes Letterboxd pages for film data and stores them in a database.
-- The scraper can be found at
+- The scraper can be found at https://github.com/fs7fyqy553/letterboxd-scraper
 - The backend is set up to regularly update the database but the updater isn't deployed yet for cost reasons
 - The backend also contains an API which is currently used to serve film data to the frontend web game.
 
